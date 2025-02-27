@@ -81,12 +81,6 @@ Contributions are welcome! If you have expertise in cybersecurity, AI defense, o
 
 ---
 
-## 📜 License
-
-This project is licensed under the MIT License—see the [LICENSE](LICENSE) file for details.
-
----
-
 ## ✉️ Contact
 
 📬 **Website:** [JohnConnorProject.org](https://JohnConnorProject.org)  
