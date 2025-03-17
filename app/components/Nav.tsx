@@ -42,10 +42,22 @@ const Navbar = () => {
               Mission
             </Link>
             <Link
+              href="/your-cloud"
+              className="block mt-4 md:mt-0 hover:text-red-500 transition duration-300"
+            >
+              Not Your Photos
+            </Link>
+            <Link
               href="/protect-the-internet"
               className="block mt-4 md:mt-0 hover:text-red-500 transition duration-300"
             >
               Decentralized Internet
+            </Link>
+            <Link
+              href="/your-stock-vote"
+              className="block mt-4 md:mt-0 hover:text-red-500 transition duration-300"
+            >
+              Who Owns Your Stock Vote?
             </Link>
             <Link
               href="/directory"
@@ -116,10 +128,22 @@ const Navbar = () => {
               Mission
             </Link>
             <Link
+              href="/your-cloud"
+              className="block mt-4 md:mt-0 hover:text-red-500 transition duration-300"
+            >
+              Not Your Photos
+            </Link>
+            <Link
               href="/protect-the-internet"
               className="block mt-4 md:mt-0 hover:text-red-500 transition duration-300"
             >
               Decentralized Internet
+            </Link>
+            <Link
+              href="/your-stock-vote"
+              className="block mt-4 md:mt-0 hover:text-red-500 transition duration-300"
+            >
+              Who Owns Your Stock Vote?
             </Link>
             <Link
               href="/directory"
