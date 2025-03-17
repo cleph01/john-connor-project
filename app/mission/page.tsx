@@ -5,13 +5,11 @@ import CardContent from "../components/CardContent";
 
 // Animation library
 // Need this version of import language for Server Side Rendering (SSR)
-import * as motion from "motion/react-client"
+import * as motion from "motion/react-client";
 
 const Mission = () => {
   return (
     <div className="bg-gray-900 text-gray-300 min-h-screen flex flex-col items-center p-4">
-      
-
       {/* Header Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -23,8 +21,11 @@ const Mission = () => {
           Our Mission
         </h1>
         <p className="text-base text-blue-500 font-semibold mx-auto sm:text-lg md:text-xl max-w-2xl">
-          Building the Resistance. One Technologist at a Time — equipping individuals and communities
-          with the knowledge and tools to defend against AI-driven digital threats.
+          Building the Resistance, One Technologist at a Time
+        </p>
+        <p>
+          Equipping individuals and communities with the knowledge and tools to
+          defend against AI-driven digital threats.
         </p>
       </motion.div>
 
@@ -46,7 +47,9 @@ const Mission = () => {
 
       {/* Core Objectives Section */}
       <Card className="bg-gray-800 text-gray-300 mt-6 w-full shadow-lg md:max-w-3xl lg:max-w-4xl">
-        <CardContent title="What Drives Us" description="The John Connor Project is more than a movement; it’s a mission to ensure cybersecurity
+        <CardContent
+          title="What Drives Us"
+          description="The John Connor Project is more than a movement; it’s a mission to ensure cybersecurity
             professionals play a critical role in protecting digital freedom. We believe that every individual
             deserves to understand how to safeguard their data, defend against AI exploitation, and
             maintain autonomy in an increasingly connected world."
@@ -56,16 +59,25 @@ const Mission = () => {
           </h2>
           <ul className="list-disc list-inside text-sm leading-relaxed sm:text-base md:text-lg space-y-3">
             <li>
-              Creating accessible educational resources on digital security, AI threats, and personal defense.
+              Creating accessible educational resources on digital security, AI
+              threats, and personal defense.
             </li>
             <li>
-              Establishing a public directory of cybersecurity professionals for communities and small businesses.
+              Establishing a public directory of cybersecurity professionals for
+              communities and small businesses.
             </li>
             <li>
-              Promoting self-hosted AI solutions to prevent data exploitation by large corporations.
+              Promoting self-hosted Cloud and AI solutions to prevent data
+              exploitation by large corporations.
             </li>
             <li>
-              Connecting technologists with individuals seeking practical, real-world cybersecurity solutions.
+              Connecting technologists with individuals seeking practical,
+              real-world cybersecurity solutions.
+            </li>
+            <li>
+              Empowering individuals and communities to establish
+              censorship-resistant communication networks, such as IP over HAM
+              radio, ensuring digital sovereignty and resilience.
             </li>
           </ul>
         </CardContent>
@@ -86,6 +98,6 @@ const Mission = () => {
       </motion.div>
     </div>
   );
-}
+};
 
 export default Mission;
