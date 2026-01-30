@@ -90,3 +90,70 @@ The John Connor Project is a Next.js website dedicated to empowering IT/cybersec
 - Proxy voting analysis tools (marked as "Coming Soon")
 - Video library (marked as "Coming Soon")
 - Potentially add ratings/reviews later
+
+## Manual Verification Process
+Until an admin panel is built, verify professionals manually:
+1. Log into Supabase dashboard: https://supabase.com/dashboard
+2. Go to Table Editor → `professionals` table
+3. Find the new entry (verified=false, public=false)
+4. Review their info (name, email, location, expertise)
+5. Optionally reach out to verify identity/credentials
+6. Update: set `verified=true` and `public=true`
+7. They now appear in /directory
+
+## Growth Roadmap
+
+### Phase 1: Foundation (Now)
+- [x] Core site with dual user journeys
+- [x] Professional registration → Supabase
+- [x] Public directory with search
+- [x] Educational content (Learn page)
+- [ ] SEO basics (meta tags, sitemap)
+- [ ] Analytics integration
+
+### Phase 2: Trust & Credibility (1-2 months)
+- [ ] First 5-10 verified professionals
+- [ ] Testimonials/case studies
+- [ ] Professional badges/specialties
+- [ ] Contact mechanism for directory
+
+### Phase 3: Growth & Awareness (2-4 months)
+- [ ] Content marketing (blog, social)
+- [ ] Local community outreach
+- [ ] Newsletter signup
+- [ ] Social proof metrics
+
+### Phase 4: Sustainability (4-6 months)
+- [ ] Payment integration (optional)
+- [ ] Donation option
+- [ ] Partnerships
+
+## Content & Publicity Strategy
+
+### Target Audiences
+1. **Technologists**: LinkedIn, X/Twitter, Reddit (r/cybersecurity, r/privacy)
+2. **Help seekers**: Local community, YouTube, Facebook (older demographics)
+
+### Priority Channels (Start Narrow)
+1. **LinkedIn** → Recruit technologists, establish credibility
+2. **Blog on site** → SEO foundation, content to share
+3. **YouTube OR X** → Pick one for broader reach
+
+### Content Pillars
+- AI threat awareness (scams, deepfakes, voice cloning)
+- Practical privacy tips
+- Success stories / case studies
+- Behind-the-scenes of the mission
+
+### Content Flywheel
+```
+Blog post (1x/week)
+    → LinkedIn post (summarize + link)
+    → X thread (key points)
+    → YouTube video (if topic warrants)
+```
+
+### First Content Pieces to Create
+1. **"Why I Started the John Connor Project"** - Personal story, mission, the problem you saw
+2. **"5 AI Scams Targeting Your Parents Right Now"** - Practical, shareable, SEO-friendly
+3. **"A Call to Technologists: Your Community Needs You"** - Recruitment focused

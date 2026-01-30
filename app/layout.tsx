@@ -15,9 +15,51 @@ const orbitron = Orbitron({
   weight: ["400", "500", "600", "700", "800", "900"],
 });
 
+const siteUrl = "https://johnconnorproject.org";
+
 export const metadata: Metadata = {
-  title: "John Connor Project | Digital Resistance Network",
-  description: "Equipping individuals and communities with the knowledge and tools to defend against AI-driven digital threats. Join the resistance.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "John Connor Project | Digital Resistance Network",
+    template: "%s | John Connor Project",
+  },
+  description: "Connecting communities with cybersecurity professionals to defend against AI-driven digital threats. Find local experts or join the resistance.",
+  keywords: ["cybersecurity", "AI threats", "digital privacy", "scam protection", "tech support", "community security", "deepfake protection"],
+  authors: [{ name: "John Connor Project" }],
+  creator: "John Connor Project",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteUrl,
+    siteName: "John Connor Project",
+    title: "John Connor Project | Digital Resistance Network",
+    description: "Connecting communities with cybersecurity professionals to defend against AI-driven digital threats.",
+    images: [
+      {
+        url: "/logo-skull-hero.png",
+        width: 800,
+        height: 800,
+        alt: "John Connor Project - Digital Resistance Network",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "John Connor Project | Digital Resistance Network",
+    description: "Connecting communities with cybersecurity professionals to defend against AI-driven digital threats.",
+    images: ["/logo-skull-hero.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "32x32" },

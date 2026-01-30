@@ -1,0 +1,6 @@
+# John Connor Project - Robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://johnconnorproject.org/sitemap.xml
