@@ -103,7 +103,7 @@ const Mission = () => {
           <div className="absolute inset-0 bg-crimson/10 blur-3xl" />
           <div className="relative terminal-card p-2">
             <Image
-              src="/logo_skull.webp"
+              src="/logo-skull-hero.png"
               alt="John Connor Project"
               width={1200}
               height={600}

@@ -426,7 +426,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <Image
-              src="/logo_skull.webp"
+              src="/logo-skull-nav.png"
               alt="JCP"
               width={32}
               height={32}
