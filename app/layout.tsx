@@ -1,18 +1,23 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import { Share_Tech_Mono, Orbitron } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Nav";
 
-
-const roboto = Roboto({
-  variable: "--font-roboto",
+const shareTechMono = Share_Tech_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
-  weight: ["100", "300", "400", "500", "700", "900"],
+  weight: "400",
+});
+
+const orbitron = Orbitron({
+  variable: "--font-display",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
-  title: "John Connor Project",
-  description: "Equipping individuals and communities with the knowledge and tools to defend against AI-driven digital threats.",
+  title: "John Connor Project | Digital Resistance Network",
+  description: "Equipping individuals and communities with the knowledge and tools to defend against AI-driven digital threats. Join the resistance.",
 };
 
 export default function RootLayout({
@@ -21,10 +26,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body
-        className={`${roboto.variable} font-roboto ${roboto.className} antialiased`}
-      ><Navbar />
+        className={`${shareTechMono.variable} ${orbitron.variable} antialiased`}
+      >
+        <Navbar />
         {children}
       </body>
     </html>

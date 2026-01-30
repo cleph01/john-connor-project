@@ -4,28 +4,40 @@ interface CardContentProps {
   title?: string;
   description?: string;
   children?: ReactNode;
+  index?: number;
 }
 
 const CardContent = ({
   title,
   description,
   children,
+  index,
 }: CardContentProps) => {
   return (
-    <div className="bg-gray-800 text-gray-300 rounded-2xl shadow-md p-4 sm:p-6 md:p-8 w-full">
-      {title && (
-        <h2 className="text-lg font-bold text-red-500 mb-2 text-center sm:text-xl md:text-2xl">
-          {title}
-        </h2>
-      )}
+    <div className="terminal-card p-6 h-full group transition-all duration-300 hover:border-crimson hover:shadow-[0_0_30px_rgba(255,23,68,0.1)]">
+      {/* Header with optional index */}
+      <div className="flex items-start justify-between mb-4">
+        {title && (
+          <h3 className="font-display text-lg text-crimson group-hover:text-glow-crimson transition-all">
+            {title}
+          </h3>
+        )}
+        {index !== undefined && (
+          <span className="font-mono text-xs text-text-muted">
+            [{String(index).padStart(2, "0")}]
+          </span>
+        )}
+      </div>
+
       {description && (
-        <p className="text-sm text-gray-400 mb-4 leading-relaxed sm:text-base md:text-lg">
+        <p className="font-mono text-sm text-text-secondary leading-relaxed mb-4">
           {description}
         </p>
       )}
+
       {children}
     </div>
   );
-}
+};
 
 export default CardContent;

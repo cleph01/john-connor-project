@@ -1,184 +1,237 @@
-import React from "react";
-import CardContent from "../components/CardContent";
+"use client";
+
+import Link from "next/link";
+import { motion } from "motion/react";
 
 const Resources = () => {
+  const resourceSections = [
+    {
+      id: "01",
+      title: "Educational Materials",
+      items: [
+        "Cybersecurity Basics: Understanding personal digital safety",
+        "Guides on secure communication and encryption",
+        "Recommended reading and video content for deeper learning",
+      ],
+    },
+    {
+      id: "02",
+      title: "Toolkits & Downloads",
+      items: [
+        "Open-source privacy tools for everyday use",
+        "Secure communication platform recommendations",
+        "Step-by-step VPN and firewall setup guides",
+      ],
+    },
+    {
+      id: "03",
+      title: "External Resources",
+      items: [
+        "Trusted cybersecurity organizations and platforms",
+        "Government resources on digital protection",
+        "Community groups and discussion forums",
+      ],
+    },
+  ];
+
   return (
-    <div className="p-4 sm:p-6 md:p-8 bg-gray-900 min-h-screen">
-      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-500 text-center mb-6">
-        Resources
-      </h1>
-      <p className="text-gray-400 text-sm sm:text-base md:text-lg text-center mb-8">
-        Explore interactive tools, educational materials, and trusted resources
-        to protect your digital presence and counter AI-driven threats.
-      </p>
+    <main className="min-h-screen bg-void relative">
+      {/* Background effects */}
+      <div className="absolute inset-0 data-grid opacity-20" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-electric/5 rounded-full blur-[200px]" />
 
-      <section className="mb-8 bg-gray-800 rounded-2xl p-4 sm:p-6 shadow-lg">
-        <h2 className="text-xl font-semibold text-red-400 mb-4">
-          Home Cybersecurity Best Practices Checklist
-        </h2>
-        <p className="text-gray-300 text-sm mb-4">
-          This checklist provides actionable steps to secure your home network
-          and devices. Each item directly counters AI-driven threats by
-          strengthening your digital perimeter. Trusted tools are linked for
-          each checklist item for seamless access.
-        </p>
-        <ul className="list-disc text-gray-300 ml-6 mb-4">
-          <li>
-            Use a reputable VPN for encrypted browsing -{" "}
-            <a href="https://protonvpn.com" className="text-red-400 underline">
-              ProtonVPN
-            </a>
-          </li>
-          <li>
-            Deploy a firewall for network protection -{" "}
-            <a href="https://pfSense.org" className="text-red-400 underline">
-              pfSense
-            </a>
-          </li>
-          <li>
-            Implement a password manager -{" "}
-            <a href="https://bitwarden.com" className="text-red-400 underline">
-              Bitwarden
-            </a>
-          </li>
-        </ul>
-        <a
-          href="/downloads/home-cybersecurity-checklist.pdf"
-          className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-xl w-full block text-center transition-all duration-300"
-          download
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+        {/* Breadcrumb */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="mb-8"
         >
-          Download Checklist
-        </a>
-      </section>
+          <div className="flex items-center gap-2 text-xs font-mono text-text-muted">
+            <Link href="/" className="hover:text-crimson transition-colors">
+              Home
+            </Link>
+            <span>/</span>
+            <span className="text-crimson">Resources</span>
+          </div>
+        </motion.div>
 
-      <section className="mb-8 bg-gray-800 rounded-2xl p-4 sm:p-6 shadow-lg">
-        <h2 className="text-xl font-semibold text-red-400 mb-4">
-          Interactive Cybersecurity Quiz
-        </h2>
-        <p className="text-gray-300 text-sm mb-4">
-          Test your knowledge of home cybersecurity best practices. The quiz
-          highlights vulnerabilities often exploited by AI-driven threats and
-          offers personalized recommendations based on your answers.
-        </p>
-        <button className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-xl w-full transition-all duration-300">
-          Take the Quiz
-        </button>
-      </section>
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-ash bg-terminal/50 mb-6">
+            <span className="w-1.5 h-1.5 bg-phosphor rounded-full animate-pulse" />
+            <span className="text-phosphor text-xs font-mono uppercase tracking-widest">
+              Intel Repository
+            </span>
+          </div>
 
-      <div className="space-y-8 mb-8">
-        {/* Alternative Internet Communication Section */}
-        <section className="mb-8 bg-gray-800 rounded-2xl p-4 sm:p-6 shadow-lg">
-          <h2 className="text-xl font-semibold text-red-400 mb-4">
-            Alternative Internet Communication
-          </h2>
-          <p className="text-gray-300 text-sm mb-4">
-            Learn about censorship-resistant communication networks like IP over
-            HAM radio. Understand how decentralized and resilient networks can
-            ensure digital sovereignty in an era of increasing censorship.
+          <h1 className="font-display text-3xl sm:text-5xl text-crimson text-glow-crimson mb-6">
+            Resources
+          </h1>
+
+          <p className="font-mono text-text-secondary max-w-2xl mx-auto leading-relaxed">
+            Explore interactive tools, educational materials, and trusted resources
+            to protect your digital presence and counter AI-driven threats.
           </p>
-          <a
-            href="/resources/ip-over-ham-roadmap"
-            className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-xl w-full block text-center transition-all duration-300"
-          >
-            Explore the Roadmap
-          </a>
-        </section>
+        </motion.div>
 
-        {/* Educational Materials Section */}
-        <section className="bg-gray-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-md">
-          <h2 className="text-xl sm:text-2xl font-semibold text-red-400 mb-4">
-            Educational Materials
-          </h2>
-          <ul className="list-disc pl-6 text-gray-300 space-y-2">
-            <li>
-              Cybersecurity Basics: Understanding personal digital safety.
+        {/* Cybersecurity Checklist */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="terminal-card p-6 sm:p-8 mb-8"
+        >
+          <div className="flex items-center gap-2 mb-4">
+            <span className="text-crimson font-mono text-sm">[00]</span>
+            <h2 className="font-display text-xl text-crimson">
+              Home Cybersecurity Best Practices
+            </h2>
+          </div>
+          <p className="font-mono text-sm text-text-secondary mb-4 leading-relaxed">
+            Actionable steps to secure your home network and devices. Each item
+            directly counters AI-driven threats by strengthening your digital
+            perimeter.
+          </p>
+          <ul className="font-mono text-sm text-text-secondary space-y-3">
+            <li className="flex items-start gap-2">
+              <span className="text-phosphor">→</span>
+              <span>
+                Use a reputable VPN for encrypted browsing –{" "}
+                <a
+                  href="https://protonvpn.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-electric hover:text-glow-electric transition-all"
+                >
+                  ProtonVPN
+                </a>
+              </span>
             </li>
-            <li>Guides on secure communication and encryption.</li>
-            <li>Recommended reading and video content for deeper learning.</li>
+            <li className="flex items-start gap-2">
+              <span className="text-phosphor">→</span>
+              <span>
+                Deploy a firewall for network protection –{" "}
+                <a
+                  href="https://pfSense.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-electric hover:text-glow-electric transition-all"
+                >
+                  pfSense
+                </a>
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-phosphor">→</span>
+              <span>
+                Implement a password manager –{" "}
+                <a
+                  href="https://bitwarden.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-electric hover:text-glow-electric transition-all"
+                >
+                  Bitwarden
+                </a>
+              </span>
+            </li>
           </ul>
-        </section>
+        </motion.section>
 
-        {/* Toolkits & Downloads Section */}
-        <section className="bg-gray-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-md">
-          <h2 className="text-xl sm:text-2xl font-semibold text-red-400 mb-4">
-            Toolkits & Downloads
-          </h2>
-          <ul className="list-disc pl-6 text-gray-300 space-y-2">
-            <li>Open-source privacy tools for everyday use.</li>
-            <li>Secure communication platform recommendations.</li>
-            <li>Step-by-step VPN and firewall setup guides.</li>
-          </ul>
-        </section>
+        {/* Resource Sections */}
+        <div className="space-y-6">
+          {resourceSections.map((section, index) => (
+            <motion.section
+              key={section.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 + index * 0.1 }}
+              className="terminal-card p-6 sm:p-8"
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-crimson font-mono text-sm">
+                  [{section.id}]
+                </span>
+                <h2 className="font-display text-lg text-crimson">
+                  {section.title}
+                </h2>
+              </div>
+              <ul className="font-mono text-sm text-text-secondary space-y-2">
+                {section.items.map((item, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-phosphor">→</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.section>
+          ))}
 
-        {/* Video Library Section */}
-        <section className="bg-gray-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-md">
-          <h2 className="text-xl sm:text-2xl font-semibold text-red-400 mb-4">
-            Video Library
-          </h2>
-          <p className="text-gray-300 mb-4">
-            Explore expert interviews, webinars, and explainers focused on
-            defending against AI-driven threats and fostering digital
-            resilience.
-          </p>
-          <button className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-xl transition-all duration-300">
-            View Videos
-          </button>
-        </section>
+          {/* Coming Soon Sections */}
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="terminal-card p-6 sm:p-8"
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-crimson font-mono text-sm">[04]</span>
+              <h2 className="font-display text-lg text-crimson">
+                Video Library
+              </h2>
+              <span className="text-xs font-mono px-2 py-0.5 border border-ash text-text-muted ml-auto">
+                Coming Soon
+              </span>
+            </div>
+            <p className="font-mono text-sm text-text-secondary">
+              Expert interviews, webinars, and explainers focused on defending
+              against AI-driven threats and fostering digital resilience.
+            </p>
+          </motion.section>
 
-        {/* External Resources Section */}
-        <section className="bg-gray-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-md">
-          <h2 className="text-xl sm:text-2xl font-semibold text-red-400 mb-4">
-            External Resources
-          </h2>
-          <ul className="list-disc pl-6 text-gray-300 space-y-2">
-            <li>Trusted cybersecurity organizations and platforms.</li>
-            <li>Government resources on digital protection.</li>
-            <li>Community groups and discussion forums.</li>
-          </ul>
-        </section>
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            className="terminal-card p-6 sm:p-8"
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-crimson font-mono text-sm">[05]</span>
+              <h2 className="font-display text-lg text-crimson">
+                Self-Hosting & AI Defense
+              </h2>
+              <span className="text-xs font-mono px-2 py-0.5 border border-ash text-text-muted ml-auto">
+                Coming Soon
+              </span>
+            </div>
+            <p className="font-mono text-sm text-text-secondary">
+              Learn how to self-host AI tools for independent truth-seeking and
+              protect yourself from AI-driven digital threats.
+            </p>
+          </motion.section>
+        </div>
 
-        {/* Self-Hosting & AI Defense Section */}
-        <section className="bg-gray-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-md">
-          <h2 className="text-xl sm:text-2xl font-semibold text-red-400 mb-4">
-            Self-Hosting & AI Defense
-          </h2>
-          <p className="text-gray-300 mb-4">
-            Learn how to self-host AI tools for independent truth-seeking and
-            protect yourself from AI-driven digital threats.
-          </p>
-          <button className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-xl transition-all duration-300">
-            Learn More
-          </button>
-        </section>
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+          className="mt-12 text-center"
+        >
+          <Link href="/get-involved">
+            <button className="btn-resistance px-6 py-3">
+              <span className="relative z-10">Contribute Resources</span>
+            </button>
+          </Link>
+        </motion.div>
       </div>
-
-      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        <CardContent
-          title="Trusted Tools for Cybersecurity"
-          description="Links to vetted tools that align with checklist recommendations, including VPNs, firewalls, and password managers."
-        />
-        <CardContent
-          title="Educational Materials"
-          description="Comprehensive guides and articles on digital security and AI defense strategies."
-        />
-        <CardContent
-          title="Toolkits & Frameworks"
-          description="Practical resources for implementing robust cybersecurity solutions at home."
-        />
-        <CardContent
-          title="Video Library"
-          description="Watch expert tutorials and presentations on AI defense tactics."
-        />
-        <CardContent
-          title="External Resources"
-          description="Curated links to respected cybersecurity communities and organizations."
-        />
-        <CardContent
-          title="Self-Hosting & AI Defense"
-          description="Learn how to deploy self-hosted AI tools for personal security and truth-seeking."
-        />
-      </section>
-    </div>
+    </main>
   );
 };
 
