@@ -56,8 +56,6 @@ const GetInvolved = () => {
     const trimmedExpertise = formData.expertise.trim();
     if (!trimmedExpertise) {
       newErrors.expertise = "Expertise is required";
-    } else if (trimmedExpertise.length < 20) {
-      newErrors.expertise = "Please provide more detail (at least 20 characters)";
     }
 
     setErrors(newErrors);
