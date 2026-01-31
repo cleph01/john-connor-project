@@ -6,6 +6,15 @@ import { useState } from "react";
 import { sendGAEvent } from "@next/third-parties/google";
 import { supabase } from "@/lib/supabase";
 
+interface FormErrors {
+  name?: string;
+  email?: string;
+  location?: string;
+  expertise?: string;
+}
+
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 const GetInvolved = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -13,16 +22,68 @@ const GetInvolved = () => {
     location: "",
     expertise: "",
   });
+  const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    // Name validation
+    const trimmedName = formData.name.trim();
+    if (!trimmedName) {
+      newErrors.name = "Name is required";
+    } else if (trimmedName.length < 2) {
+      newErrors.name = "Name must be at least 2 characters";
+    }
+
+    // Email validation
+    const trimmedEmail = formData.email.trim();
+    if (!trimmedEmail) {
+      newErrors.email = "Email is required";
+    } else if (!EMAIL_REGEX.test(trimmedEmail)) {
+      newErrors.email = "Invalid email format";
+    }
+
+    // Location validation
+    const trimmedLocation = formData.location.trim();
+    if (!trimmedLocation) {
+      newErrors.location = "Location is required";
+    } else if (trimmedLocation.length < 2) {
+      newErrors.location = "Location must be at least 2 characters";
+    }
+
+    // Expertise validation
+    const trimmedExpertise = formData.expertise.trim();
+    if (!trimmedExpertise) {
+      newErrors.expertise = "Expertise is required";
+    } else if (trimmedExpertise.length < 20) {
+      newErrors.expertise = "Please provide more detail (at least 20 characters)";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+
+    // Clear error for this field when user starts typing
+    if (errors[name as keyof FormErrors]) {
+      setErrors({ ...errors, [name]: undefined });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate before submitting
+    if (!validateForm()) {
+      return;
+    }
+
     setStatus("submitting");
 
     try {
@@ -31,10 +92,10 @@ const GetInvolved = () => {
         .from("professionals")
         .insert([
           {
-            name: formData.name,
-            email: formData.email,
-            location: formData.location,
-            expertise: formData.expertise,
+            name: formData.name.trim(),
+            email: formData.email.trim().toLowerCase(),
+            location: formData.location.trim(),
+            expertise: formData.expertise.trim(),
             verified: false,
             public: false,
           },
@@ -53,17 +114,28 @@ const GetInvolved = () => {
       });
 
       setStatus("success");
-      setFormData({ name: "", email: "", location: "", expertise: "" });
 
       // Track conversion in Google Analytics
       sendGAEvent("event", "technologist_signup", {
         event_category: "conversion",
         event_label: formData.location,
       });
+
+      setFormData({ name: "", email: "", location: "", expertise: "" });
     } catch {
       setStatus("error");
     }
   };
+
+  const inputClassName = (fieldName: keyof FormErrors) => `
+    w-full p-4 rounded-none bg-terminal border border-l-2
+    text-text-primary placeholder-text-muted font-mono
+    focus:outline-none focus:shadow-[0_0_10px_rgba(255,23,68,0.3)] transition-all
+    ${errors[fieldName]
+      ? "border-crimson/50 border-l-crimson focus:border-crimson"
+      : "border-ash border-l-crimson focus:border-crimson"
+    }
+  `;
 
   return (
     <main className="min-h-screen bg-void relative">
@@ -137,7 +209,7 @@ const GetInvolved = () => {
               </span>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6" noValidate>
               {/* Name Field */}
               <div>
                 <label className="block mb-2">
@@ -151,9 +223,15 @@ const GetInvolved = () => {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Enter your full name"
-                  className="w-full p-4 rounded-none bg-terminal border border-ash border-l-2 border-l-crimson text-text-primary placeholder-text-muted font-mono focus:outline-none focus:border-crimson focus:shadow-[0_0_10px_rgba(255,23,68,0.3)] transition-all"
-                  required
+                  className={inputClassName("name")}
+                  aria-invalid={!!errors.name}
+                  aria-describedby={errors.name ? "name-error" : undefined}
                 />
+                {errors.name && (
+                  <p id="name-error" className="mt-2 font-mono text-xs text-crimson">
+                    [ERROR] {errors.name}
+                  </p>
+                )}
               </div>
 
               {/* Email Field */}
@@ -169,9 +247,15 @@ const GetInvolved = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="your.email@domain.com"
-                  className="w-full p-4 rounded-none bg-terminal border border-ash border-l-2 border-l-crimson text-text-primary placeholder-text-muted font-mono focus:outline-none focus:border-crimson focus:shadow-[0_0_10px_rgba(255,23,68,0.3)] transition-all"
-                  required
+                  className={inputClassName("email")}
+                  aria-invalid={!!errors.email}
+                  aria-describedby={errors.email ? "email-error" : undefined}
                 />
+                {errors.email && (
+                  <p id="email-error" className="mt-2 font-mono text-xs text-crimson">
+                    [ERROR] {errors.email}
+                  </p>
+                )}
               </div>
 
               {/* Location Field */}
@@ -187,9 +271,15 @@ const GetInvolved = () => {
                   value={formData.location}
                   onChange={handleChange}
                   placeholder="City, State"
-                  className="w-full p-4 rounded-none bg-terminal border border-ash border-l-2 border-l-crimson text-text-primary placeholder-text-muted font-mono focus:outline-none focus:border-crimson focus:shadow-[0_0_10px_rgba(255,23,68,0.3)] transition-all"
-                  required
+                  className={inputClassName("location")}
+                  aria-invalid={!!errors.location}
+                  aria-describedby={errors.location ? "location-error" : undefined}
                 />
+                {errors.location && (
+                  <p id="location-error" className="mt-2 font-mono text-xs text-crimson">
+                    [ERROR] {errors.location}
+                  </p>
+                )}
               </div>
 
               {/* Expertise Field */}
@@ -205,9 +295,15 @@ const GetInvolved = () => {
                   onChange={handleChange}
                   placeholder="Briefly describe your expertise and how you can contribute to the mission..."
                   rows={5}
-                  className="w-full p-4 rounded-none bg-terminal border border-ash border-l-2 border-l-crimson text-text-primary placeholder-text-muted font-mono focus:outline-none focus:border-crimson focus:shadow-[0_0_10px_rgba(255,23,68,0.3)] transition-all resize-none"
-                  required
+                  className={`${inputClassName("expertise")} resize-none`}
+                  aria-invalid={!!errors.expertise}
+                  aria-describedby={errors.expertise ? "expertise-error" : undefined}
                 />
+                {errors.expertise && (
+                  <p id="expertise-error" className="mt-2 font-mono text-xs text-crimson">
+                    [ERROR] {errors.expertise}
+                  </p>
+                )}
               </div>
 
               {/* Submit Button */}
