@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "motion/react";
 import { useState } from "react";
+import { sendGAEvent } from "@next/third-parties/google";
 import { supabase } from "@/lib/supabase";
 
 const GetInvolved = () => {
@@ -53,6 +54,12 @@ const GetInvolved = () => {
 
       setStatus("success");
       setFormData({ name: "", email: "", location: "", expertise: "" });
+
+      // Track conversion in Google Analytics
+      sendGAEvent("event", "technologist_signup", {
+        event_category: "conversion",
+        event_label: formData.location,
+      });
     } catch {
       setStatus("error");
     }
