@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Share_Tech_Mono, Orbitron } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import Navbar from "./components/Nav";
 
@@ -95,6 +96,7 @@ export default function RootLayout({
         <Navbar />
         {children}
       </body>
+      <GoogleAnalytics gaId="G-JMSZBC5NK9" />
     </html>
   );
 }
