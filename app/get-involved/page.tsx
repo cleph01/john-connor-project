@@ -15,6 +15,15 @@ interface FormErrors {
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
+// Generate a random token for email verification
+function generateToken(): string {
+  const array = new Uint8Array(32);
+  crypto.getRandomValues(array);
+  return Array.from(array, (byte) => byte.toString(16).padStart(2, "0")).join(
+    ""
+  );
+}
+
 const GetInvolved = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -23,7 +32,10 @@ const GetInvolved = () => {
     expertise: "",
   });
   const [errors, setErrors] = useState<FormErrors>({});
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "submitting" | "success" | "error"
+  >("idle");
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
@@ -83,19 +95,49 @@ const GetInvolved = () => {
     }
 
     setStatus("submitting");
+    setErrorMessage("");
 
     try {
-      // Submit to Supabase (creates unverified entry)
+      const verificationToken = generateToken();
+      const trimmedEmail = formData.email.trim().toLowerCase();
+      const trimmedName = formData.name.trim();
+
+      // Check if email already exists
+      const { data: existingUser } = await supabase
+        .from("professionals")
+        .select("id, email_verified")
+        .eq("email", trimmedEmail)
+        .single();
+
+      if (existingUser) {
+        if (existingUser.email_verified) {
+          setErrorMessage(
+            "This email is already registered. Contact us if you need to update your information."
+          );
+          setStatus("error");
+          return;
+        } else {
+          setErrorMessage(
+            "This email is pending verification. Please check your inbox or spam folder."
+          );
+          setStatus("error");
+          return;
+        }
+      }
+
+      // Submit to Supabase with verification token
       const { error: supabaseError } = await supabase
         .from("professionals")
         .insert([
           {
-            name: formData.name.trim(),
-            email: formData.email.trim().toLowerCase(),
+            name: trimmedName,
+            email: trimmedEmail,
             location: formData.location.trim(),
             expertise: formData.expertise.trim(),
             verified: false,
             public: false,
+            email_verified: false,
+            verification_token: verificationToken,
           },
         ]);
 
@@ -104,11 +146,30 @@ const GetInvolved = () => {
         throw supabaseError;
       }
 
-      // Also notify via Formspree (for email alerts)
+      // Send verification email
+      const emailResponse = await fetch("/api/verify-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: trimmedEmail,
+          name: trimmedName,
+          token: verificationToken,
+        }),
+      });
+
+      if (!emailResponse.ok) {
+        console.error("Failed to send verification email");
+        // Don't throw - the entry is created, they can request a new email later
+      }
+
+      // Also notify via Formspree (for email alerts to you)
       await fetch("https://formspree.io/f/mdazdvnz", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          _subject: "New JCP Registration (pending email verification)",
+        }),
       });
 
       setStatus("success");
@@ -122,6 +183,9 @@ const GetInvolved = () => {
       setFormData({ name: "", email: "", location: "", expertise: "" });
     } catch {
       setStatus("error");
+      setErrorMessage(
+        "Transmission failed. Please try again or contact us directly."
+      );
     }
   };
 
@@ -129,9 +193,10 @@ const GetInvolved = () => {
     w-full p-4 rounded-none bg-terminal border border-l-2
     text-text-primary placeholder-text-muted font-mono
     focus:outline-none focus:shadow-[0_0_10px_rgba(255,23,68,0.3)] transition-all
-    ${errors[fieldName]
-      ? "border-crimson/50 border-l-crimson focus:border-crimson"
-      : "border-ash border-l-crimson focus:border-crimson"
+    ${
+      errors[fieldName]
+        ? "border-crimson/50 border-l-crimson focus:border-crimson"
+        : "border-ash border-l-crimson focus:border-crimson"
     }
   `;
 
@@ -226,7 +291,10 @@ const GetInvolved = () => {
                   aria-describedby={errors.name ? "name-error" : undefined}
                 />
                 {errors.name && (
-                  <p id="name-error" className="mt-2 font-mono text-xs text-crimson">
+                  <p
+                    id="name-error"
+                    className="mt-2 font-mono text-xs text-crimson"
+                  >
                     [ERROR] {errors.name}
                   </p>
                 )}
@@ -250,7 +318,10 @@ const GetInvolved = () => {
                   aria-describedby={errors.email ? "email-error" : undefined}
                 />
                 {errors.email && (
-                  <p id="email-error" className="mt-2 font-mono text-xs text-crimson">
+                  <p
+                    id="email-error"
+                    className="mt-2 font-mono text-xs text-crimson"
+                  >
                     [ERROR] {errors.email}
                   </p>
                 )}
@@ -271,10 +342,15 @@ const GetInvolved = () => {
                   placeholder="City, State"
                   className={inputClassName("location")}
                   aria-invalid={!!errors.location}
-                  aria-describedby={errors.location ? "location-error" : undefined}
+                  aria-describedby={
+                    errors.location ? "location-error" : undefined
+                  }
                 />
                 {errors.location && (
-                  <p id="location-error" className="mt-2 font-mono text-xs text-crimson">
+                  <p
+                    id="location-error"
+                    className="mt-2 font-mono text-xs text-crimson"
+                  >
                     [ERROR] {errors.location}
                   </p>
                 )}
@@ -295,10 +371,15 @@ const GetInvolved = () => {
                   rows={5}
                   className={`${inputClassName("expertise")} resize-none`}
                   aria-invalid={!!errors.expertise}
-                  aria-describedby={errors.expertise ? "expertise-error" : undefined}
+                  aria-describedby={
+                    errors.expertise ? "expertise-error" : undefined
+                  }
                 />
                 {errors.expertise && (
-                  <p id="expertise-error" className="mt-2 font-mono text-xs text-crimson">
+                  <p
+                    id="expertise-error"
+                    className="mt-2 font-mono text-xs text-crimson"
+                  >
                     [ERROR] {errors.expertise}
                   </p>
                 )}
@@ -312,7 +393,9 @@ const GetInvolved = () => {
                   className="btn-resistance w-full py-4 text-base font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <span className="relative z-10">
-                    {status === "submitting" ? "Transmitting..." : "Submit Application"}
+                    {status === "submitting"
+                      ? "Transmitting..."
+                      : "Submit Application"}
                   </span>
                 </button>
               </div>
@@ -320,15 +403,20 @@ const GetInvolved = () => {
               {/* Status Messages */}
               {status === "success" && (
                 <div className="p-4 border border-phosphor/50 bg-phosphor/10">
-                  <p className="font-mono text-sm text-phosphor">
-                    [SUCCESS] Application transmitted. We&apos;ll be in touch soon.
+                  <p className="font-mono text-sm text-phosphor mb-2">
+                    [SUCCESS] Application received!
+                  </p>
+                  <p className="font-mono text-xs text-text-secondary">
+                    Check your email for a verification link. Please also check
+                    your spam folder. Once verified, your application will be
+                    reviewed by our team.
                   </p>
                 </div>
               )}
               {status === "error" && (
                 <div className="p-4 border border-crimson/50 bg-crimson/10">
                   <p className="font-mono text-sm text-crimson">
-                    [ERROR] Transmission failed. Please try again or contact us directly.
+                    [ERROR] {errorMessage}
                   </p>
                 </div>
               )}
@@ -368,9 +456,9 @@ const GetInvolved = () => {
               What Happens Next?
             </h3>
             <p className="font-mono text-xs text-text-secondary leading-relaxed">
-              After submission, your application will be reviewed by our team.
-              Verified technologists are added to our directory and connected
-              with community members who need assistance.
+              After verifying your email, your application will be reviewed by
+              our team. Verified technologists are added to our directory and
+              connected with community members who need assistance.
             </p>
           </div>
           <div className="terminal-card p-6">

@@ -19,4 +19,6 @@ export type Professional = {
   website: string | null;
   verified: boolean;
   public: boolean;
+  email_verified: boolean;
+  verification_token: string | null;
 };
