@@ -18,6 +18,7 @@ const protocolLinks = [
 ];
 
 const secondaryLinks = [
+  { href: "/blog", label: "Blog" },
   { href: "/find-help", label: "Find Help" },
   { href: "/learn", label: "Learn" },
   { href: "/directory", label: "Directory" },

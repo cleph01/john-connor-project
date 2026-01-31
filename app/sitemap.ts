@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
+import { getAllPosts } from "@/lib/blog";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://johnconnorproject.org";
 
   // Static pages with their priority and change frequency
@@ -11,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { route: "/get-involved", priority: 0.9, changeFrequency: "weekly" as const },
     { route: "/find-help", priority: 0.9, changeFrequency: "weekly" as const },
     { route: "/learn", priority: 0.9, changeFrequency: "weekly" as const },
+    { route: "/blog", priority: 0.9, changeFrequency: "daily" as const },
     { route: "/directory", priority: 0.9, changeFrequency: "daily" as const },
     { route: "/resources", priority: 0.7, changeFrequency: "monthly" as const },
     { route: "/your-cloud", priority: 0.7, changeFrequency: "monthly" as const },
@@ -18,10 +20,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { route: "/your-stock-vote", priority: 0.7, changeFrequency: "monthly" as const },
   ];
 
-  return staticPages.map((page) => ({
-    url: `${baseUrl}${page.route}`,
-    lastModified: new Date(),
-    changeFrequency: page.changeFrequency,
-    priority: page.priority,
+  // Dynamic blog posts
+  const posts = await getAllPosts();
+  const blogPages = posts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.frontmatter.date),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
   }));
+
+  return [
+    ...staticPages.map((page) => ({
+      url: `${baseUrl}${page.route}`,
+      lastModified: new Date(),
+      changeFrequency: page.changeFrequency,
+      priority: page.priority,
+    })),
+    ...blogPages,
+  ];
 }
