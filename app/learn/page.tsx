@@ -7,25 +7,46 @@ const Learn = () => {
   const topics = [
     {
       id: "01",
-      title: "DNS Protection",
-      subtitle: "Block threats before they reach your devices",
-      icon: "🛡",
-      threat: "Every time you visit a website, your device asks a DNS server for the address. By default, this goes through your ISP, who can log every site you visit. Advertisers and malicious sites use DNS to track you and serve harmful content.",
-      solution: "A DNS sinkhole like Pi-hole acts as your network's bouncer. It intercepts DNS requests and blocks known advertising, tracking, and malicious domains before they ever reach your devices. One Pi-hole protects your entire network.",
+      title: "Home Networking Fundamentals",
+      subtitle: "The foundation everything else runs on",
+      icon: "🌐",
+      threat: "Most home networks are set up by an ISP technician in 20 minutes, optimized for the ISP's convenience — not yours. Single-band WiFi, default passwords, no segmentation, and dead zones in half the house. A poorly designed network is the root cause of most home tech frustrations — and a liability when something goes wrong.",
+      solution: "A well-designed home network starts with understanding your space, your devices, and your needs. The right hardware — router, switches, access points — combined with proper placement and configuration can transform your home's connectivity and give you real control over what's on your network.",
       steps: [
-        "Set up a Raspberry Pi or use an old computer",
-        "Install Pi-hole (free, open-source)",
-        "Point your router's DNS to your Pi-hole",
-        "All devices on your network are now protected",
+        "Audit your setup — count connected devices, map dead zones, check your router's age and model",
+        "Consider a mesh system or multiple access points for larger or multi-story homes",
+        "Run ethernet to TVs, desktops, and gaming consoles where possible — wired is always faster and more reliable",
+        "Use separate SSIDs (network names) for personal devices and IoT devices",
+        "Change default router credentials and enable WPA3 encryption",
       ],
       tools: [
-        { name: "Pi-hole", url: "https://pi-hole.net", desc: "Network-wide ad blocking" },
-        { name: "AdGuard Home", url: "https://adguard.com/adguard-home.html", desc: "Alternative to Pi-hole" },
-        { name: "NextDNS", url: "https://nextdns.io", desc: "Cloud-based DNS filtering" },
+        { name: "Ubiquiti UniFi", url: "https://ui.com", desc: "Professional-grade mesh networking for serious home use" },
+        { name: "TP-Link Omada", url: "https://www.tp-link.com/us/omada-sdn/", desc: "Affordable managed networking for homes and small businesses" },
+        { name: "Wireshark", url: "https://www.wireshark.org", desc: "Analyze what's actually happening on your network" },
       ],
     },
     {
       id: "02",
+      title: "Smart Home Integration",
+      subtitle: "Automation that works for you, not the cloud",
+      icon: "🏡",
+      threat: "Most smart home devices are designed to lock you into a cloud ecosystem. When the company's servers go down, your lights don't work. When they get acquired or shut down, your devices become bricks. And every cloud-dependent device is a potential entry point into your network — and a data collection endpoint reporting back to a server you don't control.",
+      solution: "Local-first smart home systems — using protocols like Matter, Z-Wave, or Zigbee with a local hub — give you full automation without the dependency. Devices work without internet, your data stays in your home, and you're not beholden to any single company's future decisions.",
+      steps: [
+        "Separate smart home devices onto their own network segment (see Network Segmentation below)",
+        "Prefer Matter, Zigbee, or Z-Wave devices over WiFi-only cloud-dependent ones",
+        "Use a local hub like Home Assistant instead of relying on manufacturer cloud apps",
+        "Check whether devices can operate locally before buying",
+        "For complex systems (Lutron, Control4, Crestron), consider a certified smart home integrator",
+      ],
+      tools: [
+        { name: "Home Assistant", url: "https://www.home-assistant.io", desc: "Open-source local home automation hub — runs on your own hardware" },
+        { name: "Zigbee2MQTT", url: "https://www.zigbee2mqtt.io", desc: "Connect Zigbee devices to Home Assistant without manufacturer bridges" },
+        { name: "Matter", url: "https://csa-iot.org/all-solutions/matter/", desc: "New cross-platform, local-first smart home standard" },
+      ],
+    },
+    {
+      id: "03",
       title: "Network Segmentation",
       subtitle: "Don't let one breach compromise everything",
       icon: "🔀",
@@ -44,7 +65,7 @@ const Learn = () => {
       ],
     },
     {
-      id: "03",
+      id: "04",
       title: "Self-Hosted Cloud",
       subtitle: "Your data, your servers, your control",
       icon: "☁️",
@@ -64,7 +85,26 @@ const Learn = () => {
       link: { href: "/your-cloud", label: "Learn more about self-hosted cloud →" },
     },
     {
-      id: "04",
+      id: "05",
+      title: "DNS Protection",
+      subtitle: "Block threats before they reach your devices",
+      icon: "🛡",
+      threat: "Every time you visit a website, your device asks a DNS server for the address. By default, this goes through your ISP, who can log every site you visit. Advertisers and malicious sites use DNS to track you and serve harmful content.",
+      solution: "A DNS sinkhole like Pi-hole acts as your network's bouncer. It intercepts DNS requests and blocks known advertising, tracking, and malicious domains before they ever reach your devices. One Pi-hole protects your entire network.",
+      steps: [
+        "Set up a Raspberry Pi or use an old computer",
+        "Install Pi-hole (free, open-source)",
+        "Point your router's DNS to your Pi-hole",
+        "All devices on your network are now protected",
+      ],
+      tools: [
+        { name: "Pi-hole", url: "https://pi-hole.net", desc: "Network-wide ad blocking" },
+        { name: "AdGuard Home", url: "https://adguard.com/adguard-home.html", desc: "Alternative to Pi-hole" },
+        { name: "NextDNS", url: "https://nextdns.io", desc: "Cloud-based DNS filtering" },
+      ],
+    },
+    {
+      id: "06",
       title: "Password Security",
       subtitle: "Your first and most important defense",
       icon: "🔐",
@@ -83,7 +123,7 @@ const Learn = () => {
       ],
     },
     {
-      id: "05",
+      id: "07",
       title: "Encrypted Communications",
       subtitle: "Keep your conversations private",
       icon: "💬",
@@ -102,7 +142,7 @@ const Learn = () => {
       ],
     },
     {
-      id: "06",
+      id: "08",
       title: "Data Minimization",
       subtitle: "The best protection is not having data to steal",
       icon: "🗑",
@@ -121,7 +161,7 @@ const Learn = () => {
       ],
     },
     {
-      id: "07",
+      id: "09",
       title: "AI Threat Awareness",
       subtitle: "Recognize and resist AI-powered manipulation",
       icon: "🤖",
@@ -179,12 +219,12 @@ const Learn = () => {
           </div>
 
           <h1 className="font-display text-3xl sm:text-5xl text-crimson text-glow-crimson mb-6">
-            Protect Yourself
+            Build &amp; Protect
           </h1>
 
           <p className="font-mono text-text-secondary max-w-2xl mx-auto leading-relaxed mb-6">
-            Practical, no-nonsense guides to securing your digital life.
-            No fear-mongering, just actionable steps you can take today.
+            Practical guides to building, optimizing, and securing your home
+            infrastructure. No jargon, no fear-mongering — just actionable steps.
           </p>
 
           <div className="inline-flex items-center gap-2 px-4 py-2 border border-ash bg-terminal/30">
@@ -193,7 +233,7 @@ const Learn = () => {
             </span>
             <span className="text-ash">•</span>
             <span className="text-text-muted font-mono text-sm">
-              ~15 min read
+              ~20 min read
             </span>
           </div>
         </motion.div>
@@ -226,7 +266,7 @@ const Learn = () => {
 
         {/* Topics */}
         <div className="space-y-16">
-          {topics.map((topic, index) => (
+          {topics.map((topic) => (
             <motion.section
               key={topic.id}
               id={topic.id}
@@ -260,7 +300,7 @@ const Learn = () => {
                   <div className="flex items-center gap-2 mb-3">
                     <span className="text-warning">⚠</span>
                     <h3 className="font-display text-sm text-warning uppercase tracking-wider">
-                      The Threat
+                      The Problem
                     </h3>
                   </div>
                   <p className="font-mono text-sm text-text-secondary leading-relaxed pl-6">
@@ -356,9 +396,9 @@ const Learn = () => {
               Need <span className="text-electric">Hands-On Help</span>?
             </h2>
             <p className="font-mono text-sm text-text-secondary mb-6 max-w-lg mx-auto">
-              These guides are a starting point. If you want personalized help
-              implementing these protections, connect with a verified technologist
-              in your area.
+              These guides are a starting point. If you want a professional to
+              design, install, or optimize your infrastructure — find one in
+              your area.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/find-help">

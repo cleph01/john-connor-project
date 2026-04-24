@@ -5,11 +5,25 @@ import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { supabase, Professional } from "@/lib/supabase";
 
+const SPECIALTIES = [
+  "Home Networking & WiFi",
+  "NAS & Personal Cloud",
+  "IoT & Smart Home",
+  "Structured Cabling",
+  "Access Control & Security Systems",
+  "Cybersecurity & Privacy",
+  "AI Threat Defense",
+  "Small Business IT",
+  "General IT Support",
+];
+
 const PublicDirectory = () => {
   const [professionals, setProfessionals] = useState<Professional[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchLocation, setSearchLocation] = useState("");
+  const [selectedSpecialty, setSelectedSpecialty] = useState<string | null>(null);
+  const [proBonoOnly, setProBonoOnly] = useState(false);
 
   useEffect(() => {
     fetchProfessionals();
@@ -35,14 +49,16 @@ const PublicDirectory = () => {
     }
   };
 
-  const filteredProfessionals = professionals.filter((pro) =>
-    pro.location.toLowerCase().includes(searchLocation.toLowerCase())
-  );
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
-  };
+  const filteredProfessionals = professionals.filter((pro) => {
+    const matchesLocation =
+      !searchLocation ||
+      pro.location.toLowerCase().includes(searchLocation.toLowerCase());
+    const matchesSpecialty =
+      !selectedSpecialty ||
+      (pro.specialties && pro.specialties.includes(selectedSpecialty));
+    const matchesProBono = !proBonoOnly || pro.pro_bono;
+    return matchesLocation && matchesSpecialty && matchesProBono;
+  });
 
   return (
     <main className="min-h-screen bg-void relative">
@@ -81,22 +97,24 @@ const PublicDirectory = () => {
           </div>
 
           <h1 className="font-display text-3xl sm:text-5xl text-crimson text-glow-crimson mb-6">
-            Public Directory
+            Professional Directory
           </h1>
 
           <p className="font-mono text-text-secondary max-w-2xl mx-auto leading-relaxed">
-            Connect with verified technologists and cybersecurity professionals
-            in your area for digital protection and guidance.
+            Verified IT and infrastructure professionals available in your area.
+            Search by location and filter by specialty to find the right person
+            for your project.
           </p>
         </motion.div>
 
-        {/* Search */}
+        {/* Search + Filters */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="mb-8"
+          className="mb-8 space-y-4"
         >
+          {/* Location Search */}
           <div className="terminal-card p-4">
             <label className="block mb-2">
               <span className="text-text-muted text-xs font-mono uppercase tracking-wider">
@@ -111,7 +129,81 @@ const PublicDirectory = () => {
               className="w-full p-3 rounded-none bg-terminal border border-ash border-l-2 border-l-crimson text-text-primary placeholder-text-muted font-mono focus:outline-none focus:border-crimson transition-all"
             />
           </div>
+
+          {/* Specialty Filter Chips */}
+          <div className="terminal-card p-4">
+            <p className="text-text-muted text-xs font-mono uppercase tracking-wider mb-3">
+              Filter by Specialty
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => setSelectedSpecialty(null)}
+                className={`font-mono text-xs px-3 py-1.5 border transition-all duration-200 ${
+                  !selectedSpecialty
+                    ? "border-crimson bg-crimson/10 text-crimson"
+                    : "border-ash text-text-muted hover:border-crimson hover:text-crimson"
+                }`}
+              >
+                All
+              </button>
+              {SPECIALTIES.map((specialty) => (
+                <button
+                  key={specialty}
+                  onClick={() =>
+                    setSelectedSpecialty(
+                      selectedSpecialty === specialty ? null : specialty
+                    )
+                  }
+                  className={`font-mono text-xs px-3 py-1.5 border transition-all duration-200 ${
+                    selectedSpecialty === specialty
+                      ? "border-phosphor bg-phosphor/10 text-phosphor"
+                      : "border-ash text-text-muted hover:border-phosphor hover:text-phosphor"
+                  }`}
+                >
+                  {specialty}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Pro-Bono Filter */}
+          <div className="terminal-card p-4">
+            <label className="flex items-center gap-3 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={proBonoOnly}
+                onChange={(e) => setProBonoOnly(e.target.checked)}
+                className="w-4 h-4 accent-electric flex-shrink-0"
+              />
+              <span className="font-mono text-xs text-text-muted group-hover:text-electric transition-colors">
+                Show only pros open to{" "}
+                <span className="text-electric">pro-bono work</span>
+              </span>
+            </label>
+          </div>
         </motion.div>
+
+        {/* Result count */}
+        {!loading && !error && professionals.length > 0 && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="font-mono text-xs text-text-muted mb-6"
+          >
+            {filteredProfessionals.length === professionals.length
+              ? `${professionals.length} verified professional${professionals.length !== 1 ? "s" : ""}`
+              : `${filteredProfessionals.length} of ${professionals.length} professionals`}
+            {selectedSpecialty && (
+              <span className="text-phosphor"> — {selectedSpecialty}</span>
+            )}
+            {searchLocation && (
+              <span className="text-electric"> near &ldquo;{searchLocation}&rdquo;</span>
+            )}
+            {proBonoOnly && (
+              <span className="text-electric"> · pro-bono available</span>
+            )}
+          </motion.p>
+        )}
 
         {/* Loading State */}
         {loading && (
@@ -132,24 +224,30 @@ const PublicDirectory = () => {
           </div>
         )}
 
-        {/* Empty State */}
+        {/* Empty State — no professionals yet */}
         {!loading && !error && professionals.length === 0 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="terminal-card p-8 text-center"
+            className="terminal-card p-10 text-center"
           >
-            <span className="text-4xl mb-4 block">🔍</span>
-            <h3 className="font-display text-xl text-text-primary mb-2">
-              Directory Coming Soon
+            <div className="font-mono text-xs text-phosphor uppercase tracking-widest mb-4">
+              Founding Members Wanted
+            </div>
+            <h3 className="font-display text-2xl text-text-primary mb-4">
+              Be the First Pro Listed
             </h3>
-            <p className="font-mono text-sm text-text-secondary mb-6">
-              We&apos;re building our network of verified professionals. Be among
-              the first to join and get listed.
+            <p className="font-mono text-sm text-text-secondary mb-4 max-w-lg mx-auto leading-relaxed">
+              This directory is actively being built. If you work in IT,
+              networking, structured cabling, smart home integration, cybersecurity,
+              or security systems — your community needs access to what you know.
+            </p>
+            <p className="font-mono text-xs text-text-muted mb-8">
+              Free to list. Set your own rates. Pro-bono on your terms.
             </p>
             <Link href="/get-involved">
-              <button className="btn-resistance px-6 py-3">
-                <span className="relative z-10">Register Now</span>
+              <button className="btn-resistance px-8 py-4 text-base font-semibold">
+                <span className="relative z-10">Get Listed</span>
               </button>
             </Link>
           </motion.div>
@@ -162,15 +260,27 @@ const PublicDirectory = () => {
             animate={{ opacity: 1 }}
             className="terminal-card p-8 text-center"
           >
-            <p className="font-mono text-text-secondary mb-4">
-              No professionals found in &quot;{searchLocation}&quot;
+            <p className="font-mono text-text-secondary mb-2">
+              No professionals found
+              {searchLocation && ` in "${searchLocation}"`}
+              {selectedSpecialty && ` for "${selectedSpecialty}"`}.
             </p>
-            <button
-              onClick={() => setSearchLocation("")}
-              className="font-mono text-sm text-crimson hover:text-glow-crimson transition-all"
-            >
-              Clear search
-            </button>
+            <p className="font-mono text-xs text-text-muted mb-4">
+              The directory is growing. Check back soon — or be the first in your area.
+            </p>
+            <div className="flex gap-4 justify-center">
+              <button
+                onClick={() => { setSearchLocation(""); setSelectedSpecialty(null); setProBonoOnly(false); }}
+                className="font-mono text-sm text-crimson hover:text-glow-crimson transition-all"
+              >
+                Clear filters
+              </button>
+              <Link href="/get-involved">
+                <button className="font-mono text-sm text-phosphor hover:text-glow-phosphor transition-all">
+                  Get listed →
+                </button>
+              </Link>
+            </div>
           </motion.div>
         )}
 
@@ -183,52 +293,28 @@ const PublicDirectory = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 + index * 0.05 }}
-                className="terminal-card p-6 group hover:border-crimson transition-all duration-300"
+                className="terminal-card p-6 group hover:border-crimson transition-all duration-300 flex flex-col"
               >
-                {/* Terminal header dots */}
-                <div className="flex items-center gap-1.5 mb-4 pb-3 border-b border-ash">
-                  <span className="w-2 h-2 rounded-full bg-crimson/60" />
-                  <span className="w-2 h-2 rounded-full bg-warning/60" />
-                  <span className="w-2 h-2 rounded-full bg-phosphor/60" />
-                  <span className="ml-2 text-text-muted text-xs font-mono">
-                    profile.dat
-                  </span>
-                  <span className="ml-auto text-text-muted text-xs font-mono">
-                    Since {formatDate(professional.created_at)}
-                  </span>
-                </div>
-
-                <div className="mb-4">
+                {/* Name + location */}
+                <div className="mb-3">
                   <h3 className="font-display text-lg text-crimson group-hover:text-glow-crimson transition-all">
                     {professional.name}
                   </h3>
-                  <p className="font-mono text-sm text-text-secondary mt-1">
-                    {professional.expertise}
-                  </p>
-                  <p className="font-mono text-xs text-text-muted mt-1">
-                    📍 {professional.location}
+                  <p className="font-mono text-xs text-text-muted mt-1 flex items-center gap-3">
+                    <span>📍 {professional.location}</span>
                     {professional.years_experience && (
-                      <span className="ml-3">
-                        ⏱ {professional.years_experience}+ years
-                      </span>
+                      <span>{professional.years_experience}+ yrs exp</span>
                     )}
                   </p>
                 </div>
 
-                {/* Bio */}
-                {professional.bio && (
-                  <p className="font-mono text-xs text-text-secondary mb-4 leading-relaxed">
-                    {professional.bio}
-                  </p>
-                )}
-
                 {/* Specialties */}
                 {professional.specialties && professional.specialties.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap gap-1.5 mb-3">
                     {professional.specialties.map((specialty, i) => (
                       <span
                         key={i}
-                        className="text-xs font-mono px-2 py-1 bg-terminal border border-ash text-text-muted"
+                        className="text-xs font-mono px-2 py-0.5 bg-terminal border border-ash text-text-muted"
                       >
                         {specialty}
                       </span>
@@ -236,21 +322,49 @@ const PublicDirectory = () => {
                   </div>
                 )}
 
+                {/* Expertise summary */}
+                <p className="font-mono text-xs text-text-secondary leading-relaxed mb-3">
+                  {professional.expertise}
+                </p>
+
+                {/* Bio */}
+                {professional.bio && (
+                  <p className="font-mono text-xs text-text-muted leading-relaxed mb-3 line-clamp-3">
+                    {professional.bio}
+                  </p>
+                )}
+
                 {/* Footer */}
-                <div className="pt-3 border-t border-ash flex items-center justify-between">
-                  <span className="font-mono text-xs text-text-muted">
-                    Status: <span className="text-phosphor">Verified</span>
-                  </span>
-                  {professional.website && (
+                <div className="mt-auto pt-4 border-t border-ash flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <span className="font-mono text-xs">
+                      <span className="text-text-muted">Status: </span>
+                      <span className="text-phosphor">Verified</span>
+                    </span>
+                    {professional.pro_bono && (
+                      <span className="font-mono text-xs px-2 py-0.5 border border-electric/50 text-electric bg-electric/5">
+                        Pro-Bono Available
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-3">
+                    {professional.website && (
+                      <a
+                        href={professional.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-mono text-xs text-electric hover:text-glow-electric transition-all"
+                      >
+                        Website →
+                      </a>
+                    )}
                     <a
-                      href={professional.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-mono text-xs text-electric hover:text-glow-electric transition-all"
+                      href={`mailto:${professional.email}?subject=Found you on the John Connor Project`}
+                      className="font-mono text-xs px-3 py-1.5 border border-crimson text-crimson hover:bg-crimson/10 transition-all duration-200"
                     >
-                      Website →
+                      Contact
                     </a>
-                  )}
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -262,42 +376,39 @@ const PublicDirectory = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="mt-12 text-center"
+          className="mt-16 terminal-card p-8 text-center"
         >
-          <div className="terminal-card p-8 inline-block">
-            <p className="font-mono text-sm text-text-secondary mb-4">
-              Are you a cybersecurity professional?
-            </p>
-            <Link href="/get-involved">
-              <button className="btn-resistance px-6 py-3">
-                <span className="relative z-10">Join the Directory</span>
-              </button>
-            </Link>
-          </div>
+          <p className="font-mono text-sm text-text-secondary mb-1">
+            Are you an IT or infrastructure professional?
+          </p>
+          <p className="font-mono text-xs text-text-muted mb-6">
+            Networking, cabling, smart home, cybersecurity, access control — get listed free.
+          </p>
+          <Link href="/get-involved">
+            <button className="btn-resistance px-8 py-3">
+              <span className="relative z-10">Get Listed</span>
+            </button>
+          </Link>
         </motion.div>
 
-        {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="mt-12 grid grid-cols-3 gap-4 text-center"
-        >
-          {[
-            { value: professionals.length || "—", label: "Verified Experts" },
-            { value: "—", label: "States Covered" },
-            { value: "—", label: "Connections Made" },
-          ].map((stat) => (
-            <div key={stat.label} className="terminal-card p-4">
+        {/* Stats — real count only */}
+        {!loading && professionals.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="mt-8 text-center"
+          >
+            <div className="terminal-card p-4 inline-block">
               <div className="font-display text-2xl text-crimson">
-                {stat.value}
+                {professionals.length}
               </div>
               <div className="text-text-muted text-xs font-mono uppercase tracking-wider mt-1">
-                {stat.label}
+                Verified Professional{professionals.length !== 1 ? "s" : ""}
               </div>
             </div>
-          ))}
-        </motion.div>
+          </motion.div>
+        )}
       </div>
     </main>
   );

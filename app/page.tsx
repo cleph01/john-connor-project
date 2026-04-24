@@ -74,8 +74,7 @@ export default function Home() {
           className="mb-10"
         >
           <p className="font-mono text-lg sm:text-xl text-electric text-glow-electric text-center max-w-xl">
-            <span className="text-text-muted">&gt;</span> Reprogram the Future.
-            One Technologist at a Time.
+            <span className="text-text-muted">&gt;</span> Professional-Grade Infrastructure for Everyone.
           </p>
         </motion.div>
 
@@ -100,21 +99,22 @@ export default function Home() {
             </div>
 
             <p className="font-mono text-base sm:text-lg leading-relaxed text-text-primary/90">
-              <span className="text-crimson">The John Connor Project</span> is
-              dedicated to empowering IT and cybersecurity professionals to
-              defend Main Street from AI-driven threats. Just as mechanics,
-              electricians, and plumbers are essential to physical
-              infrastructure,{" "}
+              <span className="text-crimson">The John Connor Project</span> connects everyday people and small businesses with skilled IT and infrastructure professionals —{" "}
               <span className="text-phosphor">
-                cybersecurity experts must become the protectors of digital
-                freedom
+                giving Main Street access to the same level of technical support that corporations take for granted
               </span>
-              . Our mission is to educate, connect, and mobilize technologists
-              to safeguard individuals from surveillance, data exploitation, and
-              AI-based manipulation.
+              . Reliable home networks. Proper IoT segmentation. NAS systems instead of cloud subscriptions. Smart home systems built right. Security that actually holds.
             </p>
 
-            {/* Goals row */}
+            {/* Take Back Your Network sub-tagline */}
+            <div className="mt-6 pt-6 border-t border-ash">
+              <p className="font-mono text-sm text-text-muted text-center leading-relaxed">
+                <span className="text-electric">Take Back Your Network.</span>{" "}
+                Your data should belong to you. Your home should run like a data center. You deserve IT support.
+              </p>
+            </div>
+
+            {/* TODO: Replace with real stats once directory has active professionals
             <div className="mt-6 pt-6 border-t border-ash grid grid-cols-3 gap-4 text-center">
               {[
                 { value: "10K", label: "Technologists" },
@@ -131,6 +131,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
+            */}
           </div>
         </motion.div>
 
@@ -192,23 +193,21 @@ export default function Home() {
                 </h3>
 
                 <p className="font-mono text-sm text-text-secondary leading-relaxed mb-6 flex-grow">
-                  You have IT, cybersecurity, or technical skills. Join our network
-                  of digital defenders and help protect your community from AI-driven
-                  threats. Set your own rates, choose your clients.
+                  You work in IT, networking, structured cabling, cybersecurity, smart home integration, or security systems. Get listed in our directory and connect with homeowners and small businesses in your community who need your skills.
                 </p>
 
                 <ul className="font-mono text-xs text-text-muted space-y-2 mb-6">
                   <li className="flex items-center gap-2">
                     <span className="text-phosphor">→</span>
-                    Get listed in our public directory
+                    Get listed in our professional directory
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="text-phosphor">→</span>
-                    Connect with people who need help
+                    Set your own rates — or offer pro-bono on your terms
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="text-phosphor">→</span>
-                    Access resources and training
+                    Build reputation and real-world clientele
                   </li>
                 </ul>
 
@@ -240,23 +239,21 @@ export default function Home() {
                 </h3>
 
                 <p className="font-mono text-sm text-text-secondary leading-relaxed mb-6 flex-grow">
-                  You&apos;re concerned about digital privacy, data security, or AI threats.
-                  Find a verified technologist in your area who can help you protect
-                  your digital life and regain control.
+                  Your home network isn&apos;t what it should be. Your data is sitting on someone else&apos;s server. Your smart home needs a real setup. Find a local professional who can actually fix it — on your terms, at a fair price.
                 </p>
 
                 <ul className="font-mono text-xs text-text-muted space-y-2 mb-6">
                   <li className="flex items-center gap-2">
                     <span className="text-electric">→</span>
-                    Find local cybersecurity experts
+                    Find local IT and infrastructure pros
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="text-electric">→</span>
-                    Get help with privacy and security
+                    Get help with networking, NAS, smart home, and more
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="text-electric">→</span>
-                    Learn to protect yourself with free guides
+                    Browse free guides to learn the basics yourself
                   </li>
                 </ul>
 
@@ -289,11 +286,10 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="font-display text-2xl sm:text-3xl text-crimson mb-4">
-              Defense Protocols
+              Infrastructure for Main Street
             </h2>
             <p className="font-mono text-text-secondary max-w-2xl mx-auto">
-              Core initiatives to reclaim digital sovereignty and protect
-              communities
+              The same technology corporations rely on — built for your home and small business
             </p>
           </motion.div>
 
@@ -302,26 +298,26 @@ export default function Home() {
             {[
               {
                 id: "01",
+                title: "Home Networking",
+                description:
+                  "Reliable wired and wireless networks. Proper IoT segmentation. WiFi that covers your whole home. Done right, once.",
+                href: "/find-help",
+                icon: "◉",
+              },
+              {
+                id: "02",
                 title: "Your Cloud",
                 description:
-                  "Decouple from Big Tech. Learn to self-host with NAS solutions and take control of your data.",
+                  "Own your data. A NAS replaces iCloud, Google Drive, and Dropbox — no monthly fees, no data mining, no surprises.",
                 href: "/your-cloud",
                 icon: "☁",
               },
               {
-                id: "02",
-                title: "Decentralized Net",
-                description:
-                  "Build censorship-resistant communication networks using IP over HAM radio technology.",
-                href: "/protect-the-internet",
-                icon: "◉",
-              },
-              {
                 id: "03",
-                title: "Stock Vote",
+                title: "Smart Home & Security",
                 description:
-                  "Shape corporate AI policy with your shareholder vote. Hold Big Tech accountable.",
-                href: "/your-stock-vote",
+                  "Cameras, access control, smart appliances, and home automation. The same systems businesses use, designed for your home.",
+                href: "/find-help",
                 icon: "◈",
               },
             ].map((feature, index) => (
@@ -382,9 +378,7 @@ export default function Home() {
             </h2>
 
             <p className="font-mono text-text-secondary max-w-2xl mx-auto mb-10 leading-relaxed">
-              Whether you&apos;re a technologist ready to defend your community or
-              someone seeking protection from digital threats, there&apos;s a place
-              for you in the resistance.
+              Whether you&apos;re a professional ready to put your skills to work for your community, or someone who just wants their home infrastructure done right — there&apos;s a place for you here.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

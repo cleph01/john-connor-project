@@ -21,4 +21,6 @@ export type Professional = {
   public: boolean;
   email_verified: boolean;
   verification_token: string | null;
+  pro_bono: boolean;
+  pro_bono_circumstances: string | null;
 };

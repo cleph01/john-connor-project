@@ -1,7 +1,13 @@
 # Claude Project Memory - John Connor Project
 
 ## Project Overview
-The John Connor Project is a Next.js website dedicated to empowering IT/cybersecurity professionals to defend communities from AI-driven threats. Think of it as connecting "digital plumbers/electricians" with people who need help.
+The John Connor Project connects everyday people and small businesses with skilled IT, cybersecurity, and infrastructure professionals — giving Main Street access to the same quality of technology infrastructure that corporations take for granted.
+
+The primary mission is **infrastructure empowerment**: reliable home and small-office networks, IoT segmentation, NAS systems as alternatives to cloud subscriptions, smart home integration, structured cabling, access control, and security systems. AI-powered threats (scams, surveillance, data exploitation) are a real and present concern that professionals in the directory also address — but it is a secondary frame, not the primary one.
+
+Think of it as: the IT equivalent of a licensed electrician or plumber — but for your digital infrastructure.
+
+**Founder context**: The founder is a structured cabling professional and growing smart home integrator. Certifications: CompTIA A+, Network+, Security+, AZ-900, Ubiquiti UniFi Professional. In progress: Lutron, Extron, Control4, BICSI.
 
 ## Tech Stack
 - **Framework**: Next.js 15 with App Router, TypeScript
@@ -56,7 +62,19 @@ The John Connor Project is a Next.js website dedicated to empowering IT/cybersec
 
 ## User Journeys
 1. **Professionals**: Home → "I'm a Technologist" → Get Involved → Registration
-2. **Help seekers**: Home → "I Need Help" → Find Help → Directory (or Learn for self-help)
+2. **Help seekers (individuals)**: Home → "I Need Help" → Find Help → Directory (or Learn for self-help)
+3. **Small businesses**: Same as help seekers — future: dedicated path/messaging planned
+
+### Professional Specialty Tags (directory filter categories)
+- Home Networking & WiFi
+- NAS & Personal Cloud Setup
+- IoT & Smart Home Integration
+- Structured Cabling & Low-Voltage
+- Access Control & Security Systems
+- Cybersecurity & Privacy
+- AI Threat Defense
+- Small Business IT
+- General Tech Support & Troubleshooting
 
 ## Verification Workflow
 1. Professional fills out /get-involved form
@@ -70,8 +88,16 @@ The John Connor Project is a Next.js website dedicated to empowering IT/cybersec
 - **Supabase over self-hosted Postgres**: Faster to launch, managed service, good free tier
 - **Formspree for notifications**: Simple, no backend needed for email alerts
 - **No ratings system yet**: Too complex for v1, would need review submission + moderation
-- **Single "Join the Resistance" CTA**: Consistent messaging across all pages
-- **Stats shown as "Goals"**: Honest about current state vs aspirational numbers
+- **"Join the Resistance" as brand CTA**: Used on homepage hero and nav. On /get-involved specifically, the form button says "Deploy Your Skills" — more specific to the pro action
+- **Homepage stats**: Remove dummy stats (10K, 50 states). Either show real numbers (honest, founding-member framing) or remove until meaningful numbers exist
+- **Pro-bono checkbox on pro profiles**: Pros can indicate willingness to do pro-bono work and under what circumstances (e.g., seniors, veterans, low-income). This is a key differentiator
+
+## Tagline & Messaging Decisions
+- **Primary tagline**: "Professional-Grade Infrastructure for Everyone." — states the mission clearly for both audiences
+- **Secondary/section tagline**: "Take Back Your Network." — action-oriented, fits resistance brand
+- **Homepage hero CTA (pros)**: "Join the Resistance" — rallying cry, brand identity
+- **Get Involved page CTA**: "Deploy Your Skills" — specific to the pro action
+- **Help seeker CTA**: "Find Help Near You" — keep as-is, it's clear
 
 ## Files to Know
 - `lib/supabase.ts` - Supabase client and Professional type
@@ -128,6 +154,23 @@ Until an admin panel is built, verify professionals manually:
 - [ ] Donation option
 - [ ] Partnerships
 
+## Monetization Strategy (Phased)
+
+### Now — Month 6: Build trust, no charges
+- Free listings for all pros
+- Affiliate links on /resources page (1Password, Synology/QNAP, Ubiquiti, ProtonMail, Backblaze, NordVPN)
+- No platform fees
+
+### Month 6–12: Pro tier
+- **Free tier**: Basic listing, searchable
+- **Pro tier ($20-35/month)**: Featured placement, pro-bono badge, specialty tags highlighted, contact button, response time shown
+- Pitch: "You're already listed. Upgrade to get found first."
+
+### Month 12+: Education + Marketplace
+- Short course/guide bundle for help-seekers: "Take Back Your Network" — practical home networking, NAS, IoT segmentation (~$29-49 on Gumroad)
+- Lightweight job/project board: pros post availability, help-seekers post needs, platform fee (~10-15%) only on completed paid engagements
+- YouTube channel drives organic traffic to both
+
 ## Content & Publicity Strategy
 
 ### Target Audiences
@@ -140,10 +183,12 @@ Until an admin panel is built, verify professionals manually:
 3. **YouTube OR X** → Pick one for broader reach
 
 ### Content Pillars
-- AI threat awareness (scams, deepfakes, voice cloning)
-- Practical privacy tips
+- Home networking & infrastructure (primary — WiFi, LANs, NAS, IoT segmentation)
+- Smart home & budget efficiency (Lutron, Control4, smart appliances)
+- Digital sovereignty (own your data, self-hosted alternatives to cloud)
+- AI threat awareness (scams, deepfakes, voice cloning — secondary frame)
+- Professional development (certs, career paths, giving back to community)
 - Success stories / case studies
-- Behind-the-scenes of the mission
 
 ### Content Flywheel
 ```
@@ -153,7 +198,12 @@ Blog post (1x/week)
     → YouTube video (if topic warrants)
 ```
 
+### YouTube Channel Positioning
+Not a tech tutorial channel. "The show that helps regular people take control of their digital infrastructure." Every video watchable by a homeowner or small business owner with no IT background.
+
 ### First Content Pieces to Create
-1. **"Why I Started the John Connor Project"** - Personal story, mission, the problem you saw
-2. **"5 AI Scams Targeting Your Parents Right Now"** - Practical, shareable, SEO-friendly
-3. **"A Call to Technologists: Your Community Needs You"** - Recruitment focused
+1. **"Why I Started the John Connor Project"** - Personal story, founder background, the gap you saw
+2. **"Your Home Network Is a Mess — Here's How to Fix It"** - Practical, high search volume, directly on-mission
+3. **"Stop Paying for Cloud Storage You Don't Need"** - NAS intro, affiliate opportunity
+4. **"A Call to Infrastructure Professionals: Your Community Needs You"** - Pro recruitment
+5. **"AI Voice Cloning Scams Are Targeting Your Family"** - Secondary mission, high shareability

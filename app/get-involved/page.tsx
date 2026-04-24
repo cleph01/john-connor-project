@@ -6,6 +6,18 @@ import { useState } from "react";
 import { sendGAEvent } from "@next/third-parties/google";
 import { supabase } from "@/lib/supabase";
 
+const SPECIALTIES = [
+  "Home Networking & WiFi",
+  "NAS & Personal Cloud",
+  "IoT & Smart Home",
+  "Structured Cabling",
+  "Access Control & Security Systems",
+  "Cybersecurity & Privacy",
+  "AI Threat Defense",
+  "Small Business IT",
+  "General IT Support",
+];
+
 interface FormErrors {
   name?: string;
   email?: string;
@@ -29,7 +41,10 @@ const GetInvolved = () => {
     name: "",
     email: "",
     location: "",
+    specialties: [] as string[],
     expertise: "",
+    pro_bono: false,
+    pro_bono_circumstances: "",
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<
@@ -72,6 +87,15 @@ const GetInvolved = () => {
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSpecialtyToggle = (specialty: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      specialties: prev.specialties.includes(specialty)
+        ? prev.specialties.filter((s) => s !== specialty)
+        : [...prev.specialties, specialty],
+    }));
   };
 
   const handleChange = (
@@ -133,7 +157,10 @@ const GetInvolved = () => {
             name: trimmedName,
             email: trimmedEmail,
             location: formData.location.trim(),
+            specialties: formData.specialties.length > 0 ? formData.specialties : null,
             expertise: formData.expertise.trim(),
+            pro_bono: formData.pro_bono,
+            pro_bono_circumstances: formData.pro_bono ? formData.pro_bono_circumstances.trim() || null : null,
             verified: false,
             public: false,
             email_verified: false,
@@ -180,7 +207,7 @@ const GetInvolved = () => {
         event_label: formData.location,
       });
 
-      setFormData({ name: "", email: "", location: "", expertise: "" });
+      setFormData({ name: "", email: "", location: "", specialties: [], expertise: "", pro_bono: false, pro_bono_circumstances: "" });
     } catch {
       setStatus("error");
       setErrorMessage(
@@ -241,8 +268,9 @@ const GetInvolved = () => {
           </h1>
 
           <p className="font-mono text-text-secondary max-w-xl mx-auto leading-relaxed">
-            Join the mission. Register as a technologist or cybersecurity
-            professional to help protect your community from AI-driven threats.
+            Get listed in our directory. Whether you work in IT, networking, structured
+            cabling, cybersecurity, smart home integration, or security systems —
+            your community needs access to what you know.
           </p>
 
           <div className="mt-4 inline-flex items-center gap-2 px-3 py-2 border border-warning/30 bg-warning/5">
@@ -356,18 +384,47 @@ const GetInvolved = () => {
                 )}
               </div>
 
+              {/* Specialties Field */}
+              <div>
+                <label className="block mb-2">
+                  <span className="text-text-muted text-xs font-mono uppercase tracking-wider">
+                    <span className="text-crimson">04.</span> Specialties
+                  </span>
+                  <span className="ml-2 text-text-muted text-xs font-mono">(select all that apply)</span>
+                </label>
+                <div className="flex flex-wrap gap-2 p-4 bg-terminal border border-ash border-l-2 border-l-crimson">
+                  {SPECIALTIES.map((specialty) => {
+                    const selected = formData.specialties.includes(specialty);
+                    return (
+                      <button
+                        key={specialty}
+                        type="button"
+                        onClick={() => handleSpecialtyToggle(specialty)}
+                        className={`font-mono text-xs px-3 py-1.5 border transition-all duration-200 ${
+                          selected
+                            ? "border-phosphor bg-phosphor/10 text-phosphor"
+                            : "border-ash text-text-muted hover:border-phosphor hover:text-phosphor"
+                        }`}
+                      >
+                        {selected ? "✓ " : ""}{specialty}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
               {/* Expertise Field */}
               <div>
                 <label className="block mb-2">
                   <span className="text-text-muted text-xs font-mono uppercase tracking-wider">
-                    <span className="text-crimson">04.</span> Your Expertise
+                    <span className="text-crimson">05.</span> Your Expertise
                   </span>
                 </label>
                 <textarea
                   name="expertise"
                   value={formData.expertise}
                   onChange={handleChange}
-                  placeholder="Briefly describe your expertise and how you can contribute to the mission..."
+                  placeholder="Describe your technical background, specialties, and the types of work you're available for (e.g. home networking, NAS setup, cabling, smart home, cybersecurity)..."
                   rows={5}
                   className={`${inputClassName("expertise")} resize-none`}
                   aria-invalid={!!errors.expertise}
@@ -385,6 +442,48 @@ const GetInvolved = () => {
                 )}
               </div>
 
+              {/* Pro-Bono Field */}
+              <div>
+                <label className="block mb-2">
+                  <span className="text-text-muted text-xs font-mono uppercase tracking-wider">
+                    <span className="text-crimson">06.</span> Pro-Bono Work
+                  </span>
+                </label>
+                <div className="p-4 bg-terminal border border-ash border-l-2 border-l-crimson space-y-3">
+                  <label className="flex items-start gap-3 cursor-pointer group">
+                    <input
+                      type="checkbox"
+                      checked={formData.pro_bono}
+                      onChange={(e) =>
+                        setFormData({ ...formData, pro_bono: e.target.checked, pro_bono_circumstances: "" })
+                      }
+                      className="mt-0.5 w-4 h-4 accent-crimson flex-shrink-0"
+                    />
+                    <span className="font-mono text-xs text-text-secondary group-hover:text-text-primary transition-colors leading-relaxed">
+                      I&apos;m open to pro-bono work for individuals or families who need it
+                    </span>
+                  </label>
+                  {formData.pro_bono && (
+                    <div className="mt-3">
+                      <label className="block mb-1">
+                        <span className="text-text-muted text-xs font-mono">
+                          Circumstances (optional — e.g. seniors, veterans, low-income households)
+                        </span>
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.pro_bono_circumstances}
+                        onChange={(e) =>
+                          setFormData({ ...formData, pro_bono_circumstances: e.target.value })
+                        }
+                        placeholder="Describe who you&apos;d consider helping pro-bono..."
+                        className="w-full p-3 rounded-none bg-void border border-ash text-text-primary placeholder-text-muted font-mono text-xs focus:outline-none focus:border-phosphor transition-all"
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+
               {/* Submit Button */}
               <div className="pt-4">
                 <button
@@ -395,7 +494,7 @@ const GetInvolved = () => {
                   <span className="relative z-10">
                     {status === "submitting"
                       ? "Transmitting..."
-                      : "Submit Application"}
+                      : "Deploy Your Skills"}
                   </span>
                 </button>
               </div>

@@ -7,45 +7,45 @@ const FindHelp = () => {
   const helpCategories = [
     {
       id: "01",
-      title: "Home Network Security",
+      title: "Home Networking & WiFi",
       description:
-        "Secure your WiFi, set up firewalls, protect your smart home devices from intrusion.",
+        "Wired and wireless networks built right. Full-home WiFi coverage, proper router setup, and a network that actually performs.",
       icon: "🏠",
     },
     {
       id: "02",
-      title: "Privacy Protection",
+      title: "IoT & Network Segmentation",
       description:
-        "Stop data tracking, secure your communications, protect your family's digital footprint.",
-      icon: "🔒",
+        "Isolate smart devices from your personal network. Keep cameras, thermostats, and appliances from becoming security liabilities.",
+      icon: "🔀",
     },
     {
       id: "03",
-      title: "Data Backup & Recovery",
+      title: "NAS & Personal Cloud",
       description:
-        "Set up secure backups, recover from ransomware, protect irreplaceable photos and documents.",
+        "Own your storage. Replace iCloud, Google Drive, and Dropbox with a personal NAS — no monthly fees, no data mining.",
       icon: "💾",
     },
     {
       id: "04",
-      title: "Small Business Security",
+      title: "Smart Home Integration",
       description:
-        "Protect customer data, secure payment systems, train employees on cyber threats.",
-      icon: "🏪",
+        "Lighting, climate, cameras, access control, and automation — designed and installed by someone who knows what they're doing.",
+      icon: "🏡",
     },
     {
       id: "05",
-      title: "AI & Scam Defense",
+      title: "Small Business IT",
       description:
-        "Identify deepfakes, avoid AI-powered scams, protect against social engineering.",
-      icon: "🤖",
+        "Reliable infrastructure for small businesses — networks, servers, workstations, backups, and ongoing support.",
+      icon: "🏪",
     },
     {
       id: "06",
-      title: "Self-Hosted Solutions",
+      title: "Cybersecurity & AI Defense",
       description:
-        "Break free from Big Tech with your own cloud storage, email, and communication tools.",
-      icon: "☁️",
+        "Harden your network, protect your data, and defend against AI-powered scams, phishing, and surveillance devices.",
+      icon: "🛡",
     },
   ];
 
@@ -91,8 +91,8 @@ const FindHelp = () => {
           </h1>
 
           <p className="font-mono text-text-secondary max-w-2xl mx-auto leading-relaxed">
-            Connect with verified cybersecurity professionals in your area.
-            Get the protection you need from someone you can trust.
+            Connect with verified IT and infrastructure professionals in your area.
+            Get the job done by someone local who knows what they&apos;re doing.
           </p>
         </motion.div>
 
@@ -122,8 +122,8 @@ const FindHelp = () => {
                 },
                 {
                   step: "03",
-                  title: "Get Protected",
-                  desc: "Work together to secure your digital life on your terms",
+                  title: "Get It Done",
+                  desc: "Work together on your terms — fair price, real results",
                 },
               ].map((item, index) => (
                 <div key={item.step} className="text-center">
@@ -153,11 +153,11 @@ const FindHelp = () => {
         >
           <div className="terminal-card p-8 border-electric/30">
             <h2 className="font-display text-2xl text-text-primary mb-4">
-              Ready to Find a <span className="text-electric">Technologist</span>?
+              Ready to Find a <span className="text-electric">Professional</span>?
             </h2>
             <p className="font-mono text-sm text-text-secondary mb-6 max-w-lg mx-auto">
-              Browse our directory of verified professionals. Each has been vetted
-              and is committed to protecting their community.
+              Browse our directory of verified IT and infrastructure professionals.
+              Search by location and specialty to find the right person for your job.
             </p>
             <Link href="/directory">
               <button className="px-8 py-4 text-base font-semibold border-2 border-electric text-electric hover:bg-electric hover:text-void transition-all duration-300">

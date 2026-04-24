@@ -41,12 +41,13 @@ const DecoupleNASPage = () => {
           </div>
 
           <h1 className="font-display text-3xl sm:text-5xl text-crimson text-glow-crimson mb-6">
-            Take Back Your Memories
+            Your Data, Your Hardware, Your Rules
           </h1>
 
           <p className="font-mono text-text-secondary max-w-2xl mx-auto leading-relaxed">
-            Decouple from Big Tech and own your photo storage. Reclaim your
-            photos and videos with a secure, self-hosted NAS solution.
+            Stop renting storage you could own. A personal NAS replaces cloud
+            subscriptions with hardware in your home — your files, accessible
+            from anywhere, with no monthly fees and no data mining.
           </p>
         </motion.div>
 
@@ -62,29 +63,27 @@ const DecoupleNASPage = () => {
             <div className="flex items-center gap-2 mb-4">
               <span className="text-crimson font-mono text-sm">[01]</span>
               <h2 className="font-display text-xl text-crimson">
-                The Illusion of Convenience
+                The Real Cost of Cloud Storage
               </h2>
             </div>
             <div className="font-mono text-sm text-text-secondary space-y-4 leading-relaxed">
               <p>
-                For years, we&apos;ve been told that cloud storage is the ultimate
-                convenience. iCloud and Google Photos have become the default for
-                storing our precious memories. But this convenience comes at a cost:
-                your data is no longer yours. It&apos;s stored on servers you don&apos;t
-                control, subject to the whims of corporations that prioritize profit
-                over privacy.
+                iCloud, Google Drive, Dropbox — they&apos;re convenient until they&apos;re not.
+                Prices go up. Storage limits get hit. Your account gets locked. The
+                company changes its terms. And the whole time, your files are on
+                servers you don&apos;t control, scanned by systems you didn&apos;t agree to in
+                any meaningful way.
               </p>
               <p>
-                Big Tech companies want to keep you locked into their ecosystems.
-                They profit from your data, using it to target ads and build
-                detailed profiles of your life. They count on you being unaware of
-                the alternatives.
+                Beyond the privacy issues, there&apos;s a straightforward financial argument:
+                a NAS device pays for itself. A 2-bay Synology with 8TB of storage costs
+                roughly what you&apos;d pay for two years of a mid-tier cloud plan — and then
+                it&apos;s yours, indefinitely, with no recurring fees.
               </p>
               <p>
-                Five to ten years ago, setting up a personal media server was a
-                complex and expensive undertaking. But technology has evolved.
-                Today, powerful and user-friendly Network Attached Storage (NAS)
-                devices make it easier than ever to take back control.
+                Five to ten years ago, setting up a personal storage server required
+                real technical skill. Today, NAS devices come with polished interfaces,
+                mobile apps, and automatic sync. The hard part is just deciding to do it.
               </p>
             </div>
           </motion.section>

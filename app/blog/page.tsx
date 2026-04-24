@@ -68,8 +68,8 @@ export default function BlogPage() {
           </h1>
 
           <p className="font-mono text-text-secondary max-w-2xl mx-auto">
-            Updates, insights, and analysis from the front lines of digital
-            defense.
+            Guides, updates, and insights on home infrastructure, digital
+            sovereignty, and protecting what&apos;s yours.
           </p>
         </motion.div>
 

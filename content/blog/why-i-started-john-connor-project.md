@@ -2,78 +2,58 @@
 title: "Why I Started the John Connor Project"
 author: "Founder"
 date: "2026-01-28"
-tags: ["mission", "ai-threats", "community"]
-excerpt: "The story behind connecting technologists with communities to defend against AI-driven threats."
+tags: ["mission", "infrastructure", "community"]
+excerpt: "I'm a structured cabling professional who runs cable, builds networks, and commissions smart home systems for a living. Every job makes the same thing obvious — and I couldn't stop thinking about it."
 ---
 
-## The Problem I Saw
+## I Run Cable for a Living
 
-Every week, I hear new stories. A grandmother lost $50,000 to a voice-cloned scam pretending to be her grandson. A small business owner's network was compromised because their "smart" security camera was the weak link. A family's private photos were exposed when their cloud storage provider suffered a breach.
+I'm a structured cabling professional and smart home integrator. Day to day, that means running Cat6, mounting access points, commissioning Ubiquiti networks, wiring security systems, and integrating smart home platforms for clients who can pay for it.
 
-These aren't just statistics. They're real people in my community.
+I'm good at it. I hold certifications from CompTIA, Microsoft, and Ubiquiti, with Lutron, Control4, and BICSI in progress. I've spent years learning how networks actually work — from the physical cable to the cloud.
 
-The AI revolution has brought incredible tools, but it's also armed scammers and malicious actors with capabilities that would have seemed like science fiction a decade ago. Voice cloning, deepfakes, automated phishing at scale, the threats are evolving faster than most people can keep up.
+And every job I finish, I think the same thing:
 
-## The Gap
+**Why do only certain people get this?**
 
-We have brilliant cybersecurity professionals who understand these threats intimately. We have vulnerable communities who don't know where to turn for help. But there's no bridge between them.
+## The Gap Is Real and It's Structural
 
-The big security firms focus on enterprise clients. Local IT shops are overwhelmed. And the average person doesn't know a firewall from a Facebook.
+When a business hires me, they get a network that performs. Proper wiring. Access points placed by signal analysis, not guesswork. VLANs that isolate the point-of-sale system from the guest WiFi from the back-office machines. A NAS for file storage that doesn't depend on a subscription. Security cameras that actually record.
 
-Meanwhile, the threats keep coming:
+When a homeowner's router dies and they walk into a big-box store, they get a $60 consumer device, a 20-minute self-install process optimized for the ISP, and no one to call when something breaks.
 
-- AI-generated voice scams that sound exactly like loved ones
-- Deepfake videos used for blackmail and fraud
-- Automated attacks that probe every connected device
-- Smart home systems that become surveillance tools
+The technology is the same. The knowledge exists. The only missing piece is access to someone who knows what they're doing.
 
-## The Solution
+That's a structural problem — and it has consequences.
 
-What if we could connect these two groups? Not through a faceless corporate directory, but through a community of verified technologists who care about protecting their neighbors?
+## What I Keep Seeing
 
-That's the John Connor Project.
+The smart TV in the living room is on the same network as the laptop with the banking app. The security camera is a $25 import with a default password and a Chinese cloud backend. The family's 10 years of photos are in iCloud — which they pay for monthly, don't control, and couldn't get off even if they wanted to. The WiFi drops in the back bedroom. The smart doorbell won't reconnect after an outage. The kids' devices have no filtering.
 
-> We're not just building a directory. We're building a resistance network.
+None of this is the homeowner's fault. They weren't taught any of it. And there's no one in their life who can help — not in any sustainable way.
 
-The name is intentional. Like the character who organized humanity's resistance against machine threats, we're organizing technologists to defend against AI-driven attacks on regular people.
+Meanwhile, AI-powered scams are targeting exactly these households. Voice cloning. Fake IRS calls with spoofed caller IDs. Grandparents wiring money to "grandchildren" in trouble. These attacks work because the underlying infrastructure is soft, unsecured, and built on products designed to extract data rather than protect users.
 
-## How It Works
+## The Project
 
-### For Technologists
+The John Connor Project is my answer to that gap.
 
-If you work in IT, cybersecurity, networking, or any technical field, you have skills that your community desperately needs. Join our directory and help your neighbors:
+It's a directory of IT and infrastructure professionals — network engineers, cabling techs, smart home integrators, cybersecurity specialists, IT generalists — connected directly to the homeowners and small businesses who need them.
 
-- Set up secure home networks
-- Configure privacy-respecting devices
-- Identify and remove malware
-- Educate families about AI scams
-- Protect small businesses
+Not a call center. Not a managed service provider with a $500/month contract minimum. A local professional who can actually come to your house, assess your situation, and fix it right.
 
-### For Everyone Else
+The name is a nod to the obvious: we're living with machines that increasingly work against us — through surveillance, data harvesting, manipulation, and fraud. The response isn't fear. It's building the infrastructure that gives you control back, and building the network of people who know how to do it.
 
-If you're worried about digital threats but don't know where to start, we have two paths for you:
+## Why Now
 
-1. **Find local help** through our directory of verified professionals
-2. **Learn to protect yourself** through our educational resources
+I've spent 25 years across different careers — financial systems, personal development, and now infrastructure. Each transition taught me something different about how the world works and who gets access to what.
 
-## The Mission
+The infrastructure gap I see every day is solvable. The technology is affordable. The professionals exist. The demand is obvious. What's been missing is the connection between them.
 
-We have five core objectives:
+That's what this is.
 
-1. **Connect** technologists with community members who need help
-2. **Educate** everyone about emerging AI threats
-3. **Advocate** for privacy-respecting technology
-4. **Build** decentralized infrastructure that resists centralized control
-5. **Empower** individuals to take control of their digital lives
+If you're a pro in IT, networking, cabling, smart home, or security systems — [join the directory](/get-involved). Your community needs access to what you know.
 
-## Join Us
+If you're a homeowner or small business owner who wants to stop guessing — [find someone who can help](/find-help).
 
-This isn't a business. It's a movement. We believe that the same community spirit that once had neighbors helping neighbors with physical tasks should extend to the digital world.
-
-Whether you're a technologist ready to defend your community, or someone seeking help with digital security, we built this for you.
-
-- **Technologists**: [Join the resistance](/get-involved)
-- **Need help**: [Find local professionals](/directory)
-- **Want to learn**: [Start here](/learn)
-
-The threats are real. The need is urgent. And the solution starts with us.
+We're building this from the ground up. Starting now.

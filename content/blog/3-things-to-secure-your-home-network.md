@@ -1,16 +1,16 @@
 ---
-title: "3 Things You Can Do This Weekend to Secure Your Home Network"
+title: "3 Weekend Projects That Will Transform Your Home Network"
 author: "John Connor Project"
 date: "2026-01-30"
-tags: ["home-security", "pi-hole", "nas", "network", "iot", "how-to"]
-excerpt: "Three practical projects that will immediately improve your home network security: DNS-level ad blocking, self-hosted cloud storage, and isolating your smart devices."
+tags: ["networking", "pi-hole", "nas", "iot", "how-to", "home-infrastructure"]
+excerpt: "Three practical projects — DNS-level filtering, self-hosted cloud storage, and IoT segmentation — that will give you more control over your home network than most corporate offices have."
 ---
 
-## Why Your Home Network Is a Target
+## Why Your Home Network Deserves Better
 
-Your home network isn't just connecting your laptop to Netflix anymore. It's running smart thermostats, security cameras, voice assistants, baby monitors, and dozens of other devices. Each one is a potential entry point for attackers.
+Your home network isn't just connecting your laptop to Netflix anymore. It's running smart thermostats, security cameras, voice assistants, baby monitors, and dozens of other devices — all on the same flat network, all trusting each other, all with different security postures and different manufacturers who may or may not push firmware updates.
 
-The good news: three weekend projects can dramatically improve your security. None require advanced skills, and the total cost is under $300.
+The good news: three weekend projects can dramatically improve your setup. None require advanced skills, and the total cost is under $300.
 
 ## Project 1: Set Up a Pi-hole DNS Sinkhole
 

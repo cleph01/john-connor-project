@@ -5,38 +5,34 @@ import { XMarkIcon, Bars3Icon, ChevronDownIcon } from "@heroicons/react/24/outli
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
-const mainLinks = [
+const primaryLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
-  { href: "/mission", label: "Mission" },
-];
-
-const protocolLinks = [
-  { href: "/your-cloud", label: "Your Cloud", desc: "Self-hosted storage" },
-  { href: "/protect-the-internet", label: "Decentralized Net", desc: "HAM radio networks" },
-  { href: "/your-stock-vote", label: "Stock Vote", desc: "Proxy voting tools" },
-];
-
-const secondaryLinks = [
-  { href: "/blog", label: "Blog" },
   { href: "/find-help", label: "Find Help" },
-  { href: "/learn", label: "Learn" },
   { href: "/directory", label: "Directory" },
+  { href: "/learn", label: "Learn" },
+];
+
+const resourceLinks = [
+  { href: "/blog", label: "Blog", desc: "Transmissions & updates" },
+  { href: "/resources", label: "Resources", desc: "Tools & recommended gear" },
+  { href: "/your-cloud", label: "Your Cloud", desc: "NAS & self-hosting guide" },
+  { href: "/protect-the-internet", label: "Decentralized Net", desc: "HAM radio project", badge: "In Progress" },
+  { href: "/your-stock-vote", label: "Stock Vote", desc: "Proxy voting tools", badge: "Experimental" },
 ];
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [protocolsOpen, setProtocolsOpen] = useState(false);
-  const [mobileProtocolsOpen, setMobileProtocolsOpen] = useState(false);
+  const [resourcesOpen, setResourcesOpen] = useState(false);
+  const [mobileResourcesOpen, setMobileResourcesOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setProtocolsOpen(false);
+        setResourcesOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -69,7 +65,7 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center gap-1">
-            {mainLinks.map((link) => (
+            {primaryLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -79,50 +75,56 @@ const Navbar = () => {
               </Link>
             ))}
 
-            {/* Protocols Dropdown */}
+            {/* Resources Dropdown */}
             <div ref={dropdownRef} className="relative">
               <button
-                onClick={() => setProtocolsOpen(!protocolsOpen)}
+                onClick={() => setResourcesOpen(!resourcesOpen)}
                 className="nav-link px-3 py-2 flex items-center gap-1"
               >
-                Protocols
+                Resources
                 <ChevronDownIcon
                   className={`h-4 w-4 transition-transform duration-200 ${
-                    protocolsOpen ? "rotate-180" : ""
+                    resourcesOpen ? "rotate-180" : ""
                   }`}
                 />
               </button>
 
               <AnimatePresence>
-                {protocolsOpen && (
+                {resourcesOpen && (
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute top-full left-0 mt-1 w-64 bg-terminal border border-ash shadow-xl"
+                    className="absolute top-full left-0 mt-1 w-72 bg-terminal border border-ash shadow-xl"
                   >
-                    {/* Dropdown header */}
                     <div className="px-4 py-2 border-b border-ash">
                       <span className="text-xs font-mono text-text-muted uppercase tracking-wider">
-                        Defense Protocols
+                        Content & Tools
                       </span>
                     </div>
 
                     <div className="py-2">
-                      {protocolLinks.map((link) => (
+                      {resourceLinks.map((link) => (
                         <Link
                           key={link.href}
                           href={link.href}
-                          onClick={() => setProtocolsOpen(false)}
-                          className="block px-4 py-3 hover:bg-slate/50 transition-colors group"
+                          onClick={() => setResourcesOpen(false)}
+                          className="flex items-start justify-between px-4 py-3 hover:bg-slate/50 transition-colors group"
                         >
-                          <span className="font-mono text-sm text-text-primary group-hover:text-crimson transition-colors">
-                            {link.label}
-                          </span>
-                          <span className="block text-xs font-mono text-text-muted mt-0.5">
-                            {link.desc}
-                          </span>
+                          <div>
+                            <span className="font-mono text-sm text-text-primary group-hover:text-crimson transition-colors">
+                              {link.label}
+                            </span>
+                            <span className="block text-xs font-mono text-text-muted mt-0.5">
+                              {link.desc}
+                            </span>
+                          </div>
+                          {link.badge && (
+                            <span className="mt-0.5 text-xs font-mono px-1.5 py-0.5 border border-ash text-text-muted whitespace-nowrap">
+                              {link.badge}
+                            </span>
+                          )}
                         </Link>
                       ))}
                     </div>
@@ -130,16 +132,6 @@ const Navbar = () => {
                 )}
               </AnimatePresence>
             </div>
-
-            {secondaryLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="nav-link px-3 py-2"
-              >
-                {link.label}
-              </Link>
-            ))}
 
             {/* CTA Button */}
             <Link
@@ -205,8 +197,8 @@ const Navbar = () => {
               </div>
 
               <div className="px-4 py-4 space-y-1">
-                {/* Main Links */}
-                {mainLinks.map((link, index) => (
+                {/* Primary Links */}
+                {primaryLinks.map((link, index) => (
                   <motion.div
                     key={link.href}
                     initial={{ x: -20, opacity: 0 }}
@@ -231,32 +223,32 @@ const Navbar = () => {
                   </motion.div>
                 ))}
 
-                {/* Protocols Section */}
+                {/* Resources Section */}
                 <motion.div
                   initial={{ x: -20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: mainLinks.length * 0.05 }}
+                  transition={{ delay: primaryLinks.length * 0.05 }}
                   className="pt-2"
                 >
                   <button
-                    onClick={() => setMobileProtocolsOpen(!mobileProtocolsOpen)}
+                    onClick={() => setMobileResourcesOpen(!mobileResourcesOpen)}
                     className="flex items-center gap-3 py-3 px-2 w-full text-text-secondary hover:text-crimson hover:bg-slate/50 transition-all duration-200 group"
                   >
                     <span className="text-crimson opacity-50 group-hover:opacity-100 font-mono text-xs">
-                      {String(mainLinks.length + 1).padStart(2, "0")}
+                      {String(primaryLinks.length + 1).padStart(2, "0")}
                     </span>
                     <span className="font-mono text-sm uppercase tracking-wider">
-                      Protocols
+                      Resources
                     </span>
                     <ChevronDownIcon
                       className={`ml-auto h-4 w-4 text-ash group-hover:text-crimson transition-all ${
-                        mobileProtocolsOpen ? "rotate-180" : ""
+                        mobileResourcesOpen ? "rotate-180" : ""
                       }`}
                     />
                   </button>
 
                   <AnimatePresence>
-                    {mobileProtocolsOpen && (
+                    {mobileResourcesOpen && (
                       <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
@@ -264,7 +256,7 @@ const Navbar = () => {
                         transition={{ duration: 0.2 }}
                         className="overflow-hidden ml-6 border-l border-ash"
                       >
-                        {protocolLinks.map((link, index) => (
+                        {resourceLinks.map((link, index) => (
                           <motion.div
                             key={link.href}
                             initial={{ x: -10, opacity: 0 }}
@@ -274,14 +266,21 @@ const Navbar = () => {
                             <Link
                               href={link.href}
                               onClick={() => setIsOpen(false)}
-                              className="flex flex-col py-3 px-4 text-text-secondary hover:text-crimson hover:bg-slate/50 transition-all duration-200"
+                              className="flex items-center justify-between py-3 px-4 text-text-secondary hover:text-crimson hover:bg-slate/50 transition-all duration-200"
                             >
-                              <span className="font-mono text-sm">
-                                {link.label}
-                              </span>
-                              <span className="font-mono text-xs text-text-muted">
-                                {link.desc}
-                              </span>
+                              <div>
+                                <span className="font-mono text-sm block">
+                                  {link.label}
+                                </span>
+                                <span className="font-mono text-xs text-text-muted">
+                                  {link.desc}
+                                </span>
+                              </div>
+                              {link.badge && (
+                                <span className="text-xs font-mono px-1.5 py-0.5 border border-ash text-text-muted">
+                                  {link.badge}
+                                </span>
+                              )}
                             </Link>
                           </motion.div>
                         ))}
@@ -290,37 +289,11 @@ const Navbar = () => {
                   </AnimatePresence>
                 </motion.div>
 
-                {/* Secondary Links */}
-                {secondaryLinks.map((link, index) => (
-                  <motion.div
-                    key={link.href}
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: (mainLinks.length + 1 + index) * 0.05 }}
-                  >
-                    <Link
-                      href={link.href}
-                      onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-3 py-3 px-2 text-text-secondary hover:text-crimson hover:bg-slate/50 transition-all duration-200 group"
-                    >
-                      <span className="text-crimson opacity-50 group-hover:opacity-100 font-mono text-xs">
-                        {String(mainLinks.length + 2 + index).padStart(2, "0")}
-                      </span>
-                      <span className="font-mono text-sm uppercase tracking-wider">
-                        {link.label}
-                      </span>
-                      <span className="ml-auto text-ash group-hover:text-crimson transition-colors">
-                        →
-                      </span>
-                    </Link>
-                  </motion.div>
-                ))}
-
                 {/* Mobile CTA */}
                 <motion.div
                   initial={{ y: 10, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: (mainLinks.length + secondaryLinks.length + 1) * 0.05 + 0.1 }}
+                  transition={{ delay: (primaryLinks.length + 1) * 0.05 + 0.1 }}
                   className="pt-4 mt-4 border-t border-ash"
                 >
                   <Link

@@ -8,37 +8,37 @@ const Mission = () => {
   const objectives = [
     {
       id: "01",
-      title: "Education",
+      title: "Infrastructure for All",
       description:
-        "Creating accessible educational resources on digital security, AI threats, and personal defense.",
-      icon: "◎",
-    },
-    {
-      id: "02",
-      title: "Network",
-      description:
-        "Establishing a public directory of cybersecurity professionals for communities and small businesses.",
+        "Reliable home networks, proper IoT segmentation, NAS systems, smart home integration — the same infrastructure corporations rely on, made accessible to everyday people and small businesses.",
       icon: "◉",
     },
     {
-      id: "03",
-      title: "Sovereignty",
+      id: "02",
+      title: "A Professional Network",
       description:
-        "Promoting self-hosted Cloud and AI solutions to prevent data exploitation by large corporations.",
+        "A directory of skilled, vetted IT, cybersecurity, and infrastructure professionals — connected directly to the communities that need them, not filtered through a corporate help desk.",
+      icon: "◎",
+    },
+    {
+      id: "03",
+      title: "Digital Sovereignty",
+      description:
+        "Personal data on personal hardware. Break the dependency on cloud subscriptions and Big Tech ecosystems. Own your storage, control your devices, keep your data.",
       icon: "◈",
     },
     {
       id: "04",
-      title: "Connection",
+      title: "Education",
       description:
-        "Connecting technologists with individuals seeking practical, real-world cybersecurity solutions.",
+        "Practical, no-jargon resources so anyone can understand their own network, their own devices, and their own digital life — with or without professional help.",
       icon: "◇",
     },
     {
       id: "05",
-      title: "Resilience",
+      title: "Community Defense",
       description:
-        "Empowering communities to establish censorship-resistant communication networks for digital sovereignty.",
+        "The same professionals who build your infrastructure are equipped to identify and defend against AI-powered scams, surveillance devices, and digital threats.",
       icon: "◆",
     },
   ];
@@ -84,12 +84,12 @@ const Mission = () => {
           </h1>
 
           <p className="font-mono text-lg text-electric text-glow-electric mb-4">
-            Building the Resistance, One Technologist at a Time
+            Take Back Your Network. One Community at a Time.
           </p>
 
           <p className="font-mono text-text-secondary max-w-2xl mx-auto">
-            Equipping individuals and communities with the knowledge and tools
-            to defend against AI-driven digital threats.
+            Closing the gap between the people who understand technology and
+            the people who depend on it.
           </p>
         </motion.div>
 
@@ -116,31 +116,45 @@ const Mission = () => {
           </div>
         </motion.div>
 
-        {/* What Drives Us */}
+        {/* The Problem */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mb-16"
+          className="mb-12"
         >
           <div className="terminal-card hex-corner p-6 sm:p-10">
             <div className="flex items-center gap-3 mb-6">
               <span className="text-2xl">◎</span>
               <h2 className="font-display text-xl sm:text-2xl text-crimson">
-                What Drives Us
+                The Problem
               </h2>
             </div>
 
-            <p className="font-mono text-text-secondary leading-relaxed text-base sm:text-lg">
-              The John Connor Project is more than a movement; it&apos;s a mission
-              to ensure cybersecurity professionals play a{" "}
-              <span className="text-phosphor">
-                critical role in protecting digital freedom
-              </span>
-              . We believe that every individual deserves to understand how to
-              safeguard their data, defend against AI exploitation, and maintain
-              autonomy in an increasingly connected world.
-            </p>
+            <div className="font-mono text-text-secondary leading-relaxed text-sm sm:text-base space-y-4">
+              <p>
+                When a corporation needs a reliable network, they hire an IT department.
+                When they need structured cabling, they call a certified contractor. When
+                they need a storage system, they deploy one. When they get hacked, they
+                have people on call to respond.
+              </p>
+              <p>
+                Everyday people get none of that. They get a router from their ISP, a
+                cloud subscription they didn&apos;t fully choose, smart home devices that
+                phone home to servers they don&apos;t control, and a &ldquo;support&rdquo; number that
+                leads to a script reader in another country.
+              </p>
+              <p>
+                <span className="text-phosphor">
+                  The technology to do this right exists. The professionals who know how
+                  exist. The only thing missing is the connection between them and the
+                  people who need them.
+                </span>
+              </p>
+              <p>
+                That&apos;s what The John Connor Project exists to build.
+              </p>
+            </div>
           </div>
         </motion.div>
 
@@ -152,7 +166,7 @@ const Mission = () => {
           className="mb-16"
         >
           <h2 className="font-display text-2xl text-crimson text-center mb-10">
-            How We Achieve Our Mission
+            How We Achieve It
           </h2>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -201,16 +215,24 @@ const Mission = () => {
               <span className="text-crimson text-glow-crimson">Needed</span>
             </h3>
 
-            <p className="font-mono text-text-secondary mb-8">
-              Join the network of digital defenders protecting communities
-              across the nation.
+            <p className="font-mono text-text-secondary mb-8 text-sm leading-relaxed">
+              If you work in IT, networking, structured cabling, cybersecurity,
+              smart home integration, or security systems — your community needs
+              access to what you know. Join the directory and start building.
             </p>
 
-            <Link href="/get-involved">
-              <button className="btn-resistance px-10 py-4 text-base font-semibold">
-                <span className="relative z-10">Join the Resistance</span>
-              </button>
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/get-involved">
+                <button className="btn-resistance px-10 py-4 text-base font-semibold">
+                  <span className="relative z-10">Join the Resistance</span>
+                </button>
+              </Link>
+              <Link href="/find-help">
+                <button className="px-10 py-4 text-base font-semibold border border-electric text-electric hover:bg-electric/10 transition-all duration-300">
+                  Find Help Near You
+                </button>
+              </Link>
+            </div>
           </div>
         </motion.div>
       </div>
