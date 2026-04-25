@@ -24,6 +24,13 @@ const PublicDirectory = () => {
   const [searchLocation, setSearchLocation] = useState("");
   const [selectedSpecialty, setSelectedSpecialty] = useState<string | null>(null);
   const [proBonoOnly, setProBonoOnly] = useState(false);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const copyEmail = (id: string, email: string) => {
+    navigator.clipboard.writeText(email);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
 
   useEffect(() => {
     fetchProfessionals();
@@ -37,6 +44,7 @@ const PublicDirectory = () => {
         .select("*")
         .eq("verified", true)
         .eq("public", true)
+        .eq("email_verified", true)
         .order("created_at", { ascending: false });
 
       if (error) throw error;
@@ -348,6 +356,16 @@ const PublicDirectory = () => {
                     )}
                   </div>
                   <div className="flex items-center gap-3">
+                    {professional.linkedin_url && (
+                      <a
+                        href={professional.linkedin_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-mono text-xs text-electric hover:text-glow-electric transition-all"
+                      >
+                        LinkedIn →
+                      </a>
+                    )}
                     {professional.website && (
                       <a
                         href={professional.website}
@@ -364,6 +382,13 @@ const PublicDirectory = () => {
                     >
                       Contact
                     </a>
+                    <button
+                      onClick={() => copyEmail(professional.id, professional.email)}
+                      title="Copy email address"
+                      className="font-mono text-xs px-2 py-1.5 border border-ash text-text-muted hover:border-crimson hover:text-crimson transition-all duration-200"
+                    >
+                      {copiedId === professional.id ? "Copied!" : "Copy Email"}
+                    </button>
                   </div>
                 </div>
               </motion.div>

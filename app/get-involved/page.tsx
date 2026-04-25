@@ -18,44 +18,100 @@ const SPECIALTIES = [
   "General IT Support",
 ];
 
+const US_STATES = [
+  { abbr: "AL", name: "Alabama" },
+  { abbr: "AK", name: "Alaska" },
+  { abbr: "AZ", name: "Arizona" },
+  { abbr: "AR", name: "Arkansas" },
+  { abbr: "CA", name: "California" },
+  { abbr: "CO", name: "Colorado" },
+  { abbr: "CT", name: "Connecticut" },
+  { abbr: "DE", name: "Delaware" },
+  { abbr: "DC", name: "District of Columbia" },
+  { abbr: "FL", name: "Florida" },
+  { abbr: "GA", name: "Georgia" },
+  { abbr: "HI", name: "Hawaii" },
+  { abbr: "ID", name: "Idaho" },
+  { abbr: "IL", name: "Illinois" },
+  { abbr: "IN", name: "Indiana" },
+  { abbr: "IA", name: "Iowa" },
+  { abbr: "KS", name: "Kansas" },
+  { abbr: "KY", name: "Kentucky" },
+  { abbr: "LA", name: "Louisiana" },
+  { abbr: "ME", name: "Maine" },
+  { abbr: "MD", name: "Maryland" },
+  { abbr: "MA", name: "Massachusetts" },
+  { abbr: "MI", name: "Michigan" },
+  { abbr: "MN", name: "Minnesota" },
+  { abbr: "MS", name: "Mississippi" },
+  { abbr: "MO", name: "Missouri" },
+  { abbr: "MT", name: "Montana" },
+  { abbr: "NE", name: "Nebraska" },
+  { abbr: "NV", name: "Nevada" },
+  { abbr: "NH", name: "New Hampshire" },
+  { abbr: "NJ", name: "New Jersey" },
+  { abbr: "NM", name: "New Mexico" },
+  { abbr: "NY", name: "New York" },
+  { abbr: "NC", name: "North Carolina" },
+  { abbr: "ND", name: "North Dakota" },
+  { abbr: "OH", name: "Ohio" },
+  { abbr: "OK", name: "Oklahoma" },
+  { abbr: "OR", name: "Oregon" },
+  { abbr: "PA", name: "Pennsylvania" },
+  { abbr: "RI", name: "Rhode Island" },
+  { abbr: "SC", name: "South Carolina" },
+  { abbr: "SD", name: "South Dakota" },
+  { abbr: "TN", name: "Tennessee" },
+  { abbr: "TX", name: "Texas" },
+  { abbr: "UT", name: "Utah" },
+  { abbr: "VT", name: "Vermont" },
+  { abbr: "VA", name: "Virginia" },
+  { abbr: "WA", name: "Washington" },
+  { abbr: "WV", name: "West Virginia" },
+  { abbr: "WI", name: "Wisconsin" },
+  { abbr: "WY", name: "Wyoming" },
+];
+
 interface FormErrors {
   name?: string;
   email?: string;
-  location?: string;
+  city?: string;
+  state?: string;
+  linkedin_url?: string;
+  website?: string;
   expertise?: string;
 }
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const URL_REGEX = /^https?:\/\/.+\..+/;
+const LINKEDIN_REGEX = /^https?:\/\/(www\.)?linkedin\.com\/.+/;
 
-// Generate a random token for email verification
 function generateToken(): string {
   const array = new Uint8Array(32);
   crypto.getRandomValues(array);
-  return Array.from(array, (byte) => byte.toString(16).padStart(2, "0")).join(
-    ""
-  );
+  return Array.from(array, (byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 
 const GetInvolved = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    location: "",
+    city: "",
+    state: "",
+    linkedin_url: "",
+    website: "",
     specialties: [] as string[],
     expertise: "",
     pro_bono: false,
     pro_bono_circumstances: "",
   });
   const [errors, setErrors] = useState<FormErrors>({});
-  const [status, setStatus] = useState<
-    "idle" | "submitting" | "success" | "error"
-  >("idle");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
-    // Name validation
     const trimmedName = formData.name.trim();
     if (!trimmedName) {
       newErrors.name = "Name is required";
@@ -63,7 +119,6 @@ const GetInvolved = () => {
       newErrors.name = "Name must be at least 2 characters";
     }
 
-    // Email validation
     const trimmedEmail = formData.email.trim();
     if (!trimmedEmail) {
       newErrors.email = "Email is required";
@@ -71,15 +126,29 @@ const GetInvolved = () => {
       newErrors.email = "Invalid email format";
     }
 
-    // Location validation
-    const trimmedLocation = formData.location.trim();
-    if (!trimmedLocation) {
-      newErrors.location = "Location is required";
-    } else if (trimmedLocation.length < 2) {
-      newErrors.location = "Location must be at least 2 characters";
+    const trimmedCity = formData.city.trim();
+    if (!trimmedCity) {
+      newErrors.city = "City is required";
+    } else if (trimmedCity.length < 2) {
+      newErrors.city = "City must be at least 2 characters";
     }
 
-    // Expertise validation
+    if (!formData.state) {
+      newErrors.state = "State is required";
+    }
+
+    const trimmedLinkedIn = formData.linkedin_url.trim();
+    if (!trimmedLinkedIn) {
+      newErrors.linkedin_url = "LinkedIn profile URL is required";
+    } else if (!LINKEDIN_REGEX.test(trimmedLinkedIn)) {
+      newErrors.linkedin_url = "Must be a valid linkedin.com URL";
+    }
+
+    const trimmedWebsite = formData.website.trim();
+    if (trimmedWebsite && !URL_REGEX.test(trimmedWebsite)) {
+      newErrors.website = "Must be a valid URL (include https://)";
+    }
+
     const trimmedExpertise = formData.expertise.trim();
     if (!trimmedExpertise) {
       newErrors.expertise = "Expertise is required";
@@ -99,12 +168,10 @@ const GetInvolved = () => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-
-    // Clear error for this field when user starts typing
     if (errors[name as keyof FormErrors]) {
       setErrors({ ...errors, [name]: undefined });
     }
@@ -113,10 +180,7 @@ const GetInvolved = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate before submitting
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) return;
 
     setStatus("submitting");
     setErrorMessage("");
@@ -125,8 +189,8 @@ const GetInvolved = () => {
       const verificationToken = generateToken();
       const trimmedEmail = formData.email.trim().toLowerCase();
       const trimmedName = formData.name.trim();
+      const location = `${formData.city.trim()}, ${formData.state}`;
 
-      // Check if email already exists
       const { data: existingUser } = await supabase
         .from("professionals")
         .select("id, email_verified")
@@ -149,18 +213,21 @@ const GetInvolved = () => {
         }
       }
 
-      // Submit to Supabase with verification token
       const { error: supabaseError } = await supabase
         .from("professionals")
         .insert([
           {
             name: trimmedName,
             email: trimmedEmail,
-            location: formData.location.trim(),
+            location,
+            linkedin_url: formData.linkedin_url.trim(),
+            website: formData.website.trim() || null,
             specialties: formData.specialties.length > 0 ? formData.specialties : null,
             expertise: formData.expertise.trim(),
             pro_bono: formData.pro_bono,
-            pro_bono_circumstances: formData.pro_bono ? formData.pro_bono_circumstances.trim() || null : null,
+            pro_bono_circumstances: formData.pro_bono
+              ? formData.pro_bono_circumstances.trim() || null
+              : null,
             verified: false,
             public: false,
             email_verified: false,
@@ -173,7 +240,6 @@ const GetInvolved = () => {
         throw supabaseError;
       }
 
-      // Send verification email
       const emailResponse = await fetch("/api/verify-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -186,37 +252,44 @@ const GetInvolved = () => {
 
       if (!emailResponse.ok) {
         console.error("Failed to send verification email");
-        // Don't throw - the entry is created, they can request a new email later
       }
 
-      // Also notify via Formspree (for email alerts to you)
-      await fetch("https://formspree.io/f/mdazdvnz", {
+      await fetch("/api/notify-signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
+          location,
           _subject: "New JCP Registration (pending email verification)",
         }),
       });
 
       setStatus("success");
 
-      // Track conversion in Google Analytics
       sendGAEvent("event", "technologist_signup", {
         event_category: "conversion",
-        event_label: formData.location,
+        event_label: location,
       });
 
-      setFormData({ name: "", email: "", location: "", specialties: [], expertise: "", pro_bono: false, pro_bono_circumstances: "" });
+      setFormData({
+        name: "",
+        email: "",
+        city: "",
+        state: "",
+        linkedin_url: "",
+        website: "",
+        specialties: [],
+        expertise: "",
+        pro_bono: false,
+        pro_bono_circumstances: "",
+      });
     } catch {
       setStatus("error");
-      setErrorMessage(
-        "Transmission failed. Please try again or contact us directly."
-      );
+      setErrorMessage("Transmission failed. Please try again or contact us directly.");
     }
   };
 
-  const inputClassName = (fieldName: keyof FormErrors) => `
+  const inputClass = (fieldName: keyof FormErrors) => `
     w-full p-4 rounded-none bg-terminal border border-l-2
     text-text-primary placeholder-text-muted font-mono
     focus:outline-none focus:shadow-[0_0_10px_rgba(255,23,68,0.3)] transition-all
@@ -229,21 +302,14 @@ const GetInvolved = () => {
 
   return (
     <main className="min-h-screen bg-void relative">
-      {/* Background effects */}
       <div className="absolute inset-0 data-grid opacity-20" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-phosphor/5 rounded-full blur-[200px]" />
 
       <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
         {/* Breadcrumb */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="mb-8"
-        >
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-8">
           <div className="flex items-center gap-2 text-xs font-mono text-text-muted">
-            <Link href="/" className="hover:text-crimson transition-colors">
-              Home
-            </Link>
+            <Link href="/" className="hover:text-crimson transition-colors">Home</Link>
             <span>/</span>
             <span className="text-crimson">Get Involved</span>
           </div>
@@ -275,8 +341,7 @@ const GetInvolved = () => {
 
           <div className="mt-4 inline-flex items-center gap-2 px-3 py-2 border border-warning/30 bg-warning/5">
             <span className="text-warning text-xs font-mono">
-              Note: This is not a charity. You will negotiate a fair price
-              between you and your client.
+              Note: This is not a charity. You will negotiate a fair price between you and your client.
             </span>
           </div>
         </motion.div>
@@ -288,20 +353,17 @@ const GetInvolved = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <div className="terminal-card hex-corner p-6 sm:p-10">
-            {/* Terminal header */}
             <div className="flex items-center gap-2 mb-8 pb-4 border-b border-ash">
               <div className="flex gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-crimson/80" />
                 <span className="w-2.5 h-2.5 rounded-full bg-warning/80" />
                 <span className="w-2.5 h-2.5 rounded-full bg-phosphor/80" />
               </div>
-              <span className="text-text-muted text-xs font-mono ml-2">
-                recruitment_form.sh
-              </span>
+              <span className="text-text-muted text-xs font-mono ml-2">recruitment_form.sh</span>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-              {/* Name Field */}
+              {/* 01. Full Name */}
               <div>
                 <label className="block mb-2">
                   <span className="text-text-muted text-xs font-mono uppercase tracking-wider">
@@ -314,21 +376,18 @@ const GetInvolved = () => {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Enter your full name"
-                  className={inputClassName("name")}
+                  className={inputClass("name")}
                   aria-invalid={!!errors.name}
                   aria-describedby={errors.name ? "name-error" : undefined}
                 />
                 {errors.name && (
-                  <p
-                    id="name-error"
-                    className="mt-2 font-mono text-xs text-crimson"
-                  >
+                  <p id="name-error" className="mt-2 font-mono text-xs text-crimson">
                     [ERROR] {errors.name}
                   </p>
                 )}
               </div>
 
-              {/* Email Field */}
+              {/* 02. Email */}
               <div>
                 <label className="block mb-2">
                   <span className="text-text-muted text-xs font-mono uppercase tracking-wider">
@@ -341,54 +400,127 @@ const GetInvolved = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="your.email@domain.com"
-                  className={inputClassName("email")}
+                  className={inputClass("email")}
                   aria-invalid={!!errors.email}
                   aria-describedby={errors.email ? "email-error" : undefined}
                 />
                 {errors.email && (
-                  <p
-                    id="email-error"
-                    className="mt-2 font-mono text-xs text-crimson"
-                  >
+                  <p id="email-error" className="mt-2 font-mono text-xs text-crimson">
                     [ERROR] {errors.email}
                   </p>
                 )}
               </div>
 
-              {/* Location Field */}
+              {/* 03. Location (city + state) */}
               <div>
                 <label className="block mb-2">
                   <span className="text-text-muted text-xs font-mono uppercase tracking-wider">
                     <span className="text-crimson">03.</span> Location
                   </span>
                 </label>
+                <div className="flex gap-3">
+                  <div className="flex-1">
+                    <input
+                      type="text"
+                      name="city"
+                      value={formData.city}
+                      onChange={handleChange}
+                      placeholder="City"
+                      className={inputClass("city")}
+                      aria-invalid={!!errors.city}
+                      aria-describedby={errors.city ? "city-error" : undefined}
+                    />
+                    {errors.city && (
+                      <p id="city-error" className="mt-2 font-mono text-xs text-crimson">
+                        [ERROR] {errors.city}
+                      </p>
+                    )}
+                  </div>
+                  <div className="w-36">
+                    <select
+                      name="state"
+                      value={formData.state}
+                      onChange={handleChange}
+                      className={`w-full p-4 rounded-none bg-terminal border border-l-2 text-text-primary font-mono focus:outline-none focus:shadow-[0_0_10px_rgba(255,23,68,0.3)] transition-all appearance-none cursor-pointer ${
+                        errors.state
+                          ? "border-crimson/50 border-l-crimson focus:border-crimson"
+                          : "border-ash border-l-crimson focus:border-crimson"
+                      } ${!formData.state ? "text-text-muted" : ""}`}
+                      aria-invalid={!!errors.state}
+                      aria-describedby={errors.state ? "state-error" : undefined}
+                    >
+                      <option value="" disabled>State</option>
+                      {US_STATES.map(({ abbr, name }) => (
+                        <option key={abbr} value={abbr}>{abbr} — {name}</option>
+                      ))}
+                    </select>
+                    {errors.state && (
+                      <p id="state-error" className="mt-2 font-mono text-xs text-crimson">
+                        [ERROR] {errors.state}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* 04. LinkedIn */}
+              <div>
+                <label className="block mb-2">
+                  <span className="text-text-muted text-xs font-mono uppercase tracking-wider">
+                    <span className="text-crimson">04.</span> LinkedIn Profile
+                  </span>
+                </label>
                 <input
-                  type="text"
-                  name="location"
-                  value={formData.location}
+                  type="url"
+                  name="linkedin_url"
+                  value={formData.linkedin_url}
                   onChange={handleChange}
-                  placeholder="City, State"
-                  className={inputClassName("location")}
-                  aria-invalid={!!errors.location}
-                  aria-describedby={
-                    errors.location ? "location-error" : undefined
-                  }
+                  placeholder="https://linkedin.com/in/yourprofile"
+                  className={inputClass("linkedin_url")}
+                  aria-invalid={!!errors.linkedin_url}
+                  aria-describedby={errors.linkedin_url ? "linkedin-error" : undefined}
                 />
-                {errors.location && (
-                  <p
-                    id="location-error"
-                    className="mt-2 font-mono text-xs text-crimson"
-                  >
-                    [ERROR] {errors.location}
+                {errors.linkedin_url ? (
+                  <p id="linkedin-error" className="mt-2 font-mono text-xs text-crimson">
+                    [ERROR] {errors.linkedin_url}
+                  </p>
+                ) : (
+                  <p className="mt-2 font-mono text-xs text-text-muted">
+                    Required — helps us verify you&apos;re a real professional
                   </p>
                 )}
               </div>
 
-              {/* Specialties Field */}
+              {/* 05. Website */}
               <div>
                 <label className="block mb-2">
                   <span className="text-text-muted text-xs font-mono uppercase tracking-wider">
-                    <span className="text-crimson">04.</span> Specialties
+                    <span className="text-crimson">05.</span> Website{" "}
+                    <span className="text-text-muted normal-case">(optional)</span>
+                  </span>
+                </label>
+                <input
+                  type="url"
+                  name="website"
+                  value={formData.website}
+                  onChange={handleChange}
+                  placeholder="https://yourwebsite.com"
+                  className={inputClass("website")}
+                  aria-invalid={!!errors.website}
+                  aria-describedby={errors.website ? "website-error" : undefined}
+                />
+                {errors.website && (
+                  <p id="website-error" className="mt-2 font-mono text-xs text-crimson">
+                    [ERROR] {errors.website}
+                  </p>
+                )}
+              </div>
+
+              {/* 06. Specialties */}
+              <div>
+                <label className="block mb-2">
+                  <span className="text-text-muted text-xs font-mono uppercase tracking-wider">
+                    <span className="text-crimson">06.</span> Specialties
                   </span>
                   <span className="ml-2 text-text-muted text-xs font-mono">(select all that apply)</span>
                 </label>
@@ -413,11 +545,11 @@ const GetInvolved = () => {
                 </div>
               </div>
 
-              {/* Expertise Field */}
+              {/* 07. Expertise */}
               <div>
                 <label className="block mb-2">
                   <span className="text-text-muted text-xs font-mono uppercase tracking-wider">
-                    <span className="text-crimson">05.</span> Your Expertise
+                    <span className="text-crimson">07.</span> Your Expertise
                   </span>
                 </label>
                 <textarea
@@ -426,27 +558,22 @@ const GetInvolved = () => {
                   onChange={handleChange}
                   placeholder="Describe your technical background, specialties, and the types of work you're available for (e.g. home networking, NAS setup, cabling, smart home, cybersecurity)..."
                   rows={5}
-                  className={`${inputClassName("expertise")} resize-none`}
+                  className={`${inputClass("expertise")} resize-none`}
                   aria-invalid={!!errors.expertise}
-                  aria-describedby={
-                    errors.expertise ? "expertise-error" : undefined
-                  }
+                  aria-describedby={errors.expertise ? "expertise-error" : undefined}
                 />
                 {errors.expertise && (
-                  <p
-                    id="expertise-error"
-                    className="mt-2 font-mono text-xs text-crimson"
-                  >
+                  <p id="expertise-error" className="mt-2 font-mono text-xs text-crimson">
                     [ERROR] {errors.expertise}
                   </p>
                 )}
               </div>
 
-              {/* Pro-Bono Field */}
+              {/* 08. Pro-Bono */}
               <div>
                 <label className="block mb-2">
                   <span className="text-text-muted text-xs font-mono uppercase tracking-wider">
-                    <span className="text-crimson">06.</span> Pro-Bono Work
+                    <span className="text-crimson">08.</span> Pro-Bono Work
                   </span>
                 </label>
                 <div className="p-4 bg-terminal border border-ash border-l-2 border-l-crimson space-y-3">
@@ -476,7 +603,7 @@ const GetInvolved = () => {
                         onChange={(e) =>
                           setFormData({ ...formData, pro_bono_circumstances: e.target.value })
                         }
-                        placeholder="Describe who you&apos;d consider helping pro-bono..."
+                        placeholder="Describe who you'd consider helping pro-bono..."
                         className="w-full p-3 rounded-none bg-void border border-ash text-text-primary placeholder-text-muted font-mono text-xs focus:outline-none focus:border-phosphor transition-all"
                       />
                     </div>
@@ -484,7 +611,7 @@ const GetInvolved = () => {
                 </div>
               </div>
 
-              {/* Submit Button */}
+              {/* Submit */}
               <div className="pt-4">
                 <button
                   type="submit"
@@ -492,9 +619,7 @@ const GetInvolved = () => {
                   className="btn-resistance w-full py-4 text-base font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <span className="relative z-10">
-                    {status === "submitting"
-                      ? "Transmitting..."
-                      : "Deploy Your Skills"}
+                    {status === "submitting" ? "Transmitting..." : "Deploy Your Skills"}
                   </span>
                 </button>
               </div>
@@ -520,21 +645,18 @@ const GetInvolved = () => {
                 </div>
               )}
 
-              {/* Terminal output decoration */}
+              {/* Terminal decoration */}
               <div className="pt-6 border-t border-ash">
                 <pre className="font-mono text-xs text-text-muted">
                   <code>
-                    <span className="text-phosphor">$</span> ./submit
-                    --application
+                    <span className="text-phosphor">$</span> ./submit --application
                     <br />
-                    <span className="text-text-muted">[*]</span> Validating
-                    credentials...
+                    <span className="text-text-muted">[*]</span> Validating credentials...
                     <br />
                     <span className="text-text-muted">[*]</span> Encryption:
                     <span className="text-phosphor"> AES-256</span>
                     <br />
-                    <span className="text-text-muted">[*]</span> Awaiting
-                    input...
+                    <span className="text-text-muted">[*]</span> Awaiting input...
                     <span className="cursor-blink" />
                   </code>
                 </pre>
@@ -551,9 +673,7 @@ const GetInvolved = () => {
           className="mt-12 grid sm:grid-cols-2 gap-6"
         >
           <div className="terminal-card p-6">
-            <h3 className="font-display text-sm text-crimson mb-3">
-              What Happens Next?
-            </h3>
+            <h3 className="font-display text-sm text-crimson mb-3">What Happens Next?</h3>
             <p className="font-mono text-xs text-text-secondary leading-relaxed">
               After verifying your email, your application will be reviewed by
               our team. Verified technologists are added to our directory and
@@ -561,9 +681,7 @@ const GetInvolved = () => {
             </p>
           </div>
           <div className="terminal-card p-6">
-            <h3 className="font-display text-sm text-crimson mb-3">
-              Your Privacy Matters
-            </h3>
+            <h3 className="font-display text-sm text-crimson mb-3">Your Privacy Matters</h3>
             <p className="font-mono text-xs text-text-secondary leading-relaxed">
               We practice what we preach. Your data is encrypted, never sold,
               and only used to connect you with those who need your expertise.

@@ -16,6 +16,7 @@ export type Professional = {
   expertise: string;
   specialties: string[] | null;
   years_experience: number | null;
+  linkedin_url: string;
   website: string | null;
   verified: boolean;
   public: boolean;

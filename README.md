@@ -1,93 +1,93 @@
 # The John Connor Project
 
-## Overview & Ethos
+**Professional-Grade Infrastructure for Everyone.**
 
-The **John Connor Project** is inspired by the archetype of John Connor from the _Terminator_ franchise—a symbol of resistance, leadership, and strategic foresight in the face of AI-driven threats. This initiative is designed to shift the narrative surrounding cybersecurity, elevating IT professionals to a critical societal role akin to electricians, plumbers, and auto mechanics. The project emphasizes the importance of personal digital security and self-hosted technologies, empowering individuals to reclaim control over their data and online presence.
+The John Connor Project connects everyday people and small businesses with skilled IT, networking, and infrastructure professionals — giving Main Street access to the same quality of technology infrastructure that corporations take for granted.
+
+Think of it as the IT equivalent of a licensed electrician or plumber, but for your digital infrastructure: reliable home and small-office networks, IoT segmentation, NAS systems as alternatives to cloud subscriptions, smart home integration, structured cabling, access control, and physical security systems.
 
 > _"The future is not set. There is no fate but what we make for ourselves."_
 
-The **ethos** of the project revolves around:
+---
 
-- **Decentralization of cybersecurity knowledge**
-- **Empowerment of individuals against AI-driven threats**
-- **Community-driven defense networks**
-- **Transparency, truth-seeking, and self-reliance**
+## Who It's For
+
+**People who need help** — homeowners, families, and small businesses who want reliable, secure infrastructure but don't know where to start or who to trust.
+
+**Professionals who want to help** — IT generalists, network engineers, structured cabling techs, smart home integrators, cybersecurity professionals, and anyone else with hands-on infrastructure skills who wants to serve their local community.
 
 ---
 
-## Focus
+## Tech Stack
 
-The John Connor Project focuses on:
-
-- **Public Education:** Offering resources, interactive quizzes, and downloadable checklists to educate individuals on securing their digital lives.
-- **Professional Directory:** Connecting the public with vetted cybersecurity professionals to implement practical defense measures.
-- **Technologist Engagement:** Providing a platform for cybersecurity experts to get involved, contribute knowledge, and collaborate on community defense projects.
-- **AI Defense Awareness:** Highlighting the role of AI in modern cyber threats and equipping individuals with tools and knowledge to counter them.
-- **Self-Hosted Solutions:** Promoting the use of self-hosted AI and NAS systems for personal security and digital sovereignty.
-
----
-
-## 🚀 Future Plans
-
-The John Connor Project aims to:
-
-- **Launch an Interactive Quiz:** A mobile-first quiz designed to assess users' cybersecurity readiness, complete with progress tracking and personalized recommendations.
-- **Expand the Professional Directory:** Building a comprehensive, location-based directory for easy access to trusted cybersecurity professionals.
-- **Interactive Learning Modules:** Developing guided courses and workshops on AI defense tactics and self-hosted security solutions.
-- **Community Forums:** Establishing spaces for discussion, knowledge-sharing, and collaboration among cybersecurity professionals and the general public.
-- **Open-Source Contributions:** Encouraging developers to contribute to self-hosted security tools and AI defense frameworks.
+- **Framework**: Next.js 15 (App Router, TypeScript)
+- **Styling**: Tailwind CSS + custom terminal/cyberpunk design system
+- **Animations**: Framer Motion
+- **Database**: Supabase (PostgreSQL with Row Level Security)
+- **Email**: Resend (verification emails)
+- **Form notifications**: Formspree
+- **Analytics**: Google Analytics 4
+- **Deployment**: Vercel
 
 ---
 
-## 💡 Key Features
+## Site Structure
 
-- **Mobile-First Design:** Optimized for seamless access on mobile devices.
-- **Cybersecurity Checklist:** Downloadable guides with actionable steps and linked trusted tools.
-- **AI Defense Focus:** Practical education on countering AI-driven digital threats.
-- **Progressive Web App (PWA):** Plans for offline access and app-like functionality.
-- **Interactive Quiz with AI Defense Context:** Tests user knowledge with clear ties between results and real-world AI threat mitigation.
-
----
-
-## ⚡ Technologies Used
-
-- **React (TypeScript - TSX)** for responsive, component-based UI.
-- **TailwindCSS** for mobile-first, utility-first styling.
-- **Framer Motion** for smooth UI animations.
-- **Next.js** (planned) for server-side rendering and optimized performance.
-- **NAS Integration** (planned) for self-hosted solutions and private data storage.
+| Route | Purpose |
+|---|---|
+| `/` | Homepage — dual paths for help-seekers and professionals |
+| `/about` | Project background and vision |
+| `/mission` | Detailed mission with 5 objectives |
+| `/get-involved` | Registration form for professionals |
+| `/find-help` | For people seeking professional help |
+| `/directory` | Public directory of verified professionals |
+| `/learn` | Infrastructure and security education (7 topics) |
+| `/resources` | Curated tools and links |
+| `/your-cloud` | NAS and self-hosted storage education |
+| `/protect-the-internet` | IP over HAM radio roadmap |
+| `/your-stock-vote` | Proxy voting for corporate AI/privacy accountability |
 
 ---
 
-## 🔧 Performance Optimizations
+## Professional Verification
 
-- **Lazy Loading:** Efficient loading of quizzes and downloadable resources on slower mobile connections.
-- **Progressive Enhancement:** Ensuring core functionality across all devices, with advanced features where supported.
-- **Optimized Media:** Compressed images and PDFs for faster downloads.
+Professionals self-register via `/get-involved`. The verification flow:
 
----
+1. Pro submits form — entry created (`verified=false`, `public=false`, `email_verified=false`)
+2. Resend sends a verification email with a unique token
+3. Pro clicks the link — `email_verified` set to `true`
+4. Owner manually reviews in Supabase and sets `verified=true`, `public=true`
+5. Pro appears in `/directory`
 
-## 🌟 How to Get Involved
-
-- **Cybersecurity Professionals:** Register through the "Get Involved" page to be featured in the public directory.
-- **Contributors:** Open to developers passionate about AI defense, self-hosting, and digital sovereignty.
-- **Supporters:** Share the mission, provide feedback, and participate in community discussions.
+All three flags must be true for a listing to be visible.
 
 ---
 
-## 🤝 Contributing
+## Local Development
 
-Contributions are welcome! If you have expertise in cybersecurity, AI defense, or web development, your insights and code contributions could help shape this vital initiative. Submit pull requests or open issues to discuss potential improvements.
+```bash
+npm install
+npm run dev
+```
+
+Create a `.env.local` file with:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+RESEND_API_KEY=
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
 
 ---
 
-## ✉️ Contact
+## Get Involved
 
-📬 **Website:** [JohnConnorProject.org](https://JohnConnorProject.org)  
-💬 **Email:** johnconnorproject@gmail.com
-📺 **YouTube:** [](https://www.youtube.com/@renaissancetechnologist)
+**Are you an IT or infrastructure professional?** Get listed free at [johnconnorproject.org/get-involved](https://johnconnorproject.org/get-involved).
+
+**Need help with your home or business network?** Find a verified professional at [johnconnorproject.org/directory](https://johnconnorproject.org/directory).
 
 ---
 
-> _Join the resistance. Defend the future. Empower the present._  
-> **The John Connor Project** — Because the future shouldn't be left undefended.
+> _Join the resistance. Take back your network._
