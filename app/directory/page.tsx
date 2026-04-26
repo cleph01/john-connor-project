@@ -348,7 +348,7 @@ const PublicDirectory = () => {
                 )}
 
                 {/* Footer */}
-                <div className="mt-auto pt-4 border-t border-ash flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div className="mt-auto pt-4 border-t border-ash flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 flex-wrap">
                     <span className="font-mono text-xs">
                       <span className="text-text-muted">Status: </span>
@@ -367,7 +367,7 @@ const PublicDirectory = () => {
                       </div>
                     )}
                   </div>
-                  <div className="flex items-center gap-3 flex-wrap">
+                  <div className="flex items-center gap-3">
                     {professional.linkedin_url && (
                       <a
                         href={professional.linkedin_url}
@@ -388,19 +388,21 @@ const PublicDirectory = () => {
                         Website →
                       </a>
                     )}
-                    <a
-                      href={`mailto:${professional.email}?subject=Found you on the John Connor Project`}
-                      className="font-mono text-xs px-3 py-1.5 border border-crimson text-crimson hover:bg-crimson/10 transition-all duration-200"
-                    >
-                      Contact
-                    </a>
-                    <button
-                      onClick={() => copyEmail(professional.id, professional.email)}
-                      title="Copy email address"
-                      className="font-mono text-xs px-2 py-1.5 border border-ash text-text-muted hover:border-crimson hover:text-crimson transition-all duration-200"
-                    >
-                      {copiedId === professional.id ? "Copied!" : "Copy Email"}
-                    </button>
+                    <div className="flex flex-col gap-1.5 items-end">
+                      <a
+                        href={`mailto:${professional.email}?subject=Found you on the John Connor Project`}
+                        className="font-mono text-xs px-3 py-1.5 border border-crimson text-crimson hover:bg-crimson/10 transition-all duration-200"
+                      >
+                        Contact
+                      </a>
+                      <button
+                        onClick={() => copyEmail(professional.id, professional.email)}
+                        title="Copy email address"
+                        className="font-mono text-xs px-2 py-1.5 border border-ash text-text-muted hover:border-crimson hover:text-crimson transition-all duration-200"
+                      >
+                        {copiedId === professional.id ? "Copied!" : "Copy Email"}
+                      </button>
+                    </div>
                   </div>
                 </div>
               </motion.div>
