@@ -27,9 +27,10 @@
 # project instructions (contains internal strategy/notes)
 CLAUDE.md
 
-# outreach content and SMM strategy (internal drafts, not for public repo)
+# outreach content, SMM strategy, and YouTube content (internal drafts, not for public repo)
 /outreach/
 /strategy/
+/youtube/
 
 # debug
 npm-debug.log*

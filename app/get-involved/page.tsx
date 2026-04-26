@@ -95,6 +95,7 @@ function generateToken(): string {
 const GetInvolved = () => {
   const [formData, setFormData] = useState({
     name: "",
+    company_name: "",
     email: "",
     city: "",
     state: "",
@@ -218,6 +219,7 @@ const GetInvolved = () => {
         .insert([
           {
             name: trimmedName,
+            company_name: formData.company_name.trim() || null,
             email: trimmedEmail,
             location,
             linkedin_url: formData.linkedin_url.trim(),
@@ -273,6 +275,7 @@ const GetInvolved = () => {
 
       setFormData({
         name: "",
+        company_name: "",
         email: "",
         city: "",
         state: "",
@@ -387,11 +390,29 @@ const GetInvolved = () => {
                 )}
               </div>
 
-              {/* 02. Email */}
+              {/* 02. Company Name */}
               <div>
                 <label className="block mb-2">
                   <span className="text-text-muted text-xs font-mono uppercase tracking-wider">
-                    <span className="text-crimson">02.</span> Email Address
+                    <span className="text-crimson">02.</span> Company Name{" "}
+                    <span className="text-text-muted normal-case">(optional)</span>
+                  </span>
+                </label>
+                <input
+                  type="text"
+                  name="company_name"
+                  value={formData.company_name}
+                  onChange={handleChange}
+                  placeholder="Your business or LLC name"
+                  className={inputClass("name").replace("border-l-crimson", "border-l-crimson")}
+                />
+              </div>
+
+              {/* 03. Email */}
+              <div>
+                <label className="block mb-2">
+                  <span className="text-text-muted text-xs font-mono uppercase tracking-wider">
+                    <span className="text-crimson">03.</span> Email Address
                   </span>
                 </label>
                 <input
@@ -411,11 +432,11 @@ const GetInvolved = () => {
                 )}
               </div>
 
-              {/* 03. Location (city + state) */}
+              {/* 04. Location (city + state) */}
               <div>
                 <label className="block mb-2">
                   <span className="text-text-muted text-xs font-mono uppercase tracking-wider">
-                    <span className="text-crimson">03.</span> Location
+                    <span className="text-crimson">04.</span> Location
                   </span>
                 </label>
                 <div className="flex gap-3">
@@ -463,11 +484,11 @@ const GetInvolved = () => {
                 </div>
               </div>
 
-              {/* 04. LinkedIn */}
+              {/* 05. LinkedIn */}
               <div>
                 <label className="block mb-2">
                   <span className="text-text-muted text-xs font-mono uppercase tracking-wider">
-                    <span className="text-crimson">04.</span> LinkedIn Profile
+                    <span className="text-crimson">05.</span> LinkedIn Profile
                   </span>
                 </label>
                 <input
@@ -491,11 +512,11 @@ const GetInvolved = () => {
                 )}
               </div>
 
-              {/* 05. Website */}
+              {/* 06. Website */}
               <div>
                 <label className="block mb-2">
                   <span className="text-text-muted text-xs font-mono uppercase tracking-wider">
-                    <span className="text-crimson">05.</span> Website{" "}
+                    <span className="text-crimson">06.</span> Website{" "}
                     <span className="text-text-muted normal-case">(optional)</span>
                   </span>
                 </label>
@@ -516,11 +537,11 @@ const GetInvolved = () => {
                 )}
               </div>
 
-              {/* 06. Specialties */}
+              {/* 07. Specialties */}
               <div>
                 <label className="block mb-2">
                   <span className="text-text-muted text-xs font-mono uppercase tracking-wider">
-                    <span className="text-crimson">06.</span> Specialties
+                    <span className="text-crimson">07.</span> Specialties
                   </span>
                   <span className="ml-2 text-text-muted text-xs font-mono">(select all that apply)</span>
                 </label>
@@ -545,11 +566,11 @@ const GetInvolved = () => {
                 </div>
               </div>
 
-              {/* 07. Expertise */}
+              {/* 08. Expertise */}
               <div>
                 <label className="block mb-2">
                   <span className="text-text-muted text-xs font-mono uppercase tracking-wider">
-                    <span className="text-crimson">07.</span> Your Expertise
+                    <span className="text-crimson">08.</span> Your Expertise
                   </span>
                 </label>
                 <textarea
@@ -569,11 +590,11 @@ const GetInvolved = () => {
                 )}
               </div>
 
-              {/* 08. Pro-Bono */}
+              {/* 09. Pro-Bono */}
               <div>
                 <label className="block mb-2">
                   <span className="text-text-muted text-xs font-mono uppercase tracking-wider">
-                    <span className="text-crimson">08.</span> Pro-Bono Work
+                    <span className="text-crimson">09.</span> Pro-Bono Work
                   </span>
                 </label>
                 <div className="p-4 bg-terminal border border-ash border-l-2 border-l-crimson space-y-3">

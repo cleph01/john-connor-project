@@ -24,8 +24,8 @@ export const metadata: Metadata = {
     default: "John Connor Project | Digital Resistance Network",
     template: "%s | John Connor Project",
   },
-  description: "Connecting communities with cybersecurity professionals to defend against AI-driven digital threats. Find local experts or join the resistance.",
-  keywords: ["cybersecurity", "AI threats", "digital privacy", "scam protection", "tech support", "community security", "deepfake protection"],
+  description: "Professional-grade IT and infrastructure help for homeowners and small businesses. Find a vetted local professional for home networking, structured cabling, smart home, NAS setup, and cybersecurity.",
+  keywords: ["home networking", "IT professional near me", "structured cabling", "smart home installer", "NAS setup", "home network security", "IoT segmentation", "small business IT", "local IT support", "cybersecurity professional"],
   authors: [{ name: "John Connor Project" }],
   creator: "John Connor Project",
   openGraph: {
@@ -33,21 +33,21 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteUrl,
     siteName: "John Connor Project",
-    title: "John Connor Project | Digital Resistance Network",
-    description: "Connecting communities with cybersecurity professionals to defend against AI-driven digital threats.",
+    title: "John Connor Project | Professional-Grade Infrastructure for Everyone",
+    description: "Find a vetted local IT and infrastructure professional for home networking, smart home, NAS, cabling, and cybersecurity. Or get listed free.",
     images: [
       {
         url: "/logo-skull-hero.png",
         width: 800,
         height: 800,
-        alt: "John Connor Project - Digital Resistance Network",
+        alt: "John Connor Project - Professional-Grade Infrastructure for Everyone",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "John Connor Project | Digital Resistance Network",
-    description: "Connecting communities with cybersecurity professionals to defend against AI-driven digital threats.",
+    title: "John Connor Project | Professional-Grade Infrastructure for Everyone",
+    description: "Find a vetted local IT and infrastructure professional for home networking, smart home, NAS, cabling, and cybersecurity. Or get listed free.",
     images: ["/logo-skull-hero.png"],
   },
   robots: {

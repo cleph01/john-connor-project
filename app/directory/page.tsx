@@ -308,6 +308,11 @@ const PublicDirectory = () => {
                   <h3 className="font-display text-lg text-crimson group-hover:text-glow-crimson transition-all">
                     {professional.name}
                   </h3>
+                  {professional.company_name && (
+                    <p className="font-mono text-xs text-text-secondary mt-0.5">
+                      {professional.company_name}
+                    </p>
+                  )}
                   <p className="font-mono text-xs text-text-muted mt-1 flex items-center gap-3">
                     <span>📍 {professional.location}</span>
                     {professional.years_experience && (
