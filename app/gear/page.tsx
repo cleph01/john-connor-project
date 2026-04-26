@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "motion/react";
+import { useState, useMemo } from "react";
 
 interface GearItem {
   name: string;
@@ -15,6 +16,7 @@ interface GearSection {
   id: string;
   title: string;
   subtitle: string;
+  category: string;
   items: GearItem[];
 }
 
@@ -27,6 +29,7 @@ const sections: GearSection[] = [
   {
     id: "01",
     title: "Home Networking",
+    category: "Networking",
     subtitle: "Routers, access points, and switches worth buying",
     items: [
       {
@@ -69,6 +72,7 @@ const sections: GearSection[] = [
   {
     id: "02",
     title: "NAS & Storage",
+    category: "NAS & Storage",
     subtitle: "Own your data — stop renting it from the cloud",
     items: [
       {
@@ -104,6 +108,7 @@ const sections: GearSection[] = [
   {
     id: "03",
     title: "Smart Home",
+    category: "Smart Home",
     subtitle: "Local-first hardware — your automations, your data",
     items: [
       {
@@ -132,6 +137,7 @@ const sections: GearSection[] = [
   {
     id: "04",
     title: "Cameras & Surveillance",
+    category: "Cameras",
     subtitle: "Local recording, no cloud subscriptions, no monthly fees",
     items: [
       {
@@ -181,6 +187,7 @@ const sections: GearSection[] = [
   {
     id: "05",
     title: "Access Control",
+    category: "Access Control",
     subtitle: "Smart locks, keypads, and door hardware for homes and small offices",
     items: [
       {
@@ -221,8 +228,9 @@ const sections: GearSection[] = [
     ],
   },
   {
-    id: "07",
+    id: "06",
     title: "Cabling & Low-Voltage Tools",
+    category: "Cabling Tools",
     subtitle: "Do the job right — the tools professionals use",
     items: [
       {
@@ -270,7 +278,25 @@ const priceColors: Record<GearItem["price"], string> = {
   Pro: "border-crimson/50 text-crimson",
 };
 
+const CATEGORIES = ["All", "Networking", "NAS & Storage", "Smart Home", "Cameras", "Access Control", "Cabling Tools"];
+const PRICE_TIERS: Array<GearItem["price"] | "All"> = ["All", "Budget", "Mid-Range", "Pro"];
+
 const GearPage = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [selectedPrice, setSelectedPrice] = useState<GearItem["price"] | "All">("All");
+
+  const filteredSections = useMemo(() => {
+    return sections
+      .filter((s) => selectedCategory === "All" || s.category === selectedCategory)
+      .map((s) => ({
+        ...s,
+        items: selectedPrice === "All" ? s.items : s.items.filter((item) => item.price === selectedPrice),
+      }))
+      .filter((s) => s.items.length > 0);
+  }, [selectedCategory, selectedPrice]);
+
+  const isFiltered = selectedCategory !== "All" || selectedPrice !== "All";
+
   return (
     <main className="min-h-screen bg-void relative">
       <div className="absolute inset-0 data-grid opacity-20" />
@@ -314,84 +340,135 @@ const GearPage = () => {
           </p>
         </motion.div>
 
-        {/* Price Legend */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="flex flex-wrap gap-3 justify-center mb-10"
-        >
-          {(Object.entries(priceColors) as [GearItem["price"], string][]).map(([tier, classes]) => (
-            <span key={tier} className={`font-mono text-xs px-2 py-1 border ${classes}`}>
-              {tier}
-            </span>
-          ))}
-          <span className="font-mono text-xs text-text-muted self-center">— price tiers</span>
-        </motion.div>
-
         {/* Affiliate Disclosure */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.25 }}
-          className="mb-12 px-4 py-3 border border-ash bg-terminal/30"
+          transition={{ delay: 0.15 }}
+          className="mb-10 px-4 py-3 border border-ash bg-terminal/30"
         >
           <p className="font-mono text-xs text-text-muted leading-relaxed">
             <span className="text-text-secondary">Disclosure:</span> Some links on this page are Amazon affiliate links. If you purchase through them, we may earn a small commission at no extra cost to you. We only recommend gear we would actually install.
           </p>
         </motion.div>
 
+        {/* Filters */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="mb-12 space-y-4"
+        >
+          {/* Category filter */}
+          <div>
+            <span className="font-mono text-xs text-text-muted uppercase tracking-wider mb-2 block">Category</span>
+            <div className="flex flex-wrap gap-2">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`font-mono text-xs px-3 py-1.5 border transition-all duration-200 ${
+                    selectedCategory === cat
+                      ? "border-crimson text-crimson bg-crimson/10"
+                      : "border-ash text-text-muted hover:border-text-secondary hover:text-text-secondary"
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Price filter */}
+          <div>
+            <span className="font-mono text-xs text-text-muted uppercase tracking-wider mb-2 block">Price Tier</span>
+            <div className="flex flex-wrap gap-2">
+              {PRICE_TIERS.map((tier) => (
+                <button
+                  key={tier}
+                  onClick={() => setSelectedPrice(tier)}
+                  className={`font-mono text-xs px-3 py-1.5 border transition-all duration-200 ${
+                    selectedPrice === tier
+                      ? tier === "All"
+                        ? "border-crimson text-crimson bg-crimson/10"
+                        : `${priceColors[tier as GearItem["price"]]} bg-terminal/50`
+                      : "border-ash text-text-muted hover:border-text-secondary hover:text-text-secondary"
+                  }`}
+                >
+                  {tier}
+                </button>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
         {/* Gear Sections */}
         <div className="space-y-14">
-          {sections.map((section, sectionIndex) => (
-            <motion.section
-              key={section.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: sectionIndex * 0.05 }}
+          {filteredSections.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="terminal-card p-10 text-center"
             >
-              <div className="flex items-baseline gap-3 mb-6">
-                <span className="font-mono text-xs text-crimson">[{section.id}]</span>
-                <h2 className="font-display text-xl text-crimson">{section.title}</h2>
-                <span className="font-mono text-xs text-text-muted hidden sm:block">
-                  — {section.subtitle}
-                </span>
-              </div>
+              <p className="font-mono text-text-muted text-sm mb-3">No gear matches the selected filters.</p>
+              <button
+                onClick={() => { setSelectedCategory("All"); setSelectedPrice("All"); }}
+                className="font-mono text-xs text-crimson hover:underline"
+              >
+                Clear filters
+              </button>
+            </motion.div>
+          ) : (
+            filteredSections.map((section, sectionIndex) => (
+              <motion.section
+                key={section.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: sectionIndex * 0.05 }}
+              >
+                <div className="flex items-baseline gap-3 mb-6">
+                  <span className="font-mono text-xs text-crimson">[{section.id}]</span>
+                  <h2 className="font-display text-xl text-crimson">{section.title}</h2>
+                  <span className="font-mono text-xs text-text-muted hidden sm:block">
+                    — {section.subtitle}
+                  </span>
+                </div>
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {section.items.map((item) => (
-                  <div key={item.name} className="terminal-card p-5 flex flex-col">
-                    <div className="flex items-start justify-between mb-2">
-                      <span className="font-display text-sm text-text-primary leading-snug pr-2">
-                        {item.name}
-                      </span>
-                      <span className={`font-mono text-xs px-1.5 py-0.5 border shrink-0 ${priceColors[item.price]}`}>
-                        {item.price}
-                      </span>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {section.items.map((item) => (
+                    <div key={item.name} className="terminal-card p-5 flex flex-col">
+                      <div className="flex items-start justify-between mb-2">
+                        <span className="font-display text-sm text-text-primary leading-snug pr-2">
+                          {item.name}
+                        </span>
+                        <span className={`font-mono text-xs px-1.5 py-0.5 border shrink-0 ${priceColors[item.price]}`}>
+                          {item.price}
+                        </span>
+                      </div>
+
+                      <p className="font-mono text-xs text-text-muted leading-relaxed mb-2">
+                        {item.desc}
+                      </p>
+
+                      <p className="font-mono text-xs text-text-secondary leading-relaxed mb-4 flex-1">
+                        <span className="text-phosphor">Why:</span> {item.why}
+                      </p>
+
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-mono text-xs px-3 py-2 border border-crimson text-crimson hover:bg-crimson/10 transition-all duration-200 text-center"
+                      >
+                        View on Amazon →
+                      </a>
                     </div>
-
-                    <p className="font-mono text-xs text-text-muted leading-relaxed mb-2">
-                      {item.desc}
-                    </p>
-
-                    <p className="font-mono text-xs text-text-secondary leading-relaxed mb-4 flex-1">
-                      <span className="text-phosphor">Why:</span> {item.why}
-                    </p>
-
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-mono text-xs px-3 py-2 border border-crimson text-crimson hover:bg-crimson/10 transition-all duration-200 text-center"
-                    >
-                      View on Amazon →
-                    </a>
-                  </div>
-                ))}
-              </div>
-            </motion.section>
-          ))}
+                  ))}
+                </div>
+              </motion.section>
+            ))
+          )}
         </div>
 
         {/* CTA */}
