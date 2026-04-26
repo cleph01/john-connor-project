@@ -225,7 +225,7 @@ const Resources = () => {
             </p>
           </motion.section>
 
-          {/* Coming Soon: Gear Picks by Budget */}
+          {/* Gear Picks — link to dedicated page */}
           <motion.section
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -234,16 +234,16 @@ const Resources = () => {
           >
             <div className="flex items-center gap-3 mb-4">
               <span className="text-crimson font-mono text-sm">[07]</span>
-              <h2 className="font-display text-lg text-crimson">Gear Picks by Budget</h2>
-              <span className="text-xs font-mono px-2 py-0.5 border border-ash text-text-muted ml-auto">
-                Coming Soon
-              </span>
+              <h2 className="font-display text-lg text-crimson">Gear Picks</h2>
             </div>
-            <p className="font-mono text-sm text-text-secondary">
-              Curated hardware recommendations organized by budget and use case —
-              routers, NAS devices, access points, switches, and smart home gear.
+            <p className="font-mono text-sm text-text-secondary mb-4">
+              Curated hardware recommendations organized by category —
+              routers, NAS devices, access points, switches, cabling tools, and smart home gear.
               Vetted by infrastructure professionals, not marketing departments.
             </p>
+            <Link href="/gear" className="font-mono text-sm text-electric hover:text-glow-electric transition-all">
+              Browse gear picks →
+            </Link>
           </motion.section>
         </div>
 

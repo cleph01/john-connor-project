@@ -15,7 +15,8 @@ const primaryLinks = [
 
 const resourceLinks = [
   { href: "/blog", label: "Blog", desc: "Transmissions & updates" },
-  { href: "/resources", label: "Resources", desc: "Tools & recommended gear" },
+  { href: "/resources", label: "Resources", desc: "Tools & software reference" },
+  { href: "/gear", label: "Gear Picks", desc: "Hardware we recommend" },
   { href: "/your-cloud", label: "Your Cloud", desc: "NAS & self-hosting guide" },
   { href: "/protect-the-internet", label: "Decentralized Net", desc: "HAM radio project", badge: "In Progress" },
   { href: "/your-stock-vote", label: "Stock Vote", desc: "Proxy voting tools", badge: "Experimental" },
