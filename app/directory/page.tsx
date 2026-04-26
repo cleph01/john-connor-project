@@ -348,7 +348,7 @@ const PublicDirectory = () => {
                 )}
 
                 {/* Footer */}
-                <div className="mt-auto pt-4 border-t border-ash flex items-center justify-between gap-3">
+                <div className="mt-auto pt-4 border-t border-ash flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                   <div className="flex items-center gap-3 flex-wrap">
                     <span className="font-mono text-xs">
                       <span className="text-text-muted">Status: </span>
@@ -367,7 +367,7 @@ const PublicDirectory = () => {
                       </div>
                     )}
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-wrap">
                     {professional.linkedin_url && (
                       <a
                         href={professional.linkedin_url}
