@@ -28,7 +28,7 @@ interface Partner {
 const partners: Partner[] = [
   {
     name: "iDrive",
-    url: "https://www.idrive.com/?refer=charlesmon",
+    url: "https://www.idrive.com/idrive/signup?from=c2c&p=charlesmon",
     tagline: "The offsite piece of a proper backup strategy.",
     desc: "Cloud backup for computers, NAS devices, and mobile. One plan covers multiple devices — designed for households that take their data seriously.",
     why: "We advocate owning your data on a NAS first. But the 3-2-1 rule exists for a reason: one offsite copy protects against fire, theft, and catastrophic failure. A second NAS at a family member's house is the ideal — iDrive is the practical alternative when that's not an option. It's not a replacement for local ownership. It's the insurance policy behind it.",
@@ -73,7 +73,7 @@ const sections: ResourceSection[] = [
       { name: "TrueNAS", url: "https://www.truenas.com", desc: "Enterprise-grade NAS OS built on FreeBSD. Run it on your own hardware for free.", badge: "Open Source" },
       { name: "Nextcloud", url: "https://nextcloud.com", desc: "Self-hosted Dropbox/Google Drive replacement. Runs on a NAS, Raspberry Pi, or VPS.", badge: "Open Source" },
       { name: "Immich", url: "https://immich.app", desc: "Self-hosted Google Photos alternative. Facial recognition, auto-albums, mobile backup.", badge: "Open Source" },
-      { name: "Backblaze", url: "https://www.backblaze.com", desc: "Affordable cloud backup for your NAS or PC. Use as offsite backup alongside local storage.", badge: "Paid" },
+      { name: "iDrive e2", url: "https://console.idrivee2.com/partner/charlesmon", desc: "S3-compatible object storage for NAS offsite backup. The technical solution for satisfying the offsite requirement of a 3-2-1 strategy without surrendering primary ownership.", badge: "Paid" },
     ],
   },
   {
