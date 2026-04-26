@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "motion/react";
+import { useState, useMemo } from "react";
 
 interface Tool {
   name: string;
@@ -14,6 +15,7 @@ interface ResourceSection {
   id: string;
   title: string;
   subtitle: string;
+  category: string;
   tools: Tool[];
 }
 
@@ -53,6 +55,7 @@ const sections: ResourceSection[] = [
   {
     id: "01",
     title: "Home Networking",
+    category: "Networking",
     subtitle: "Routers, switches, access points, and firewall software",
     tools: [
       { name: "Ubiquiti UniFi", url: "https://ui.com", desc: "Professional-grade mesh networking — the gold standard for serious home and small-business use.", badge: "Paid" },
@@ -66,6 +69,7 @@ const sections: ResourceSection[] = [
   {
     id: "02",
     title: "NAS & Storage",
+    category: "NAS & Storage",
     subtitle: "Own your data — hardware and software for personal cloud storage",
     tools: [
       { name: "Synology", url: "https://www.synology.com", desc: "The most user-friendly NAS hardware. Excellent mobile apps, polished OS, great for beginners and pros alike.", badge: "Paid" },
@@ -79,6 +83,7 @@ const sections: ResourceSection[] = [
   {
     id: "03",
     title: "Smart Home",
+    category: "Smart Home",
     subtitle: "Local-first automation — control your home without cloud dependency",
     tools: [
       { name: "Home Assistant", url: "https://www.home-assistant.io", desc: "The definitive open-source home automation hub. Runs locally, supports 3,000+ integrations. Your data never leaves your home.", badge: "Open Source" },
@@ -91,6 +96,7 @@ const sections: ResourceSection[] = [
   {
     id: "04",
     title: "Security & Privacy",
+    category: "Security",
     subtitle: "Essential tools for locking down your digital life",
     tools: [
       { name: "Bitwarden", url: "https://bitwarden.com", desc: "Free, open-source password manager. Self-host it or use their cloud. The best option for most people.", badge: "Open Source" },
@@ -104,6 +110,7 @@ const sections: ResourceSection[] = [
   {
     id: "05",
     title: "Monitoring & Diagnostics",
+    category: "Monitoring",
     subtitle: "Know what's on your network and whether you've been compromised",
     tools: [
       { name: "Have I Been Pwned", url: "https://haveibeenpwned.com", desc: "Check if your email or password has appeared in a known data breach. Run this for every account.", badge: "Free" },
@@ -122,7 +129,27 @@ const badgeColors: Record<Tool["badge"], string> = {
   "Paid": "border-ash text-text-muted",
 };
 
+const CATEGORIES = ["All", "Networking", "NAS & Storage", "Smart Home", "Security", "Monitoring"];
+const COSTS: Array<Tool["badge"] | "All"> = ["All", "Free", "Open Source", "Freemium", "Paid"];
+
 const Resources = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [selectedCost, setSelectedCost] = useState<Tool["badge"] | "All">("All");
+
+  const filteredSections = useMemo(() => {
+    return sections
+      .filter((section) => selectedCategory === "All" || section.category === selectedCategory)
+      .map((section) => ({
+        ...section,
+        tools: selectedCost === "All"
+          ? section.tools
+          : section.tools.filter((tool) => tool.badge === selectedCost),
+      }))
+      .filter((section) => section.tools.length > 0);
+  }, [selectedCategory, selectedCost]);
+
+  const isFiltered = selectedCategory !== "All" || selectedCost !== "All";
+
   return (
     <main className="min-h-screen bg-void relative">
       {/* Background effects */}
@@ -169,31 +196,11 @@ const Resources = () => {
           </p>
         </motion.div>
 
-        {/* Badge Legend */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="flex flex-wrap gap-3 justify-center mb-12"
-        >
-          {(Object.entries(badgeColors) as [Tool["badge"], string][]).map(([badge, classes]) => (
-            <span
-              key={badge}
-              className={`font-mono text-xs px-2 py-1 border ${classes}`}
-            >
-              {badge}
-            </span>
-          ))}
-          <span className="font-mono text-xs text-text-muted self-center">
-            — cost indicators
-          </span>
-        </motion.div>
-
-        {/* Trusted Partners */}
+        {/* Trusted Partners — always visible */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.2 }}
           className="mb-14"
         >
           <div className="flex items-baseline gap-3 mb-2">
@@ -228,94 +235,165 @@ const Resources = () => {
           </div>
         </motion.section>
 
+        {/* Filters */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="mb-10 space-y-4"
+        >
+          {/* Category filter */}
+          <div>
+            <span className="font-mono text-xs text-text-muted uppercase tracking-wider mb-2 block">Category</span>
+            <div className="flex flex-wrap gap-2">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`font-mono text-xs px-3 py-1.5 border transition-all duration-200 ${
+                    selectedCategory === cat
+                      ? "border-crimson text-crimson bg-crimson/10"
+                      : "border-ash text-text-muted hover:border-text-secondary hover:text-text-secondary"
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Cost filter */}
+          <div>
+            <span className="font-mono text-xs text-text-muted uppercase tracking-wider mb-2 block">Cost</span>
+            <div className="flex flex-wrap gap-2">
+              {COSTS.map((cost) => (
+                <button
+                  key={cost}
+                  onClick={() => setSelectedCost(cost)}
+                  className={`font-mono text-xs px-3 py-1.5 border transition-all duration-200 ${
+                    selectedCost === cost
+                      ? cost === "All"
+                        ? "border-crimson text-crimson bg-crimson/10"
+                        : `${badgeColors[cost as Tool["badge"]]} bg-terminal/50`
+                      : "border-ash text-text-muted hover:border-text-secondary hover:text-text-secondary"
+                  }`}
+                >
+                  {cost}
+                </button>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
         {/* Resource Sections */}
         <div className="space-y-12">
-          {sections.map((section, sectionIndex) => (
-            <motion.section
-              key={section.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: sectionIndex * 0.05 }}
+          {filteredSections.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="terminal-card p-10 text-center"
             >
-              <div className="flex items-baseline gap-3 mb-6">
-                <span className="font-mono text-xs text-crimson">[{section.id}]</span>
-                <h2 className="font-display text-xl text-crimson">{section.title}</h2>
-                <span className="font-mono text-xs text-text-muted hidden sm:block">
-                  — {section.subtitle}
-                </span>
-              </div>
+              <p className="font-mono text-text-muted text-sm mb-3">No tools match the selected filters.</p>
+              <button
+                onClick={() => { setSelectedCategory("All"); setSelectedCost("All"); }}
+                className="font-mono text-xs text-crimson hover:underline"
+              >
+                Clear filters
+              </button>
+            </motion.div>
+          ) : (
+            filteredSections.map((section, sectionIndex) => (
+              <motion.section
+                key={section.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: sectionIndex * 0.05 }}
+              >
+                <div className="flex items-baseline gap-3 mb-6">
+                  <span className="font-mono text-xs text-crimson">[{section.id}]</span>
+                  <h2 className="font-display text-xl text-crimson">{section.title}</h2>
+                  <span className="font-mono text-xs text-text-muted hidden sm:block">
+                    — {section.subtitle}
+                  </span>
+                </div>
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {section.tools.map((tool) => (
-                  <a
-                    key={tool.name}
-                    href={tool.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="terminal-card p-5 hover:border-crimson transition-all duration-300 group block"
-                  >
-                    <div className="flex items-start justify-between mb-2">
-                      <span className="font-display text-sm text-text-primary group-hover:text-crimson transition-colors">
-                        {tool.name}
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {section.tools.map((tool) => (
+                    <a
+                      key={tool.name}
+                      href={tool.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="terminal-card p-5 hover:border-crimson transition-all duration-300 group block"
+                    >
+                      <div className="flex items-start justify-between mb-2">
+                        <span className="font-display text-sm text-text-primary group-hover:text-crimson transition-colors">
+                          {tool.name}
+                        </span>
+                        <span className={`font-mono text-xs px-1.5 py-0.5 border shrink-0 ml-2 ${badgeColors[tool.badge]}`}>
+                          {tool.badge}
+                        </span>
+                      </div>
+                      <p className="font-mono text-xs text-text-muted leading-relaxed">
+                        {tool.desc}
+                      </p>
+                      <span className="block mt-3 font-mono text-xs text-phosphor opacity-0 group-hover:opacity-100 transition-opacity">
+                        → Visit site
                       </span>
-                      <span className={`font-mono text-xs px-1.5 py-0.5 border shrink-0 ml-2 ${badgeColors[tool.badge]}`}>
-                        {tool.badge}
-                      </span>
-                    </div>
-                    <p className="font-mono text-xs text-text-muted leading-relaxed">
-                      {tool.desc}
-                    </p>
-                    <span className="block mt-3 font-mono text-xs text-phosphor opacity-0 group-hover:opacity-100 transition-opacity">
-                      → Visit site
-                    </span>
-                  </a>
-                ))}
-              </div>
-            </motion.section>
-          ))}
+                    </a>
+                  ))}
+                </div>
+              </motion.section>
+            ))
+          )}
 
-          {/* Coming Soon: Video Library */}
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="terminal-card p-6 sm:p-8"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-crimson font-mono text-sm">[06]</span>
-              <h2 className="font-display text-lg text-crimson">Video Library</h2>
-              <span className="text-xs font-mono px-2 py-0.5 border border-ash text-text-muted ml-auto">
-                Coming Soon
-              </span>
-            </div>
-            <p className="font-mono text-sm text-text-secondary">
-              Walkthroughs, installation guides, gear reviews, and how-to content
-              for home networking, NAS setup, smart home integration, and more.
-              Linked from the YouTube channel as it grows.
-            </p>
-          </motion.section>
+          {/* Only show these if no category filter is active */}
+          {!isFiltered && (
+            <>
+              {/* Coming Soon: Video Library */}
+              <motion.section
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="terminal-card p-6 sm:p-8"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-crimson font-mono text-sm">[06]</span>
+                  <h2 className="font-display text-lg text-crimson">Video Library</h2>
+                  <span className="text-xs font-mono px-2 py-0.5 border border-ash text-text-muted ml-auto">
+                    Coming Soon
+                  </span>
+                </div>
+                <p className="font-mono text-sm text-text-secondary">
+                  Walkthroughs, installation guides, gear reviews, and how-to content
+                  for home networking, NAS setup, smart home integration, and more.
+                  Linked from the YouTube channel as it grows.
+                </p>
+              </motion.section>
 
-          {/* Gear Picks — link to dedicated page */}
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="terminal-card p-6 sm:p-8"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-crimson font-mono text-sm">[07]</span>
-              <h2 className="font-display text-lg text-crimson">Gear Picks</h2>
-            </div>
-            <p className="font-mono text-sm text-text-secondary mb-4">
-              Curated hardware recommendations organized by category —
-              routers, NAS devices, access points, switches, cabling tools, and smart home gear.
-              Vetted by infrastructure professionals, not marketing departments.
-            </p>
-            <Link href="/gear" className="font-mono text-sm text-electric hover:text-glow-electric transition-all">
-              Browse gear picks →
-            </Link>
-          </motion.section>
+              {/* Gear Picks — link to dedicated page */}
+              <motion.section
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="terminal-card p-6 sm:p-8"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-crimson font-mono text-sm">[07]</span>
+                  <h2 className="font-display text-lg text-crimson">Gear Picks</h2>
+                </div>
+                <p className="font-mono text-sm text-text-secondary mb-4">
+                  Curated hardware recommendations organized by category —
+                  routers, NAS devices, access points, switches, cabling tools, and smart home gear.
+                  Vetted by infrastructure professionals, not marketing departments.
+                </p>
+                <Link href="/gear" className="font-mono text-sm text-electric hover:text-glow-electric transition-all">
+                  Browse gear picks →
+                </Link>
+              </motion.section>
+            </>
+          )}
         </div>
 
         {/* CTA */}
