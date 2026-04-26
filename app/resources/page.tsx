@@ -27,11 +27,11 @@ interface Partner {
 
 const partners: Partner[] = [
   {
-    name: "Backblaze",
-    url: "https://www.backblaze.com",
-    tagline: "Offsite backup — the last line of defense.",
-    desc: "Affordable cloud backup for your computers and NAS. The offsite piece of a proper 3-2-1 backup strategy.",
-    why: "Set it up once and forget it. $9/month for unlimited personal backup. If your house burns down, your data doesn't.",
+    name: "iDrive",
+    url: "https://www.idrive.com/?refer=charlesmon",
+    tagline: "The offsite piece of a proper backup strategy.",
+    desc: "Cloud backup for computers, NAS devices, and mobile. One plan covers multiple devices — designed for households that take their data seriously.",
+    why: "We advocate owning your data on a NAS first. But the 3-2-1 rule exists for a reason: one offsite copy protects against fire, theft, and catastrophic failure. A second NAS at a family member's house is the ideal — iDrive is the practical alternative when that's not an option. It's not a replacement for local ownership. It's the insurance policy behind it.",
   },
   {
     name: "Proton",
