@@ -17,6 +17,38 @@ interface ResourceSection {
   tools: Tool[];
 }
 
+interface Partner {
+  name: string;
+  url: string;
+  tagline: string;
+  desc: string;
+  why: string;
+}
+
+const partners: Partner[] = [
+  {
+    name: "Backblaze",
+    url: "https://www.backblaze.com",
+    tagline: "Offsite backup — the last line of defense.",
+    desc: "Affordable cloud backup for your computers and NAS. The offsite piece of a proper 3-2-1 backup strategy.",
+    why: "Set it up once and forget it. $9/month for unlimited personal backup. If your house burns down, your data doesn't.",
+  },
+  {
+    name: "Proton",
+    url: "https://proton.me",
+    tagline: "The privacy suite that actually lives up to its promises.",
+    desc: "Swiss-based, end-to-end encrypted email, VPN, cloud storage, and password manager. Zero-knowledge architecture, audited code, no ad business model.",
+    why: "When we tell clients to stop using Gmail for sensitive communication, this is what we point them to. The whole suite, not just the VPN.",
+  },
+  {
+    name: "1Password",
+    url: "https://1password.com",
+    tagline: "The fix for password reuse in your household.",
+    desc: "Password manager for individuals and families. Stores passwords, passkeys, and sensitive documents with a strong security model and an interface non-technical family members will actually use.",
+    why: "Password reuse is the most common and most preventable attack vector for regular people. This is the tool we recommend when someone asks what to do about it.",
+  },
+];
+
 const sections: ResourceSection[] = [
   {
     id: "01",
@@ -156,6 +188,45 @@ const Resources = () => {
             — cost indicators
           </span>
         </motion.div>
+
+        {/* Trusted Partners */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="mb-14"
+        >
+          <div className="flex items-baseline gap-3 mb-2">
+            <h2 className="font-display text-xl text-crimson">Trusted Partners</h2>
+          </div>
+          <p className="font-mono text-xs text-text-muted mb-1">
+            Tools we recommend by name — not because they pay us to, but because they're what we'd install for a family member.
+          </p>
+          <p className="font-mono text-xs text-text-muted mb-6">
+            <span className="text-text-secondary">Disclosure:</span> Some links below are affiliate links. If you purchase through them, we may earn a small commission at no extra cost to you.
+          </p>
+
+          <div className="grid sm:grid-cols-3 gap-4">
+            {partners.map((partner) => (
+              <div key={partner.name} className="terminal-card p-5 border-t-2 border-t-electric flex flex-col">
+                <h3 className="font-display text-base text-electric mb-1">{partner.name}</h3>
+                <p className="font-mono text-xs text-text-secondary mb-3 italic">{partner.tagline}</p>
+                <p className="font-mono text-xs text-text-muted leading-relaxed mb-3">{partner.desc}</p>
+                <p className="font-mono text-xs text-text-secondary leading-relaxed mb-4 flex-1">
+                  <span className="text-phosphor">Why we recommend it:</span> {partner.why}
+                </p>
+                <a
+                  href={partner.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-xs px-3 py-2 border border-electric text-electric hover:bg-electric/10 transition-all duration-200 text-center"
+                >
+                  Learn more →
+                </a>
+              </div>
+            ))}
+          </div>
+        </motion.section>
 
         {/* Resource Sections */}
         <div className="space-y-12">
