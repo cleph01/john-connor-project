@@ -95,6 +95,33 @@ const sections: ResourceSection[] = [
   },
   {
     id: "04",
+    title: "Cameras & Surveillance",
+    category: "Cameras",
+    subtitle: "Local NVR software and camera platforms — your footage, your hardware",
+    tools: [
+      { name: "UniFi Protect", url: "https://ui.com/camera-security", desc: "Ubiquiti's camera management platform. Runs on UniFi hardware, records locally, no subscription. The professional standard for local IP camera systems.", badge: "Paid" },
+      { name: "Frigate", url: "https://frigate.video", desc: "Open-source NVR with real-time AI object detection. Runs locally on your own hardware, integrates directly with Home Assistant. The most capable self-hosted camera platform available.", badge: "Open Source" },
+      { name: "Agent DVR", url: "https://www.ispyconnect.com", desc: "Self-hosted NVR software for Windows and Linux. Supports hundreds of IP camera models via ONVIF. Good choice for mixed camera setups.", badge: "Freemium" },
+      { name: "Scrypted", url: "https://www.scrypted.app", desc: "Local smart home camera hub with HomeKit Secure Video support. Bridges IP cameras into Apple Home without any cloud.", badge: "Open Source" },
+      { name: "ZoneMinder", url: "https://zoneminder.com", desc: "Veteran open-source NVR. Battle-tested, runs on Linux, handles large camera counts. Steeper setup curve but rock solid once running.", badge: "Open Source" },
+      { name: "Reolink App", url: "https://reolink.com/software-and-manual/", desc: "Local management app for Reolink cameras. Supports direct LAN access without cloud — enable this in settings to keep your footage fully local.", badge: "Free" },
+    ],
+  },
+  {
+    id: "05",
+    title: "Access Control",
+    category: "Access Control",
+    subtitle: "Door hardware, smart locks, and entry management software",
+    tools: [
+      { name: "UniFi Access", url: "https://ui.com/door-access", desc: "Ubiquiti's enterprise door access platform. Manages readers, door strikes, and schedules from the UniFi dashboard. Right-sized for small offices, multi-unit properties, and serious home installs.", badge: "Paid" },
+      { name: "Konnected", url: "https://konnected.io", desc: "Modernize existing wired alarm systems without replacing them. Connects hardwired door/window sensors to Home Assistant or SmartThings. Keep the reliable infrastructure, ditch the monitoring contract.", badge: "Paid" },
+      { name: "Home Assistant Locks", url: "https://www.home-assistant.io/integrations/#lock", desc: "Home Assistant's lock integration hub — supports Z-Wave, Zigbee, and WiFi deadbolts from Schlage, Yale, Kwikset, and others. Full local control, no manufacturer cloud required.", badge: "Open Source" },
+      { name: "KeypadLinc", url: "https://www.insteon.com", desc: "Hardwired keypad controller for scene and access management. Popular in structured installations where a physical panel is required.", badge: "Paid" },
+      { name: "Nuki Bridge", url: "https://nuki.io", desc: "Smart lock bridge that adds HomeKit, Home Assistant, and API access to compatible Nuki locks. Local API available — no cloud dependency.", badge: "Paid" },
+    ],
+  },
+  {
+    id: "06",
     title: "Security & Privacy",
     category: "Security",
     subtitle: "Essential tools for locking down your digital life",
@@ -108,7 +135,7 @@ const sections: ResourceSection[] = [
     ],
   },
   {
-    id: "05",
+    id: "07",
     title: "Monitoring & Diagnostics",
     category: "Monitoring",
     subtitle: "Know what's on your network and whether you've been compromised",
@@ -129,7 +156,7 @@ const badgeColors: Record<Tool["badge"], string> = {
   "Paid": "border-ash text-text-muted",
 };
 
-const CATEGORIES = ["All", "Networking", "NAS & Storage", "Smart Home", "Security", "Monitoring"];
+const CATEGORIES = ["All", "Networking", "NAS & Storage", "Smart Home", "Cameras", "Access Control", "Security", "Monitoring"];
 const COSTS: Array<Tool["badge"] | "All"> = ["All", "Free", "Open Source", "Freemium", "Paid"];
 
 const Resources = () => {
@@ -359,7 +386,7 @@ const Resources = () => {
                 className="terminal-card p-6 sm:p-8"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="text-crimson font-mono text-sm">[06]</span>
+                  <span className="text-crimson font-mono text-sm">[08]</span>
                   <h2 className="font-display text-lg text-crimson">Video Library</h2>
                   <span className="text-xs font-mono px-2 py-0.5 border border-ash text-text-muted ml-auto">
                     Coming Soon
@@ -380,7 +407,7 @@ const Resources = () => {
                 className="terminal-card p-6 sm:p-8"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="text-crimson font-mono text-sm">[07]</span>
+                  <span className="text-crimson font-mono text-sm">[09]</span>
                   <h2 className="font-display text-lg text-crimson">Gear Picks</h2>
                 </div>
                 <p className="font-mono text-sm text-text-secondary mb-4">
