@@ -355,9 +355,16 @@ const PublicDirectory = () => {
                       <span className="text-phosphor">Verified</span>
                     </span>
                     {professional.pro_bono && (
-                      <span className="font-mono text-xs px-2 py-0.5 border border-electric/50 text-electric bg-electric/5">
-                        Pro-Bono Available
-                      </span>
+                      <div className="flex flex-col gap-1">
+                        <span className="font-mono text-xs px-2 py-0.5 border border-electric/50 text-electric bg-electric/5">
+                          Pro-Bono Available
+                        </span>
+                        {professional.pro_bono_circumstances && (
+                          <span className="font-mono text-xs text-text-muted leading-relaxed">
+                            {professional.pro_bono_circumstances}
+                          </span>
+                        )}
+                      </div>
                     )}
                   </div>
                   <div className="flex items-center gap-3">
