@@ -25,6 +25,21 @@ export async function POST(request: NextRequest) {
       from: FROM_EMAIL,
       to: email,
       subject: "Verify your email - John Connor Project",
+      text: `Hello ${name},
+
+Thank you for registering with the John Connor Project.
+
+Please verify your email address by visiting the link below:
+
+${verificationUrl}
+
+This link expires in 24 hours.
+
+If you didn't sign up for the John Connor Project, you can ignore this email.
+
+— The John Connor Project
+https://johnconnorproject.org
+      `,
       html: `
         <!DOCTYPE html>
         <html>

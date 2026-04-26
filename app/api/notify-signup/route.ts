@@ -17,6 +17,22 @@ export async function POST(request: NextRequest) {
       from: FROM_EMAIL,
       to: notificationEmail,
       subject: `New JCP Registration — ${name}`,
+      text: `New registration received — pending email verification and your review.
+
+Name: ${name}${company_name ? `\nCompany: ${company_name}` : ""}
+Email: ${email}
+Location: ${location}
+LinkedIn: ${linkedin_url}${website ? `\nWebsite: ${website}` : ""}
+Specialties: ${specialties?.join(", ") || "None selected"}
+Pro-Bono: ${pro_bono ? `Yes${pro_bono_circumstances ? ` — ${pro_bono_circumstances}` : ""}` : "No"}
+
+Expertise:
+${expertise}
+
+---
+Review in Supabase and set verified=true and public=true to approve.
+https://supabase.com/dashboard
+      `,
       html: `
         <!DOCTYPE html>
         <html>
