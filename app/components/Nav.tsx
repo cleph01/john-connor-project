@@ -12,11 +12,10 @@ const primaryLinks = [
   { href: "/directory", label: "Directory" },
   { href: "/learn", label: "Learn" },
   { href: "/gear", label: "Gear" },
+  { href: "/blog", label: "Blog" },
 ];
 
 const resourceLinks = [
-  { href: "/mission", label: "Mission", desc: "Objectives & roadmap" },
-  { href: "/blog", label: "Blog", desc: "Transmissions & updates" },
   { href: "/resources", label: "Resources", desc: "Tools & software reference" },
   { href: "/your-cloud", label: "Your Cloud", desc: "NAS & self-hosting guide" },
   { href: "/protect-the-internet", label: "Decentralized Net", desc: "HAM radio project", badge: "In Progress" },
@@ -102,7 +101,7 @@ const Navbar = () => {
                   >
                     <div className="px-4 py-2 border-b border-ash">
                       <span className="text-xs font-mono text-text-muted uppercase tracking-wider">
-                        Content & Tools
+                        Tools & Projects
                       </span>
                     </div>
 

@@ -269,6 +269,22 @@ export default function About() {
           </div>
         </motion.div>
 
+        {/* Mission Link */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.65 }}
+          className="mb-12 text-center"
+        >
+          <Link
+            href="/mission"
+            className="inline-flex items-center gap-2 font-mono text-sm text-electric hover:text-glow-electric transition-all"
+          >
+            <span>Read our full mission and objectives</span>
+            <span>→</span>
+          </Link>
+        </motion.div>
+
         {/* Call to Infrastructure Professionals */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
