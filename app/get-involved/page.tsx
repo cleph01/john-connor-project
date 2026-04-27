@@ -342,11 +342,13 @@ const GetInvolved = () => {
             your community needs access to what you know.
           </p>
 
-          <div className="mt-4 inline-flex items-center gap-2 px-3 py-2 border border-warning/30 bg-warning/5">
-            <span className="text-warning text-xs font-mono">
-              Note: This is not a charity. You will negotiate a fair price between you and your client.
-            </span>
-          </div>
+          <p className="font-mono text-xs text-text-muted max-w-xl mx-auto mt-4 leading-relaxed">
+            Not sure what this is about?{" "}
+            <Link href="/about" className="text-electric hover:underline transition-colors">
+              Read about the project
+            </Link>{" "}
+            before you apply.
+          </p>
         </motion.div>
 
         {/* Registration Form */}

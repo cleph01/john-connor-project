@@ -181,24 +181,27 @@ const DecoupleNASPage = () => {
             className="terminal-card p-6 sm:p-8 text-center"
           >
             <h3 className="font-display text-xl text-crimson mb-4">
-              Start Your Decoupling Journey Today
+              Ready to Own Your Data?
             </h3>
             <p className="font-mono text-sm text-text-secondary mb-6 max-w-xl mx-auto">
-              Don&apos;t let Big Tech control your memories any longer. Take the first
-              step towards digital sovereignty.
+              See the hardware we recommend, read the setup guides, or find a local
+              professional to install it for you.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/resources">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
+              <Link href="/gear">
                 <button className="btn-resistance px-6 py-3">
-                  <span className="relative z-10">Explore Resources</span>
+                  <span className="relative z-10">See NAS Gear Picks</span>
                 </button>
               </Link>
-              <Link href="/get-involved">
+              <Link href="/find-help">
                 <button className="btn-terminal px-6 py-3">
-                  Join the Resistance
+                  Find a Pro to Install It
                 </button>
               </Link>
             </div>
+            <Link href="/learn" className="font-mono text-xs text-electric hover:underline transition-colors">
+              Or read the self-hosting guides first →
+            </Link>
           </motion.section>
         </div>
       </div>

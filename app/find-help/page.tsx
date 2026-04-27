@@ -152,6 +152,13 @@ const FindHelp = () => {
           className="mb-16 text-center"
         >
           <div className="terminal-card p-8 border-electric/30">
+            {/* Trust notice — above the CTA where it matters */}
+            <div className="flex items-start gap-3 mb-6 text-left px-2 py-4 border border-phosphor/20 bg-phosphor/5">
+              <span className="text-phosphor text-lg shrink-0">✓</span>
+              <p className="font-mono text-xs text-text-secondary leading-relaxed">
+                <span className="text-phosphor">Verified professionals only.</span> Every technologist in our directory has been reviewed by the John Connor Project. You negotiate directly with them — we don&apos;t take a cut.
+              </p>
+            </div>
             <h2 className="font-display text-2xl text-text-primary mb-4">
               Ready to Find a <span className="text-electric">Professional</span>?
             </h2>
@@ -240,29 +247,6 @@ const FindHelp = () => {
           </div>
         </motion.section>
 
-        {/* Trust Notice */}
-        <motion.section
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-        >
-          <div className="terminal-card p-6 border-phosphor/30">
-            <div className="flex items-start gap-3">
-              <span className="text-phosphor text-xl">✓</span>
-              <div>
-                <h3 className="font-display text-base text-phosphor mb-2">
-                  Verified Professionals
-                </h3>
-                <p className="font-mono text-sm text-text-secondary">
-                  Every technologist in our directory has been reviewed by the
-                  John Connor Project community. You negotiate directly with them —
-                  we don&apos;t take a cut. This is about protecting communities,
-                  not profit.
-                </p>
-              </div>
-            </div>
-          </div>
-        </motion.section>
       </div>
     </main>
   );
