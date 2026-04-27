@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "motion/react";
 import { useState, useEffect } from "react";
+import SubscribeForm from "../components/SubscribeForm";
 import { BlogPostMeta } from "@/lib/blog";
 
 export default function BlogPage() {
@@ -182,6 +183,11 @@ export default function BlogPage() {
             </p>
           </div>
         )}
+
+        {/* Subscribe */}
+        <div className="mt-16 max-w-xl mx-auto">
+          <SubscribeForm context="New guides, project updates, and infrastructure intel — delivered to your inbox. No spam. Unsubscribe anytime." />
+        </div>
       </div>
     </main>
   );

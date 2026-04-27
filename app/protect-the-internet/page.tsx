@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "motion/react";
+import SubscribeForm from "../components/SubscribeForm";
 
 const IPOverHamRoadmap = () => {
   const phases = [
@@ -147,12 +148,22 @@ const IPOverHamRoadmap = () => {
           </div>
         </motion.div>
 
-        {/* CTA */}
+        {/* Subscribe CTA */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.9 }}
-          className="mt-12 text-center"
+          className="mt-12"
+        >
+          <SubscribeForm context="This project is in active development. Subscribe to The Uplink and get notified when Phase 2 begins and new milestones are reached." />
+        </motion.div>
+
+        {/* Secondary CTA */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.0 }}
+          className="mt-6 text-center"
         >
           <Link href="/get-involved">
             <button className="btn-resistance px-6 py-3">

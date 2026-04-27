@@ -15,6 +15,7 @@ const primaryLinks = [
 ];
 
 const resourceLinks = [
+  { href: "/mission", label: "Mission", desc: "Objectives & roadmap" },
   { href: "/blog", label: "Blog", desc: "Transmissions & updates" },
   { href: "/resources", label: "Resources", desc: "Tools & software reference" },
   { href: "/your-cloud", label: "Your Cloud", desc: "NAS & self-hosting guide" },

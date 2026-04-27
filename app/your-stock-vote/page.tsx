@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "motion/react";
+import SubscribeForm from "../components/SubscribeForm";
 
 const ProxyVotingToolPage = () => {
   return (
@@ -281,18 +282,23 @@ const ProxyVotingToolPage = () => {
                   </li>
                 ))}
               </ul>
-              <p className="text-text-muted">
-                Want to be notified when these tools launch? Join the resistance
-                and we&apos;ll keep you updated.
-              </p>
             </div>
           </motion.section>
+
+          {/* Subscribe */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+          >
+            <SubscribeForm context="Subscribe to The Uplink and get notified when proxy analysis tools launch — plus infrastructure news, guides, and project updates." />
+          </motion.div>
 
           {/* CTA Section */}
           <motion.section
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
+            transition={{ delay: 0.8 }}
             className="terminal-card p-6 sm:p-8 text-center"
           >
             <h3 className="font-display text-xl text-crimson mb-4">

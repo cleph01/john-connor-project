@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
+import SubscribeForm from "./components/SubscribeForm";
 
 export default function Home() {
   return (
@@ -301,7 +302,7 @@ export default function Home() {
                 title: "Home Networking",
                 description:
                   "Reliable wired and wireless networks. Proper IoT segmentation. WiFi that covers your whole home. Done right, once.",
-                href: "/find-help",
+                href: "/learn",
                 icon: "◉",
               },
               {
@@ -317,7 +318,7 @@ export default function Home() {
                 title: "Smart Home & Security",
                 description:
                   "Cameras, access control, smart appliances, and home automation. The same systems businesses use, designed for your home.",
-                href: "/find-help",
+                href: "/gear",
                 icon: "◈",
               },
             ].map((feature, index) => (
@@ -415,6 +416,19 @@ export default function Home() {
         </div>
       </section>
 
+      {/* The Uplink — Newsletter */}
+      <section className="relative z-10 py-20 px-4 sm:px-6 border-t border-ash">
+        <div className="max-w-xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <SubscribeForm />
+          </motion.div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="relative z-10 py-8 px-4 border-t border-ash">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -427,7 +441,7 @@ export default function Home() {
               className="opacity-60"
             />
             <span className="font-mono text-xs text-text-muted">
-              &copy; 2025 John Connor Project
+              &copy; {new Date().getFullYear()} John Connor Project
             </span>
           </div>
           <div className="flex items-center gap-6">
