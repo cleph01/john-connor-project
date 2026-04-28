@@ -417,7 +417,7 @@ export default function Home() {
       </section>
 
       {/* The Uplink — Newsletter */}
-      <section className="relative z-10 py-20 px-4 sm:px-6 border-t border-ash">
+      <section id="subscribe" className="relative z-10 py-20 px-4 sm:px-6 border-t border-ash">
         <div className="max-w-xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -20,6 +20,7 @@ const resourceLinks = [
   { href: "/your-cloud", label: "Your Cloud", desc: "NAS & self-hosting guide" },
   { href: "/protect-the-internet", label: "Decentralized Net", desc: "HAM radio project", badge: "In Progress" },
   { href: "/your-stock-vote", label: "Stock Vote", desc: "Proxy voting tools", badge: "Experimental" },
+  { href: "/#subscribe", label: "The Uplink", desc: "Newsletter & updates" },
 ];
 
 const Navbar = () => {
@@ -307,9 +308,15 @@ const Navbar = () => {
                 </motion.div>
 
                 {/* Status footer */}
-                <div className="pt-4 flex items-center justify-between text-xs text-text-muted font-mono">
+                <div className="pt-4 border-t border-ash flex items-center justify-between text-xs text-text-muted font-mono">
                   <span className="status-active">Network Active</span>
-                  <span>v2.0.47</span>
+                  <Link
+                    href="/#subscribe"
+                    onClick={() => setIsOpen(false)}
+                    className="text-electric hover:underline transition-colors"
+                  >
+                    📡 The Uplink
+                  </Link>
                 </div>
               </div>
             </div>
