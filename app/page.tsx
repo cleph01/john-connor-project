@@ -359,6 +359,40 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Network Builder CTA */}
+      <section className="relative z-10 py-16 px-4 sm:px-6 border-t border-ash">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <Link href="/learn/network-builder" className="block group">
+              <div className="terminal-card p-6 sm:p-8 border-electric/30 hover:border-electric transition-all duration-300 hover:shadow-[0_0_40px_rgba(0,212,255,0.08)]">
+                <div className="flex items-center gap-4 flex-wrap">
+                  <div className="w-14 h-14 border border-electric/40 bg-electric/5 flex items-center justify-center text-3xl shrink-0 group-hover:bg-electric/10 transition-all">
+                    🖧
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="w-1.5 h-1.5 bg-electric rounded-full animate-pulse" />
+                      <span className="font-mono text-xs text-electric uppercase tracking-widest">Interactive Learning</span>
+                    </div>
+                    <h3 className="font-display text-lg sm:text-xl text-electric mb-1 group-hover:text-glow-electric transition-all">
+                      Build Your First Secure Network
+                    </h3>
+                    <p className="font-mono text-sm text-text-secondary">
+                      Guided game — 7 stages, VLAN architecture, and real-world troubleshooting. Zero to confident home operator.
+                    </p>
+                  </div>
+                  <span className="font-mono text-sm text-electric group-hover:translate-x-1 transition-transform shrink-0">→</span>
+                </div>
+              </div>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Call to Action Section */}
       <section className="relative z-10 py-20 px-4 sm:px-6 border-t border-ash">
         <div className="max-w-4xl mx-auto text-center">

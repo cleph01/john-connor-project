@@ -238,6 +238,45 @@ const Learn = () => {
           </div>
         </motion.div>
 
+        {/* Network Builder Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="mb-10"
+        >
+          <Link href="/learn/network-builder" className="block group">
+            <div className="terminal-card p-6 sm:p-8 border-electric/40 hover:border-electric transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,212,255,0.1)]">
+              <div className="flex items-start gap-4 flex-wrap">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="w-1.5 h-1.5 bg-electric rounded-full animate-pulse" />
+                    <span className="font-mono text-xs text-electric uppercase tracking-widest">Interactive Training</span>
+                  </div>
+                  <h2 className="font-display text-xl sm:text-2xl text-electric mb-2 group-hover:text-glow-electric transition-all">
+                    Network Builder
+                  </h2>
+                  <p className="font-mono text-sm text-text-secondary leading-relaxed mb-4">
+                    Go from zero to confident home network operator. Guided tutorials, hands-on VLAN architecture, and real-world troubleshooting scenarios — all in one interactive game.
+                  </p>
+                  <div className="flex flex-wrap gap-3 text-xs font-mono">
+                    <span className="px-2 py-1 border border-phosphor/30 text-phosphor">7 Tutorial Stages</span>
+                    <span className="px-2 py-1 border border-electric/30 text-electric">Architect Mode</span>
+                    <span className="px-2 py-1 border border-warning/30 text-warning">Incident Response</span>
+                    <span className="px-2 py-1 border border-ash text-text-muted">XP + Badges</span>
+                  </div>
+                </div>
+                <div className="flex flex-col items-center gap-2 shrink-0">
+                  <div className="w-16 h-16 border border-electric/40 bg-electric/5 flex items-center justify-center text-3xl group-hover:bg-electric/10 transition-all">
+                    🖧
+                  </div>
+                  <span className="font-mono text-xs text-electric group-hover:text-glow-electric transition-all">Start →</span>
+                </div>
+              </div>
+            </div>
+          </Link>
+        </motion.div>
+
         {/* Table of Contents */}
         <motion.nav
           initial={{ opacity: 0, y: 20 }}
